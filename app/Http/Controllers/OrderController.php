@@ -32,6 +32,7 @@ class OrderController extends Controller
     {
         $request->validate([
             'shipping_address' => 'required|string',
+            'metode_pengiriman' => 'required|in:ambil_ditempat,antar_kurir,ekspedisi',
             'note' => 'nullable|string',
         ]);
 
@@ -47,6 +48,7 @@ class OrderController extends Controller
                 'total_price' => $total,
                 'status' => 'pending',
                 'shipping_address' => $request->shipping_address,
+                'metode_pengiriman' => $request->metode_pengiriman,
                 'payment_status' => 'unpaid',
                 'note' => $request->note,
             ]);

@@ -11,13 +11,13 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::where('role', '!=', 'admin')->latest()->paginate(10);
+        $users = User::whereDoesntHave('roles', fn($q) => $q->where('name', 'admin'))->latest()->paginate(10);
         return view('admin.users.index', compact('users'));
     }
 
     public function petaniPending()
     {
-        $petani = User::where('role', 'petani')
+        $petani = User::role('petani')
             ->whereHas('petaniProfile', function($query) {
                 $query->where('status_verifikasi', 'pending');
             })->latest()->get();

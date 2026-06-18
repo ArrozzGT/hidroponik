@@ -10,30 +10,6 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" media="print" onload="this.media='all'">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
-        .reg-bg {
-            min-height: 100vh;
-            background: linear-gradient(135deg, #16a34a, #22c55e, #10b981);
-            display: flex; align-items: center; justify-content: center;
-            padding: 32px 16px; position: relative; overflow: hidden;
-        }
-        .reg-bg::before {
-            content: ''; position: absolute; inset: 0;
-            background-image: linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
-            background-size: 60px 60px;
-        }
-        @keyframes float {
-            0%,100% { transform: translateY(0) rotate(0deg); }
-            33% { transform: translateY(-18px) rotate(5deg); }
-            66% { transform: translateY(-8px) rotate(-3deg); }
-        }
-        .leaf-deco {
-            position: absolute; pointer-events: none; z-index: 1;
-            color: rgba(255,255,255,.08);
-            animation: float 12s ease-in-out infinite;
-        }
         .step-circle {
             width: 40px; height: 40px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
@@ -44,12 +20,10 @@
             flex: 1; height: 4px; border-radius: 2px;
             margin: 0 8px; transition: all .3s ease;
         }
-        [x-cloak] { display: none !important; }
         .role-card {
             border-radius: 16px; border: 2px solid #e5e7eb;
             padding: 24px; cursor: pointer;
             transition: all .2s ease;
-            display: flex; align-items: flex-start; gap: 16px;
         }
         .role-card:hover { border-color: #86efac; }
         .role-card.active { border-color: #16a34a; background: #f0fdf4; }
@@ -57,249 +31,220 @@
 </head>
 <body>
     <main>
-    <div class="reg-bg">
-        <i data-lucide="leaf" class="leaf-deco" style="top:8%;left:4%;font-size:2.8rem;animation-delay:0s;" aria-hidden="true"></i>
-        <i data-lucide="leaf" class="leaf-deco" style="top:22%;right:6%;font-size:2rem;animation-delay:-4s;" aria-hidden="true"></i>
-        <i data-lucide="sprout" class="leaf-deco" style="bottom:12%;left:10%;font-size:2.4rem;animation-delay:-7s;" aria-hidden="true"></i>
-        <i data-lucide="leaf" class="leaf-deco" style="bottom:28%;right:4%;font-size:1.6rem;animation-delay:-10s;" aria-hidden="true"></i>
+        <div class="min-h-screen bg-gradient-to-br from-green-600 via-green-500 to-emerald-500 flex items-center justify-center p-8 relative overflow-hidden">
+            {{-- Floating leaves --}}
+            <i data-lucide="leaf" class="absolute pointer-events-none z-[1] text-white/10 animate-[leafFloat_12s_ease-in-out_infinite]" style="top:8%;left:4%;font-size:2.8rem;" aria-hidden="true"></i>
+            <i data-lucide="leaf" class="absolute pointer-events-none z-[1] text-white/10 animate-[leafFloat_12s_ease-in-out_infinite]" style="top:22%;right:6%;font-size:2rem;animation-delay:-4s;" aria-hidden="true"></i>
+            <i data-lucide="sprout" class="absolute pointer-events-none z-[1] text-white/10 animate-[leafFloat_12s_ease-in-out_infinite]" style="bottom:12%;left:10%;font-size:2.4rem;animation-delay:-7s;" aria-hidden="true"></i>
+            <i data-lucide="leaf" class="absolute pointer-events-none z-[1] text-white/10 animate-[leafFloat_12s_ease-in-out_infinite]" style="bottom:28%;right:4%;font-size:1.6rem;animation-delay:-10s;" aria-hidden="true"></i>
 
-        <div style="max-width:580px;width:100%;position:relative;z-index:10;" x-data="registerForm()" x-cloak>
-            {{-- Header --}}
-            <div style="text-align:center;margin-bottom:24px;">
-                <a href="/" style="display:inline-flex;align-items:center;gap:10px;text-decoration:none;margin-bottom:16px;">
-                    <div style="width:48px;height:48px;border-radius:14px;background:rgba(255,255,255,.2);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;">
-                        <i data-lucide="leaf" style="width:28px;height:28px;color:#fff;" aria-hidden="true"></i>
-                    </div>
-                    <div style="text-align:left;">
-                        <span style="font-size:24px;font-weight:800;color:#fff;">{{ config('app.name', 'SIPSH') }}</span>
-                        <p style="font-size:11px;color:rgba(255,255,255,.7);margin-top:-1px;">Sayuran Hidroponik</p>
-                    </div>
-                </a>
-                <h1 style="font-size:28px;font-weight:800;color:#fff;margin-bottom:4px;">Daftar Akun Baru</h1>
-                <p style="font-size:14px;color:rgba(255,255,255,.8);">Bergabunglah dengan ribuan pengguna lainnya</p>
-            </div>
+            <div class="max-w-[580px] w-full relative z-10" x-data="registerForm()" x-cloak>
+                {{-- Header --}}
+                <div class="text-center mb-6">
+                    <a href="/" class="inline-flex items-center gap-2.5 no-underline mb-4">
+                        <div class="w-12 h-12 rounded-xl bg-white/20 backdrop-blur flex items-center justify-center">
+                            <i data-lucide="leaf" class="w-7 h-7 text-white" aria-hidden="true"></i>
+                        </div>
+                        <div class="text-left">
+                            <span class="text-2xl font-extrabold text-white">{{ config('app.name', 'SIPSH') }}</span>
+                            <p class="text-[11px] text-white/70 -mt-0.5">Sayuran Hidroponik</p>
+                        </div>
+                    </a>
+                    <h1 class="text-[28px] font-extrabold text-white mb-1">Daftar Akun Baru</h1>
+                    <p class="text-sm text-white/80">Bergabunglah dengan ribuan pengguna lainnya</p>
+                </div>
 
-            {{-- Progress --}}
-            <div style="display:flex;align-items:center;justify-content:center;margin-bottom:28px;">
-                <template x-for="(s, i) in steps" :key="i">
-                    <div style="display:flex;align-items:center;">
-                        <div x-text="i + 1"
-                            :class="step >= i + 1 ? 'step-circle bg-white text-green-600 shadow-lg' : 'step-circle bg-white/20 text-white'"
-                        ></div>
-                        <div x-show="i < steps.length - 1"
-                            :class="step > i + 1 ? 'step-line bg-white' : 'step-line bg-white/20'"
-                        ></div>
-                    </div>
-                </template>
-            </div>
+                {{-- Progress stepper --}}
+                <div class="flex items-center justify-center mb-7">
+                    <template x-for="(s, i) in steps" :key="i">
+                        <div class="flex items-center">
+                            <div x-text="i + 1"
+                                :class="step >= i + 1 ? 'step-circle bg-white text-green-600 shadow-lg' : 'step-circle bg-white/20 text-white'"
+                            ></div>
+                            <div x-show="i < steps.length - 1"
+                                :class="step > i + 1 ? 'step-line bg-white' : 'step-line bg-white/20'"
+                            ></div>
+                        </div>
+                    </template>
+                </div>
 
-            {{-- Card --}}
-            <div style="background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-radius:24px;padding:36px 32px;box-shadow:0 30px 80px rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.3);">
-                <form method="POST" action="{{ route('register') }}">
-                    @csrf
-                    <input type="hidden" name="role" x-model="role">
+                {{-- Card --}}
+                <div class="bg-white/95 backdrop-blur-lg rounded-3xl p-9 shadow-[0_30px_80px_rgba(0,0,0,.25)] border border-white/30">
+                    <form method="POST" action="{{ route('register') }}">
+                        @csrf
+                        <input type="hidden" name="role" x-model="role">
 
-                    {{-- Step 1: Role Selection --}}
-                    <div x-show="step === 1">
-                        <h2 style="font-size:22px;font-weight:800;color:#14532d;margin-bottom:4px;">Pilih Tipe Akun</h2>
-                        <p style="font-size:14px;color:#6b7280;margin-bottom:24px;">Silakan pilih tipe akun Anda</p>
+                        {{-- Step 1: Role Selection --}}
+                        <div x-show="step === 1">
+                            <h2 class="text-[22px] font-extrabold text-green-900 mb-1">Pilih Tipe Akun</h2>
+                            <p class="text-sm text-gray-500 mb-6">Silakan pilih tipe akun Anda</p>
 
-                        <div style="display:flex;flex-direction:column;gap:16px;">
-                            {{-- Pembeli --}}
-                            <div @click="role = 'pembeli'" :class="role === 'pembeli' ? 'role-card active' : 'role-card'">
-                                <div style="display:flex;align-items:center;gap:12px;width:100%;">
-                                    <div style="width:48px;height:48px;border-radius:12px;background:#dcfce7;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                                        <i data-lucide="user" style="width:24px;height:24px;color:#16a34a;" aria-hidden="true"></i>
+                            <div class="flex flex-col gap-4">
+                                {{-- Pembeli --}}
+                                <div @click="role = 'pembeli'" :class="role === 'pembeli' ? 'role-card active' : 'role-card'">
+                                    <div class="flex items-center gap-3 w-full">
+                                        <div class="w-12 h-12 rounded-xl bg-green-100 flex items-center justify-center shrink-0">
+                                            <i data-lucide="user" class="w-6 h-6 text-green-600" aria-hidden="true"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="font-bold text-green-900 text-base">Pembeli</p>
+                                            <p class="text-xs text-gray-500">Saya ingin membeli sayuran</p>
+                                            <p class="text-[11px] text-gray-400 mt-1">Bergabung sebagai pembeli untuk mendapatkan akses ke berbagai sayuran hidroponik segar berkualitas premium.</p>
+                                        </div>
                                     </div>
-                                    <div style="flex:1;">
-                                        <p style="font-weight:700;color:#14532d;font-size:16px;">Pembeli</p>
-                                        <p style="font-size:13px;color:#6b7280;">Saya ingin membeli sayuran</p>
-                                        <p style="font-size:12px;color:#9ca3af;margin-top:4px;">Bergabung sebagai pembeli untuk mendapatkan akses ke berbagai sayuran hidroponik segar berkualitas premium.</p>
+                                </div>
+
+                                {{-- Petani --}}
+                                <div @click="role = 'petani'" :class="role === 'petani' ? 'role-card active' : 'role-card'">
+                                    <div class="flex items-center gap-3 w-full">
+                                        <div class="w-12 h-12 rounded-xl bg-green-100 flex items-center justify-center shrink-0">
+                                            <i data-lucide="leaf" class="w-6 h-6 text-green-600" aria-hidden="true"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="font-bold text-green-900 text-base">Petani</p>
+                                            <p class="text-xs text-gray-500">Saya ingin menjual sayuran</p>
+                                            <p class="text-[11px] text-gray-400 mt-1">Daftar sebagai petani untuk mulai menjual produk hidroponik Anda dan jangkau lebih banyak pelanggan.</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
-                            {{-- Petani --}}
-                            <div @click="role = 'petani'" :class="role === 'petani' ? 'role-card active' : 'role-card'">
-                                <div style="display:flex;align-items:center;gap:12px;width:100%;">
-                                    <div style="width:48px;height:48px;border-radius:12px;background:#dcfce7;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                                        <i data-lucide="leaf" style="width:24px;height:24px;color:#16a34a;" aria-hidden="true"></i>
-                                    </div>
-                                    <div style="flex:1;">
-                                        <p style="font-weight:700;color:#14532d;font-size:16px;">Petani</p>
-                                        <p style="font-size:13px;color:#6b7280;">Saya ingin menjual sayuran</p>
-                                        <p style="font-size:12px;color:#9ca3af;margin-top:4px;">Daftar sebagai petani untuk mulai menjual produk hidroponik Anda dan jangkau lebih banyak pelanggan.</p>
-                                    </div>
+                            <div class="mt-7">
+                                <button type="button" @click="nextStep()"
+                                    class="w-full py-3.5 bg-green-600 text-white text-sm font-bold border-none rounded-xl cursor-pointer flex items-center justify-center gap-2 shadow-[0_4px_14px_rgba(22,163,74,.3)] hover:bg-green-700 hover:shadow-[0_6px_20px_rgba(22,163,74,.4)] transition-all">
+                                    Lanjutkan
+                                    <i data-lucide="arrow-right" class="w-4.5 h-4.5" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        {{-- Step 2: Personal Info --}}
+                        <div x-show="step === 2">
+                            <h2 class="text-[22px] font-extrabold text-green-900 mb-1">Informasi Pribadi</h2>
+                            <p class="text-sm text-gray-500 mb-6">Lengkapi data pribadi Anda</p>
+
+                            <div class="mb-4">
+                                <x-input-label for="name" :value="__('Nama Lengkap')" />
+                                <div class="relative mt-1.5">
+                                    <i data-lucide="user" class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" aria-hidden="true"></i>
+                                    <x-text-input id="name" type="text" name="name" x-model="name" required placeholder="Nama lengkap Anda" class="w-full pl-11" />
+                                </div>
+                                @error('name') <x-input-error :messages="$errors->get('name')" class="mt-1" /> @enderror
+                            </div>
+
+                            <div class="mb-4">
+                                <x-input-label for="email" :value="__('Email')" />
+                                <div class="relative mt-1.5">
+                                    <i data-lucide="mail" class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" aria-hidden="true"></i>
+                                    <x-text-input id="email" type="email" name="email" x-model="email" required autocomplete="username" placeholder="nama@example.com" class="w-full pl-11" />
+                                </div>
+                                @error('email') <x-input-error :messages="$errors->get('email')" class="mt-1" /> @enderror
+                            </div>
+
+                            <div class="mb-4">
+                                <x-input-label for="password" :value="__('Password')" />
+                                <div class="relative mt-1.5">
+                                    <i data-lucide="lock" class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" aria-hidden="true"></i>
+                                    <x-text-input id="password" type="password" name="password" x-model="password" required autocomplete="new-password" placeholder="Minimal 8 karakter" class="w-full pl-11" />
+                                </div>
+                                @error('password') <x-input-error :messages="$errors->get('password')" class="mt-1" /> @enderror
+                            </div>
+
+                            <div class="mb-4">
+                                <x-input-label for="password_confirmation" :value="__('Konfirmasi Password')" />
+                                <div class="relative mt-1.5">
+                                    <i data-lucide="lock" class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" aria-hidden="true"></i>
+                                    <x-text-input id="password_confirmation" type="password" name="password_confirmation" x-model="passwordConfirmation" required autocomplete="new-password" placeholder="Ulangi password" class="w-full pl-11" />
                                 </div>
                             </div>
+
+                            <div class="flex gap-3 mt-6">
+                                <button type="button" @click="prevStep()"
+                                    class="flex-1 py-3.5 bg-white text-green-600 text-sm font-bold border-2 border-green-600 rounded-xl cursor-pointer flex items-center justify-center gap-2 hover:bg-green-50 transition-all">
+                                    <i data-lucide="arrow-left" class="w-4.5 h-4.5" aria-hidden="true"></i>
+                                    Kembali
+                                </button>
+                                <button type="button" @click="nextStep()"
+                                    class="flex-1 py-3.5 bg-green-600 text-white text-sm font-bold border-none rounded-xl cursor-pointer flex items-center justify-center gap-2 shadow-[0_4px_14px_rgba(22,163,74,.3)] hover:bg-green-700 hover:shadow-[0_6px_20px_rgba(22,163,74,.4)] transition-all">
+                                    Lanjutkan
+                                    <i data-lucide="arrow-right" class="w-4.5 h-4.5" aria-hidden="true"></i>
+                                </button>
+                            </div>
                         </div>
 
-                        <div style="margin-top:28px;">
-                            <button type="button" @click="nextStep()"
-                                style="width:100%;padding:14px;background:#16a34a;color:#fff;font-size:15px;font-weight:700;border:none;border-radius:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 14px rgba(22,163,74,.3);transition:all .2s;">
-                                Lanjutkan
-                                <i data-lucide="arrow-right" style="width:18px;height:18px;" aria-hidden="true"></i>
-                            </button>
+                        {{-- Step 3: Additional Info --}}
+                        <div x-show="step === 3">
+                            <h2 class="text-[22px] font-extrabold text-green-900 mb-1">Informasi Tambahan</h2>
+                            <p class="text-sm text-gray-500 mb-6">Beberapa informasi tambahan</p>
+
+                            <div class="mb-4">
+                                <x-input-label for="no_hp" :value="__('Nomor Telepon')" />
+                                <div class="relative mt-1.5">
+                                    <i data-lucide="phone" class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" aria-hidden="true"></i>
+                                    <x-text-input id="no_hp" type="text" name="no_hp" x-model="noHp" required placeholder="+62 812-3456-7890" class="w-full pl-11" />
+                                </div>
+                                @error('no_hp') <x-input-error :messages="$errors->get('no_hp')" class="mt-1" /> @enderror
+                            </div>
+
+                            <div class="mb-4">
+                                <x-input-label for="lokasi_kebun" :value="__('Alamat')" />
+                                <div class="relative mt-1.5">
+                                    <i data-lucide="map-pin" class="absolute left-3 top-3.5 w-5 h-5 text-gray-400" aria-hidden="true"></i>
+                                    <textarea id="lokasi_kebun" name="lokasi_kebun" x-model="lokasi" rows="3" placeholder="Jl. Contoh No. 123, Jakarta"
+                                        class="w-full pl-11 form-input min-h-[80px] resize-none"></textarea>
+                                </div>
+                            </div>
+
+                            {{-- Petani-only fields --}}
+                            <div x-show="role === 'petani'" class="mb-4">
+                                <x-input-label for="nama_kebun" :value="__('Nama Kebun/Usaha')" />
+                                <div class="relative mt-1.5">
+                                    <i data-lucide="leaf" class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" aria-hidden="true"></i>
+                                    <x-text-input id="nama_kebun" type="text" name="nama_kebun" x-model="namaKebun" placeholder="Kebun Hijau Farm" class="w-full pl-11" />
+                                </div>
+                                @error('nama_kebun') <x-input-error :messages="$errors->get('nama_kebun')" class="mt-1" /> @enderror
+                            </div>
+
+                            <div x-show="role === 'petani'" class="mb-4">
+                                <x-input-label for="deskripsi_kebun" :value="__('Deskripsi Usaha')" />
+                                <textarea id="deskripsi_kebun" name="deskripsi_kebun" x-model="deskripsiKebun" rows="3" placeholder="Ceritakan tentang kebun hidroponik Anda..."
+                                    class="w-full form-input min-h-[80px] resize-none"></textarea>
+                            </div>
+
+                            {{-- Notice --}}
+                            <div class="bg-green-50 rounded-xl p-4 mb-6">
+                                <p class="font-semibold text-xs text-green-900 mb-1">📋 Perhatian</p>
+                                <p class="text-[11px] text-gray-500">
+                                    Dengan mendaftar, Anda menyetujui <a href="#" class="text-green-600 font-semibold no-underline">Syarat & Ketentuan</a> serta <a href="#" class="text-green-600 font-semibold no-underline">Kebijakan Privasi</a> kami.
+                                </p>
+                            </div>
+
+                            <div class="flex gap-3">
+                                <button type="button" @click="prevStep()"
+                                    class="flex-1 py-3.5 bg-white text-green-600 text-sm font-bold border-2 border-green-600 rounded-xl cursor-pointer flex items-center justify-center gap-2 hover:bg-green-50 transition-all">
+                                    <i data-lucide="arrow-left" class="w-4.5 h-4.5" aria-hidden="true"></i>
+                                    Kembali
+                                </button>
+                                <button type="submit"
+                                    class="flex-1 py-3.5 bg-green-600 text-white text-sm font-bold border-none rounded-xl cursor-pointer flex items-center justify-center gap-2 shadow-[0_4px_14px_rgba(22,163,74,.3)] hover:bg-green-700 hover:shadow-[0_6px_20px_rgba(22,163,74,.4)] transition-all">
+                                    Daftar Sekarang
+                                    <i data-lucide="arrow-right" class="w-4.5 h-4.5" aria-hidden="true"></i>
+                                </button>
+                            </div>
                         </div>
+                    </form>
+
+                    {{-- Login link --}}
+                    <div class="mt-5 pt-4 border-t border-gray-200 text-center">
+                        <p class="text-xs text-gray-500">
+                            Sudah punya akun?
+                            <a href="{{ route('login') }}" class="font-bold text-green-600 no-underline hover:text-green-700 transition-colors">Masuk di sini</a>
+                        </p>
                     </div>
-
-                    {{-- Step 2: Personal Info --}}
-                    <div x-show="step === 2">
-                        <h2 style="font-size:22px;font-weight:800;color:#14532d;margin-bottom:4px;">Informasi Pribadi</h2>
-                        <p style="font-size:14px;color:#6b7280;margin-bottom:24px;">Lengkapi data pribadi Anda</p>
-
-                        <div style="margin-bottom:16px;">
-                            <label style="display:block;font-size:14px;font-weight:600;color:#14532d;margin-bottom:6px;">Nama Lengkap</label>
-                            <div style="position:relative;">
-                                <i data-lucide="user" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);width:20px;height:20px;color:#9ca3af;" aria-hidden="true"></i>
-                                <input type="text" name="name" x-model="name" required placeholder="Nama lengkap Anda"
-                                    style="width:100%;padding:12px 12px 12px 42px;border:2px solid #bbf7d0;border-radius:12px;font-size:14px;outline:none;transition:border-color .2s,box-shadow .2s;background:#fff;color:#1a1a1a;"
-                                    onfocus="this.style.borderColor='#16a34a';this.style.boxShadow='0 0 0 3px rgba(22,163,74,.15)'"
-                                    onblur="this.style.borderColor='#bbf7d0';this.style.boxShadow='none'"
-                                />
-                            </div>
-                            @error('name') <p style="margin-top:4px;font-size:12px;font-weight:600;color:#dc2626;">{{ $message }}</p> @enderror
-                        </div>
-
-                        <div style="margin-bottom:16px;">
-                            <label style="display:block;font-size:14px;font-weight:600;color:#14532d;margin-bottom:6px;">Email</label>
-                            <div style="position:relative;">
-                                <i data-lucide="mail" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);width:20px;height:20px;color:#9ca3af;" aria-hidden="true"></i>
-                                <input type="email" name="email" x-model="email" required autocomplete="username" placeholder="nama@example.com"
-                                    style="width:100%;padding:12px 12px 12px 42px;border:2px solid #bbf7d0;border-radius:12px;font-size:14px;outline:none;transition:border-color .2s,box-shadow .2s;background:#fff;color:#1a1a1a;"
-                                    onfocus="this.style.borderColor='#16a34a';this.style.boxShadow='0 0 0 3px rgba(22,163,74,.15)'"
-                                    onblur="this.style.borderColor='#bbf7d0';this.style.boxShadow='none'"
-                                />
-                            </div>
-                            @error('email') <p style="margin-top:4px;font-size:12px;font-weight:600;color:#dc2626;">{{ $message }}</p> @enderror
-                        </div>
-
-                        <div style="margin-bottom:16px;">
-                            <label style="display:block;font-size:14px;font-weight:600;color:#14532d;margin-bottom:6px;">Password</label>
-                            <div style="position:relative;">
-                                <i data-lucide="lock" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);width:20px;height:20px;color:#9ca3af;" aria-hidden="true"></i>
-                                <input type="password" name="password" x-model="password" required autocomplete="new-password" placeholder="Minimal 8 karakter"
-                                    style="width:100%;padding:12px 12px 12px 42px;border:2px solid #bbf7d0;border-radius:12px;font-size:14px;outline:none;transition:border-color .2s,box-shadow .2s;background:#fff;color:#1a1a1a;"
-                                    onfocus="this.style.borderColor='#16a34a';this.style.boxShadow='0 0 0 3px rgba(22,163,74,.15)'"
-                                    onblur="this.style.borderColor='#bbf7d0';this.style.boxShadow='none'"
-                                />
-                            </div>
-                            @error('password') <p style="margin-top:4px;font-size:12px;font-weight:600;color:#dc2626;">{{ $message }}</p> @enderror
-                        </div>
-
-                        <div style="margin-bottom:16px;">
-                            <label style="display:block;font-size:14px;font-weight:600;color:#14532d;margin-bottom:6px;">Konfirmasi Password</label>
-                            <div style="position:relative;">
-                                <i data-lucide="lock" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);width:20px;height:20px;color:#9ca3af;" aria-hidden="true"></i>
-                                <input type="password" name="password_confirmation" x-model="passwordConfirmation" required autocomplete="new-password" placeholder="Ulangi password"
-                                    style="width:100%;padding:12px 12px 12px 42px;border:2px solid #bbf7d0;border-radius:12px;font-size:14px;outline:none;transition:border-color .2s,box-shadow .2s;background:#fff;color:#1a1a1a;"
-                                    onfocus="this.style.borderColor='#16a34a';this.style.boxShadow='0 0 0 3px rgba(22,163,74,.15)'"
-                                    onblur="this.style.borderColor='#bbf7d0';this.style.boxShadow='none'"
-                                />
-                            </div>
-                        </div>
-
-                        <div style="display:flex;gap:12px;margin-top:24px;">
-                            <button type="button" @click="prevStep()"
-                                style="flex:1;padding:14px;background:#fff;color:#16a34a;font-size:15px;font-weight:700;border:2px solid #16a34a;border-radius:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:all .2s;">
-                                <i data-lucide="arrow-left" style="width:18px;height:18px;" aria-hidden="true"></i>
-                                Kembali
-                            </button>
-                            <button type="button" @click="nextStep()"
-                                style="flex:1;padding:14px;background:#16a34a;color:#fff;font-size:15px;font-weight:700;border:none;border-radius:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 14px rgba(22,163,74,.3);transition:all .2s;">
-                                Lanjutkan
-                                <i data-lucide="arrow-right" style="width:18px;height:18px;" aria-hidden="true"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    {{-- Step 3: Additional Info --}}
-                    <div x-show="step === 3">
-                        <h2 style="font-size:22px;font-weight:800;color:#14532d;margin-bottom:4px;">Informasi Tambahan</h2>
-                        <p style="font-size:14px;color:#6b7280;margin-bottom:24px;">Beberapa informasi tambahan</p>
-
-                        <div style="margin-bottom:16px;">
-                            <label style="display:block;font-size:14px;font-weight:600;color:#14532d;margin-bottom:6px;">Nomor Telepon</label>
-                            <div style="position:relative;">
-                                <i data-lucide="phone" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);width:20px;height:20px;color:#9ca3af;" aria-hidden="true"></i>
-                                <input type="text" name="no_hp" x-model="noHp" required placeholder="+62 812-3456-7890"
-                                    style="width:100%;padding:12px 12px 12px 42px;border:2px solid #bbf7d0;border-radius:12px;font-size:14px;outline:none;transition:border-color .2s,box-shadow .2s;background:#fff;color:#1a1a1a;"
-                                    onfocus="this.style.borderColor='#16a34a';this.style.boxShadow='0 0 0 3px rgba(22,163,74,.15)'"
-                                    onblur="this.style.borderColor='#bbf7d0';this.style.boxShadow='none'"
-                                />
-                            </div>
-                            @error('no_hp') <p style="margin-top:4px;font-size:12px;font-weight:600;color:#dc2626;">{{ $message }}</p> @enderror
-                        </div>
-
-                        <div style="margin-bottom:16px;">
-                            <label style="display:block;font-size:14px;font-weight:600;color:#14532d;margin-bottom:6px;">Alamat</label>
-                            <div style="position:relative;">
-                                <i data-lucide="map-pin" style="position:absolute;left:12px;top:14px;width:20px;height:20px;color:#9ca3af;" aria-hidden="true"></i>
-                                <textarea name="lokasi_kebun" x-model="lokasi" rows="3" placeholder="Jl. Contoh No. 123, Jakarta"
-                                    style="width:100%;padding:12px 12px 12px 42px;border:2px solid #bbf7d0;border-radius:12px;font-size:14px;outline:none;transition:border-color .2s,box-shadow .2s;background:#fff;color:#1a1a1a;resize:none;"
-                                    onfocus="this.style.borderColor='#16a34a';this.style.boxShadow='0 0 0 3px rgba(22,163,74,.15)'"
-                                    onblur="this.style.borderColor='#bbf7d0';this.style.boxShadow='none'"
-                                ></textarea>
-                            </div>
-                        </div>
-
-                        {{-- Petani-only fields --}}
-                        <div x-show="role === 'petani'" style="margin-bottom:16px;">
-                            <label style="display:block;font-size:14px;font-weight:600;color:#14532d;margin-bottom:6px;">Nama Kebun/Usaha</label>
-                            <div style="position:relative;">
-                                <i data-lucide="leaf" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);width:20px;height:20px;color:#9ca3af;" aria-hidden="true"></i>
-                                <input type="text" name="nama_kebun" x-model="namaKebun" placeholder="Kebun Hijau Farm"
-                                    style="width:100%;padding:12px 12px 12px 42px;border:2px solid #bbf7d0;border-radius:12px;font-size:14px;outline:none;transition:border-color .2s,box-shadow .2s;background:#fff;color:#1a1a1a;"
-                                    onfocus="this.style.borderColor='#16a34a';this.style.boxShadow='0 0 0 3px rgba(22,163,74,.15)'"
-                                    onblur="this.style.borderColor='#bbf7d0';this.style.boxShadow='none'"
-                                />
-                            </div>
-                            @error('nama_kebun') <p style="margin-top:4px;font-size:12px;font-weight:600;color:#dc2626;">{{ $message }}</p> @enderror
-                        </div>
-
-                        <div x-show="role === 'petani'" style="margin-bottom:16px;">
-                            <label style="display:block;font-size:14px;font-weight:600;color:#14532d;margin-bottom:6px;">Deskripsi Usaha</label>
-                            <textarea name="deskripsi_kebun" x-model="deskripsiKebun" rows="3" placeholder="Ceritakan tentang kebun hidroponik Anda..."
-                                style="width:100%;padding:12px;border:2px solid #bbf7d0;border-radius:12px;font-size:14px;outline:none;transition:border-color .2s,box-shadow .2s;background:#fff;color:#1a1a1a;resize:none;"
-                                onfocus="this.style.borderColor='#16a34a';this.style.boxShadow='0 0 0 3px rgba(22,163,74,.15)'"
-                                onblur="this.style.borderColor='#bbf7d0';this.style.boxShadow='none'"
-                            ></textarea>
-                        </div>
-
-                        {{-- Notice --}}
-                        <div style="background:#f0fdf4;border-radius:12px;padding:16px;margin-bottom:24px;">
-                            <p style="font-weight:600;font-size:13px;color:#14532d;margin-bottom:4px;">📋 Perhatian</p>
-                            <p style="font-size:12px;color:#6b7280;">
-                                Dengan mendaftar, Anda menyetujui <a href="#" style="color:#16a34a;font-weight:600;text-decoration:none;">Syarat & Ketentuan</a> serta <a href="#" style="color:#16a34a;font-weight:600;text-decoration:none;">Kebijakan Privasi</a> kami.
-                            </p>
-                        </div>
-
-                        <div style="display:flex;gap:12px;">
-                            <button type="button" @click="prevStep()"
-                                style="flex:1;padding:14px;background:#fff;color:#16a34a;font-size:15px;font-weight:700;border:2px solid #16a34a;border-radius:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:all .2s;">
-                                <i data-lucide="arrow-left" style="width:18px;height:18px;" aria-hidden="true"></i>
-                                Kembali
-                            </button>
-                            <button type="submit"
-                                style="flex:1;padding:14px;background:#16a34a;color:#fff;font-size:15px;font-weight:700;border:none;border-radius:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 14px rgba(22,163,74,.3);transition:all .2s;">
-                                Daftar Sekarang
-                                <i data-lucide="arrow-right" style="width:18px;height:18px;" aria-hidden="true"></i>
-                            </button>
-                        </div>
-                    </div>
-                </form>
-
-                {{-- Login link --}}
-                <div style="margin-top:20px;padding-top:16px;border-top:1px solid #e5e7eb;text-align:center;">
-                    <p style="font-size:13px;color:#6b7280;">
-                        Sudah punya akun?
-                        <a href="{{ route('login') }}" style="font-weight:700;color:#16a34a;text-decoration:none;">Masuk di sini</a>
-                    </p>
                 </div>
             </div>
         </div>
-    </div>
-</main>
+    </main>
 
     <script>
         function registerForm() {

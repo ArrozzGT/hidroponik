@@ -23,16 +23,6 @@ class RegisteredUserController extends Controller
         return view('auth.register');
     }
 
-    public function createPetani(): View
-    {
-        return view('auth.register-petani');
-    }
-
-    public function createPembeli(): View
-    {
-        return view('auth.register-pembeli');
-    }
-
     /**
      * Handle an incoming registration request.
      *
@@ -62,7 +52,6 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => $request->role,
             'no_hp' => $request->no_hp,
             'alamat' => $request->lokasi_kebun,
             'status' => $request->role === 'petani' ? 'nonaktif' : 'aktif',
@@ -91,9 +80,9 @@ class RegisteredUserController extends Controller
         Auth::login($user);
 
         // Redirect based on role
-        if ($user->role === 'admin') {
+        if ($user->hasRole('admin')) {
             return redirect(route('admin.dashboard'));
-        } elseif ($user->role === 'petani') {
+        } elseif ($user->hasRole('petani')) {
             return redirect(route('petani.dashboard'));
         } else {
             return redirect(route('pembeli.dashboard'));

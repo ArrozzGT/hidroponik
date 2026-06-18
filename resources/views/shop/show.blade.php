@@ -102,7 +102,7 @@
                     {{-- Quantity + Cart Button --}}
                     @if($product->stock > 0)
                         @auth
-                            @if(auth()->user()->role === 'pembeli')
+                            @if(auth()->user()->hasRole('pembeli'))
                                 <form action="{{ route('cart.add', $product) }}" method="POST" x-data="{ qty: 1, max: {{ $product->stock }} }">
                                     @csrf
                                     {{-- Quantity Input --}}

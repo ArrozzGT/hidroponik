@@ -31,9 +31,9 @@ class AuthenticatedSessionController extends Controller
         $user = Auth::user();
         \App\Models\ActivityLog::log('login', 'User ' . $user->name . ' berhasil login.');
 
-        if ($user->role === 'admin') {
+        if ($user->hasRole('admin')) {
             return redirect()->intended(route('admin.dashboard'));
-        } elseif ($user->role === 'petani') {
+        } elseif ($user->hasRole('petani')) {
             return redirect()->intended(route('petani.dashboard'));
         } else {
             return redirect()->intended(route('pembeli.dashboard'));

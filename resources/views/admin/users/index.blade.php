@@ -49,8 +49,8 @@
                                     </td>
                                     <td>{{ $user->email }}</td>
                                     <td>
-                                        <span class="badge {{ $user->role === 'petani' ? 'badge-green' : 'badge-gray' }}">
-                                            {{ ucfirst($user->role) }}
+                                        <span class="badge {{ $user->hasRole('petani') ? 'badge-green' : 'badge-gray' }}">
+                                            {{ ucfirst($user->getRoleNames()->first()) }}
                                         </span>
                                     </td>
                                     <td>

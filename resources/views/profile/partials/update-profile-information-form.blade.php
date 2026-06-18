@@ -19,8 +19,6 @@
         @csrf
         @method('patch')
 
-        <input type="hidden" name="role" value="{{ $user->role }}">
-
         <div>
             <x-input-label for="foto" :value="__('Foto Profil')" />
             @if($user->foto)
@@ -75,7 +73,7 @@
             <x-input-error class="mt-1.5" :messages="$errors->get('alamat')" />
         </div>
 
-        @if($user->role === 'petani')
+        @if($user->hasRole('petani'))
             <hr class="my-6 border-gray-100">
             <h3 class="text-md font-bold text-gray-900 mb-4">{{ __('Informasi Kebun') }}</h3>
 

@@ -1,4 +1,4 @@
-@extends(Auth::user()->role === 'admin' ? 'layouts.admin' : (Auth::user()->role === 'petani' ? 'layouts.petani' : 'layouts.pembeli'))
+@extends(Auth::user()->hasRole('admin') ? 'layouts.admin' : (Auth::user()->hasRole('petani') ? 'layouts.petani' : 'layouts.pembeli'))
 
 @section('page', 'Notifikasi')
 
@@ -14,7 +14,7 @@
     </div>
 @endsection
 
-@section(Auth::user()->role === 'admin' ? 'admin-content' : (Auth::user()->role === 'petani' ? 'petani-content' : 'pembeli-content'))
+@section(Auth::user()->hasRole('admin') ? 'admin-content' : (Auth::user()->hasRole('petani') ? 'petani-content' : 'pembeli-content'))
     <div class="py-6 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         @if(session('success'))
             <div class="bg-green-50 border border-green-100 text-green-700 px-5 py-3 rounded-2xl mb-6 text-sm font-medium">{{ session('success') }}</div>

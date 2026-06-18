@@ -94,6 +94,44 @@
                                     @enderror
                                 </div>
 
+                                {{-- Metode Pengiriman --}}
+                                <div class="mb-5" x-data="{ metode: '{{ old('metode_pengiriman', 'ambil_ditempat') }}' }">
+                                    <label class="form-label">
+                                        Metode Pengiriman <span class="text-red-500">*</span>
+                                    </label>
+                                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-1.5">
+                                        <template x-for="(opt, i) in [
+                                            { value: 'ambil_ditempat', label: 'Ambil di Tempat', desc: 'Ambil langsung ke kebun', icon: 'store', bg: 'bg-amber-50', color: '#d97706' },
+                                            { value: 'antar_kurir', label: 'Antar Kurir', desc: 'Diantar kurir ke alamat', icon: 'bike', bg: 'bg-blue-50', color: '#2563eb' },
+                                            { value: 'ekspedisi', label: 'Ekspedisi', desc: 'Via jasa kirim', icon: 'truck', bg: 'bg-purple-50', color: '#7c3aed' },
+                                        ]" :key="i">
+                                            <label class="relative flex items-center gap-3 p-4 border-2 rounded-2xl cursor-pointer transition-all"
+                                                   :class="metode === opt.value ? 'border-green-500 bg-green-50' : 'border-gray-200 bg-white hover:border-green-300'">
+                                                <input type="radio" name="metode_pengiriman" :value="opt.value"
+                                                       class="sr-only" x-model="metode">
+                                                <div class="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" :class="opt.bg">
+                                                    <i :data-lucide="opt.icon" :style="`width:18px;height:18px;color:${opt.color};`" aria-hidden="true"></i>
+                                                </div>
+                                                <div>
+                                                    <p class="text-sm font-bold text-gray-900" :class="metode === opt.value ? 'text-green-700' : ''" x-text="opt.label"></p>
+                                                    <p class="text-[11px] text-gray-400" x-text="opt.desc"></p>
+                                                </div>
+                                                <div class="ml-auto shrink-0" x-show="metode === opt.value">
+                                                    <i data-lucide="check-circle" style="width:18px;height:18px;color:#16a34a;" aria-hidden="true"></i>
+                                                </div>
+                                            </label>
+                                        </template>
+                                    </div>
+                                    @error('metode_pengiriman')
+                                        <p class="mt-1.5 text-xs text-red-600 font-medium flex items-center gap-1">
+                                            <svg class="w-3.5 h-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                            </svg>
+                                            {{ $message }}
+                                        </p>
+                                    @enderror
+                                </div>
+
                                 {{-- Catatan --}}
                                 <div>
                                     <label for="note" class="form-label">

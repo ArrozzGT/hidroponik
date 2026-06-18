@@ -30,7 +30,7 @@
                         Toko
                     </x-nav-link>
 
-                    @if(auth()->user()->role === 'admin')
+                    @if(auth()->user()->hasRole('admin'))
                         <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
                             <i data-lucide="users" style="width:15px;height:15px;display:inline;" aria-hidden="true"></i>
                             User
@@ -49,14 +49,14 @@
                         </x-nav-link>
                     @endif
 
-                    @if(auth()->user()->role === 'petani')
+                    @if(auth()->user()->hasRole('petani'))
                         <x-nav-link :href="route('petani.products.index')" :active="request()->routeIs('petani.products.*')">
                             <i data-lucide="sprout" style="width:15px;height:15px;display:inline;" aria-hidden="true"></i>
                             Produk Saya
                         </x-nav-link>
                     @endif
 
-                    @if(auth()->user()->role === 'pembeli')
+                    @if(auth()->user()->hasRole('pembeli'))
                         <x-nav-link :href="route('orders.index')" :active="request()->routeIs('orders.*')">
                             <i data-lucide="clipboard-list" style="width:15px;height:15px;display:inline;" aria-hidden="true"></i>
                             Pesanan
@@ -71,7 +71,7 @@
 
                 @auth
                     {{-- Cart icon (pembeli) --}}
-                    @if(auth()->user()->role === 'pembeli')
+                    @if(auth()->user()->hasRole('pembeli'))
                         @php $cartCount = \App\Models\Cart::where('user_id', auth()->id())->count(); @endphp
                         <a href="{{ route('cart.index') }}"
                            class="relative w-9 h-9 flex items-center justify-center rounded-xl text-gray-500 hover:text-green-700 hover:bg-green-50 transition-all">
@@ -102,9 +102,9 @@
                                 <p class="text-xs font-bold text-gray-900">{{ Auth::user()->name }}</p>
                                 <p class="text-xs text-gray-400">{{ Auth::user()->email }}</p>
                                 <span class="inline-flex mt-1.5 px-2 py-0.5 text-[10px] font-bold uppercase rounded-full
-                                    {{ Auth::user()->role === 'admin' ? 'bg-purple-100 text-purple-700' :
-                                       (Auth::user()->role === 'petani' ? 'bg-green-100 text-green-700' : 'bg-blue-100 text-blue-700') }}">
-                                    {{ Auth::user()->role }}
+                                    {{ Auth::user()->hasRole('admin') ? 'bg-purple-100 text-purple-700' :
+                                       (Auth::user()->hasRole('petani') ? 'bg-green-100 text-green-700' : 'bg-blue-100 text-blue-700') }}">
+                                    {{ Auth::user()->getRoleNames()->first() }}
                                 </span>
                             </div>
                             <x-dropdown-link :href="route('profile.edit')" class="flex items-center gap-2">
@@ -135,7 +135,7 @@
             {{-- ══ Mobile hamburger ══ --}}
             <div class="-me-2 flex items-center sm:hidden">
                 @auth
-                @if(auth()->user()->role === 'pembeli')
+                @if(auth()->user()->hasRole('pembeli'))
                     @php $cartCount = \App\Models\Cart::where('user_id', auth()->id())->count(); @endphp
                     <a href="{{ route('cart.index') }}" class="relative mr-2 w-9 h-9 flex items-center justify-center rounded-xl text-gray-500">
                         <i data-lucide="shopping-cart" style="width:19px;height:19px;" aria-hidden="true"></i>
@@ -164,7 +164,7 @@
                     <i data-lucide="store" style="width:15px;height:15px;display:inline;margin-right:6px;" aria-hidden="true"></i>Toko
                 </x-responsive-nav-link>
 
-                @if(auth()->user()->role === 'admin')
+                @if(auth()->user()->hasRole('admin'))
                     <x-responsive-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
                         <i data-lucide="users" style="width:15px;height:15px;display:inline;margin-right:6px;" aria-hidden="true"></i>User
                     </x-responsive-nav-link>
@@ -182,13 +182,13 @@
                     </x-responsive-nav-link>
                 @endif
 
-                @if(auth()->user()->role === 'petani')
+                @if(auth()->user()->hasRole('petani'))
                     <x-responsive-nav-link :href="route('petani.products.index')" :active="request()->routeIs('petani.products.*')">
                         <i data-lucide="sprout" style="width:15px;height:15px;display:inline;margin-right:6px;" aria-hidden="true"></i>Produk Saya
                     </x-responsive-nav-link>
                 @endif
 
-                @if(auth()->user()->role === 'pembeli')
+                @if(auth()->user()->hasRole('pembeli'))
                     <x-responsive-nav-link :href="route('cart.index')" :active="request()->routeIs('cart.*')">
                         <i data-lucide="shopping-cart" style="width:15px;height:15px;display:inline;margin-right:6px;" aria-hidden="true"></i>Keranjang
                     </x-responsive-nav-link>

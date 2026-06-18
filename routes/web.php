@@ -24,9 +24,9 @@ Route::middleware(['auth'])->group(function () {
 
 Route::get('/dashboard', function () {
     $user = Auth::user();
-    if ($user->role === 'admin') {
+    if ($user->hasRole('admin')) {
         return redirect()->route('admin.dashboard');
-    } elseif ($user->role === 'petani') {
+    } elseif ($user->hasRole('petani')) {
         return redirect()->route('petani.dashboard');
     } else {
         return redirect()->route('pembeli.dashboard');

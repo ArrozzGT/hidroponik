@@ -16,7 +16,7 @@ class ProfileUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
             'name' => ['required', 'string', 'max:255'],
             'email' => [
                 'required',
@@ -29,10 +29,14 @@ class ProfileUpdateRequest extends FormRequest
             'no_hp' => ['required', 'string', 'max:15'],
             'alamat' => ['nullable', 'string'],
             'foto' => ['nullable', 'image', 'max:2048'],
-            // Farmer profile fields (only if role is petani)
-            'nama_kebun' => ['nullable', 'required_if:role,petani', 'string', 'max:255'],
-            'lokasi_kebun' => ['nullable', 'required_if:role,petani', 'string', 'max:255'],
             'deskripsi_kebun' => ['nullable', 'string'],
         ];
+
+        if ($this->user()->hasRole('petani')) {
+            $rules['nama_kebun'] = ['required', 'string', 'max:255'];
+            $rules['lokasi_kebun'] = ['required', 'string', 'max:255'];
+        }
+
+        return $rules;
     }
 }

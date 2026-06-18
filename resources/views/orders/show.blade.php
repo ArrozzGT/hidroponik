@@ -41,6 +41,23 @@
 
                     <div class="card card-pad hover-lift">
                         <h3 class="font-bold text-gray-900 mb-4">Informasi Pengiriman</h3>
+                        @php
+                            $metodeLabels = [
+                                'ambil_ditempat' => ['label' => 'Ambil di Tempat', 'icon' => 'store', 'color' => '#d97706'],
+                                'antar_kurir' => ['label' => 'Antar Kurir', 'icon' => 'bike', 'color' => '#2563eb'],
+                                'ekspedisi' => ['label' => 'Ekspedisi', 'icon' => 'truck', 'color' => '#7c3aed'],
+                            ];
+                            $m = $metodeLabels[$order->metode_pengiriman] ?? ['label' => ucfirst($order->metode_pengiriman), 'icon' => 'package', 'color' => '#6b7280'];
+                        @endphp
+                        <div class="flex items-center gap-3 mb-4 p-3 bg-gray-50 rounded-2xl">
+                            <div class="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style="background:{{ $m['color'] }}22;">
+                                <i data-lucide="{{ $m['icon'] }}" style="width:16px;height:16px;color:{{ $m['color'] }};" aria-hidden="true"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-bold text-gray-900">{{ $m['label'] }}</p>
+                                <p class="text-xs text-gray-400">Metode pengiriman</p>
+                            </div>
+                        </div>
                         <p class="text-sm text-gray-500 leading-relaxed">{{ $order->shipping_address }}</p>
                         @if($order->note)
                             <div class="mt-4 p-4 bg-gray-50 rounded-2xl text-sm text-gray-500 italic">{{ $order->note }}</div>

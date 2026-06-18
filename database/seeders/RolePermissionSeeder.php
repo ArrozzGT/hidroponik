@@ -23,7 +23,6 @@ class RolePermissionSeeder extends Seeder
             [
                 'name' => 'Super Admin SIPSH',
                 'password' => \Illuminate\Support\Facades\Hash::make('password'),
-                'role' => 'admin',
                 'status' => 'aktif',
             ]
         );

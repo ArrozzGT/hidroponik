@@ -46,7 +46,7 @@ class ProfileController extends Controller
         $user->save();
 
         // Update Petani Profile if role is petani
-        if ($user->role === 'petani') {
+        if ($user->hasRole('petani')) {
             $user->petaniProfile()->update([
                 'nama_kebun' => $request->nama_kebun,
                 'lokasi_kebun' => $request->lokasi_kebun,

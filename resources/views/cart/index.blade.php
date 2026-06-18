@@ -150,17 +150,6 @@
                                     <span class="font-semibold text-green-700 bg-green-50 px-2.5 py-0.5 rounded-lg text-xs">GRATIS</span>
                                 </div>
 
-                                {{-- Coupon Code Input --}}
-                                <div class="pt-2">
-                                    <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Kode Kupon</p>
-                                    <div class="flex gap-2">
-                                        <input type="text" placeholder="Masukkan kode" class="form-input flex-1 py-2 px-3 text-sm rounded-xl border-slate-200">
-                                        <button type="button" class="px-4 py-2 bg-slate-100 text-slate-600 font-semibold text-sm rounded-xl hover:bg-slate-200 transition-colors">
-                                            Pakai
-                                        </button>
-                                    </div>
-                                </div>
-
                                 {{-- Divider --}}
                                 <div class="border-t border-slate-100 pt-4"></div>
 

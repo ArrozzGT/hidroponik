@@ -121,7 +121,6 @@ class DatabaseSeeder extends Seeder
                 [
                     'name' => $data['name'],
                     'password' => Hash::make('password'),
-                    'role' => 'petani',
                     'no_hp' => $data['no_hp'],
                     'alamat' => $data['lokasi_kebun'],
                     'status' => 'aktif',
@@ -187,7 +186,6 @@ class DatabaseSeeder extends Seeder
                 [
                     'name' => $data['name'],
                     'password' => Hash::make('password'),
-                    'role' => 'pembeli',
                     'no_hp' => $data['no_hp'],
                     'alamat' => $data['alamat'],
                     'status' => 'aktif',
@@ -201,7 +199,7 @@ class DatabaseSeeder extends Seeder
 
     private function seedOrders(): void
     {
-        $pembelis = User::where('role', 'pembeli')->get();
+        $pembelis = User::role('pembeli')->get();
         $products = Product::all();
         $statuses = ['pending', 'processing', 'shipping', 'completed', 'cancelled'];
         $paymentStatuses = ['unpaid', 'paid'];
@@ -335,7 +333,7 @@ class DatabaseSeeder extends Seeder
 
     private function seedCarts(): void
     {
-        $pembeli = User::where('role', 'pembeli')->first();
+        $pembeli = User::role('pembeli')->first();
         $products = Product::whereIn('id', [3, 7])->get();
 
         foreach ($products as $product) {
@@ -349,7 +347,7 @@ class DatabaseSeeder extends Seeder
 
     private function seedPanen(): void
     {
-        $petani = User::where('role', 'petani')->get();
+        $petani = User::role('petani')->get();
 
         foreach ($petani as $p) {
             $products = Product::where('user_id', $p->id)->get();
@@ -368,7 +366,7 @@ class DatabaseSeeder extends Seeder
 
     private function seedStokNutrisi(): void
     {
-        $petani = User::where('role', 'petani')->get();
+        $petani = User::role('petani')->get();
         $nutrisi = ['AB Mix Sayur', 'AB Mix Buah', 'Nutrisi Hidroponik Cair', 'Pupuk Daun'];
 
         foreach ($petani as $p) {
@@ -390,7 +388,7 @@ class DatabaseSeeder extends Seeder
         foreach ($users->take(5) as $user) {
             Notifikasi::create([
                 'user_id' => $user->id,
-                'from_user_id' => User::where('role', 'admin')->first()?->id,
+                'from_user_id' => User::role('admin')->first()?->id,
                 'type' => 'verification',
                 'title' => 'Selamat Datang di SIPSH',
                 'message' => 'Akun Anda telah berhasil terdaftar. Silakan lengkapi profil Anda.',
@@ -398,7 +396,7 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-        $pembeli = User::where('role', 'pembeli')->first();
+        $pembeli = User::role('pembeli')->first();
         if ($pembeli) {
             Notifikasi::create([
                 'user_id' => $pembeli->id,
@@ -412,7 +410,7 @@ class DatabaseSeeder extends Seeder
 
     private function seedRekomendasi(): void
     {
-        $petani = User::where('role', 'petani')->get();
+        $petani = User::role('petani')->get();
 
         foreach ($petani->take(2) as $p) {
             Rekomendasi::create([
@@ -427,7 +425,7 @@ class DatabaseSeeder extends Seeder
     private function seedTransaksi(): void
     {
         $orders = Order::all();
-        $admin = User::where('role', 'admin')->first();
+        $admin = User::role('admin')->first();
 
         foreach ($orders as $order) {
             $transaksi = Transaksi::create([

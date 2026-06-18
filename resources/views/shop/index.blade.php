@@ -239,7 +239,7 @@
                                         </button>
                                     @else
                                         @auth
-                                            @if(auth()->user()->role === 'pembeli')
+                                            @if(auth()->user()->hasRole('pembeli'))
                                                 <form action="{{ route('cart.add', $product) }}" method="POST">
                                                     @csrf
                                                     <input type="hidden" name="quantity" value="1">

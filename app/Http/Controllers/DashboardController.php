@@ -17,8 +17,8 @@ class DashboardController extends Controller
     public function admin()
     {
         $stats = [
-            'total_users' => User::where('role', '!=', 'admin')->count(),
-            'total_petani' => User::where('role', 'petani')->count(),
+            'total_users' => User::whereDoesntHave('roles', fn($q) => $q->where('name', 'admin'))->count(),
+            'total_petani' => User::role('petani')->count(),
             'total_products' => Product::count(),
             'total_orders' => Order::count(),
             'total_transaksi' => Transaksi::count(),
@@ -26,7 +26,7 @@ class DashboardController extends Controller
             'recent_orders' => Order::with('user')->latest()->limit(5)->get(),
         ];
 
-        $pendingPetani = User::where('role', 'petani')
+        $pendingPetani = User::role('petani')
             ->whereHas('petaniProfile', fn($q) => $q->where('status_verifikasi', 'pending'))
             ->with('petaniProfile')
             ->take(5)
