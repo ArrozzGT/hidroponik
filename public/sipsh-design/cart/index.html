@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Keranjang — SIPSH</title>
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    .cart-page { padding: 24px 0; }
+    .cart-page h1 { margin-bottom: 24px; }
+
+    /* Empty cart state */
+    .cart-empty {
+      text-align: center;
+      padding: 80px 24px;
+    }
+    .cart-empty .empty-icon {
+      font-size: 72px;
+      margin-bottom: 16px;
+      opacity: 0.3;
+    }
+    .cart-empty h3 { margin-bottom: 8px; }
+    .cart-empty p { color: var(--neutral-medium); margin-bottom: 24px; }
+
+    /* Coupon row */
+    .coupon-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: var(--space-lg);
+    }
+    .coupon-row input {
+      flex: 1;
+      padding: 10px 14px;
+      border: 2px solid var(--neutral-gray);
+      border-radius: var(--radius-sm);
+      font-family: var(--font-family);
+    }
+    .coupon-row input:focus { border-color: var(--primary); outline: none; }
+
+    @media (max-width: 600px) {
+      .cart-item-details .cart-item-remove {
+        align-self: flex-end;
+      }
+      .coupon-row { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-brand">SIPSH</div>
+    <button class="navbar-toggle" onclick="document.querySelector('.navbar-nav').classList.toggle('open')">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="navbar-nav">
+      <a href="../landing-page/index.html">Home</a>
+      <a href="../shop/index.html">Shop</a>
+      <a href="../product-detail/index.html">Produk</a>
+      <a class="active">Cart</a>
+      <a href="../auth-pages/index.html">Masuk</a>
+    </div>
+    <div class="navbar-actions">
+      <a href="../cart/index.html" class="cart-badge">
+        <span class="material-icons-round" style="font-size:24px;">shopping_cart</span>
+        <span class="badge-count">3</span>
+      </a>
+    </div>
+  </nav>
+
+  <div class="container cart-page">
+    <h1>🛒 Keranjang Belanja</h1>
+
+    <div class="cart-layout">
+      <!-- Cart Items -->
+      <div class="cart-items">
+        <!-- Coupon -->
+        <div class="coupon-row">
+          <input type="text" placeholder="Masukkan kode kupon">
+          <button class="btn btn-primary btn-sm">Gunakan</button>
+        </div>
+
+        <!-- Item 1 -->
+        <div class="cart-item">
+          <div class="cart-item-image" style="background:linear-gradient(135deg,#e0e0e0,#ccc);border-radius:var(--radius-sm);"></div>
+          <div class="cart-item-details">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+              <div>
+                <h4 class="cart-item-title">Kemeja Premium Oxford — Putih, L</h4>
+                <p class="text-muted text-sm">Variasi: Putih / L</p>
+              </div>
+              <span class="cart-item-remove">✕</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:auto;">
+              <div class="quantity-control">
+                <button>−</button>
+                <span>1</span>
+                <button>+</button>
+              </div>
+              <span class="cart-item-price">Rp 189.000</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 2 -->
+        <div class="cart-item">
+          <div class="cart-item-image" style="background:linear-gradient(135deg,#d4d4d4,#bbb);border-radius:var(--radius-sm);"></div>
+          <div class="cart-item-details">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+              <div>
+                <h4 class="cart-item-title">Tas Ransel Urban — Hitam</h4>
+                <p class="text-muted text-sm">Variasi: Hitam</p>
+              </div>
+              <span class="cart-item-remove">✕</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:auto;">
+              <div class="quantity-control">
+                <button>−</button>
+                <span>2</span>
+                <button>+</button>
+              </div>
+              <span class="cart-item-price">Rp 698.000</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 3 -->
+        <div class="cart-item">
+          <div class="cart-item-image" style="background:linear-gradient(135deg,#c8c8c8,#aaa);border-radius:var(--radius-sm);"></div>
+          <div class="cart-item-details">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+              <div>
+                <h4 class="cart-item-title">Jam Tangan Minimalis — Silver</h4>
+                <p class="text-muted text-sm">Variasi: Silver</p>
+              </div>
+              <span class="cart-item-remove">✕</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:auto;">
+              <div class="quantity-control">
+                <button>−</button>
+                <span>1</span>
+                <button>+</button>
+              </div>
+              <span class="cart-item-price">Rp 459.000</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Summary -->
+      <div class="cart-summary">
+        <h3>Ringkasan Belanja</h3>
+        <div class="summary-row">
+          <span>Subtotal (3 item)</span>
+          <span>Rp 1.346.000</span>
+        </div>
+        <div class="summary-row">
+          <span>Ongkos Kirim</span>
+          <span class="tag tag-success">GRATIS</span>
+        </div>
+        <div class="summary-row">
+          <span>Diskon</span>
+          <span style="color:var(--error);">−Rp 50.000</span>
+        </div>
+        <div class="summary-row">
+          <span>Pajak</span>
+          <span>Rp 13.460</span>
+        </div>
+        <div class="summary-row total">
+          <span>Total</span>
+          <span>Rp 1.309.460</span>
+        </div>
+        <button class="btn btn-primary btn-lg btn-block" style="margin-top:16px;">
+          Lanjut ke Pembayaran →
+        </button>
+        <a href="../shop/index.html" style="display:block;text-align:center;margin-top:12px;font-size:var(--text-sm);">
+          ← Lanjut Belanja
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer" style="margin-top:48px;">
+    <div class="footer-grid">
+      <div>
+        <h4 style="background:var(--primary-gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">SIPSH</h4>
+        <p style="margin-top:12px;">Platform e-commerce premium.</p>
+      </div>
+      <div>
+        <h4>Belanja</h4>
+        <a href="../shop/index.html">Semua Produk</a>
+        <a href="#">Kategori</a>
+        <a href="#">Promo</a>
+      </div>
+      <div>
+        <h4>Bantuan</h4>
+        <a href="#">Pusat Bantuan</a>
+        <a href="#">Kebijakan Privasi</a>
+        <a href="#">Syarat & Ketentuan</a>
+      </div>
+      <div>
+        <h4>Perusahaan</h4>
+        <a href="#">Tentang Kami</a>
+        <a href="#">Kontak</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 SIPSH. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>

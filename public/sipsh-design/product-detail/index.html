@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Produk Detail — SIPSH</title>
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    /* Breadcrumb */
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: var(--text-sm);
+      color: var(--neutral-medium);
+      padding: 16px 0;
+    }
+    .breadcrumb a { color: var(--neutral-medium); }
+    .breadcrumb a:hover { color: var(--primary); }
+    .breadcrumb span { color: var(--dark-charcoal); }
+
+    /* Related products section */
+    .related-section {
+      margin-top: 48px;
+      padding-top: 32px;
+      border-top: 1px solid var(--neutral-gray);
+    }
+
+    /* Specs table inline */
+    .spec-list { margin: 16px 0; }
+    .spec-row {
+      display: flex;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--neutral-gray);
+      font-size: var(--text-sm);
+    }
+    .spec-row .spec-label { flex: 0 0 140px; font-weight: var(--font-semibold); color: #555; }
+    .spec-row .spec-value { flex: 1; }
+
+    @media (max-width: 600px) {
+      .spec-row { flex-direction: column; gap: 2px; }
+      .spec-row .spec-label { flex: none; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-brand">SIPSH</div>
+    <button class="navbar-toggle" onclick="document.querySelectorAll('.navbar-nav')[0].classList.toggle('open')">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="navbar-nav">
+      <a href="../landing-page/index.html">Home</a>
+      <a href="../shop/index.html">Shop</a>
+      <a class="active">Produk</a>
+      <a href="../cart/index.html">Cart</a>
+      <a href="../auth-pages/index.html">Masuk</a>
+    </div>
+    <div class="navbar-actions">
+      <a href="../cart/index.html" class="cart-badge">
+        <span class="material-icons-round" style="font-size:24px;">shopping_cart</span>
+        <span class="badge-count">3</span>
+      </a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb">
+      <a href="../landing-page/index.html">Home</a>
+      <span>›</span>
+      <a href="../shop/index.html">Shop</a>
+      <span>›</span>
+      <span>Kemeja Premium Oxford</span>
+    </nav>
+
+    <!-- Product Detail Layout -->
+    <div class="product-detail-layout">
+      <!-- Gallery -->
+      <div class="product-gallery">
+        <div class="product-gallery-main" style="background:linear-gradient(135deg,#ddd,#bbb);border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;color:#999;font-size:48px;">
+          📷
+        </div>
+        <div class="product-gallery-thumbs">
+          <div class="active" style="width:80px;height:80px;border-radius:var(--radius-sm);background:linear-gradient(135deg,#ddd,#bbb);display:flex;align-items:center;justify-content:center;color:#aaa;">📷</div>
+          <div style="width:80px;height:80px;border-radius:var(--radius-sm);background:linear-gradient(135deg,#e8e8e8,#d0d0d0);display:flex;align-items:center;justify-content:center;color:#aaa;">📷</div>
+          <div style="width:80px;height:80px;border-radius:var(--radius-sm);background:linear-gradient(135deg,#f0f0f0,#e0e0e0);display:flex;align-items:center;justify-content:center;color:#aaa;">📷</div>
+          <div style="width:80px;height:80px;border-radius:var(--radius-sm);background:linear-gradient(135deg,#d8d8d8,#c0c0c0);display:flex;align-items:center;justify-content:center;color:#aaa;">📷</div>
+        </div>
+      </div>
+
+      <!-- Product Info -->
+      <div class="product-info">
+        <div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+            <span class="tag tag-info">Fashion Pria</span>
+            <span class="tag tag-success">Tersedia</span>
+          </div>
+          <h1 class="product-title">Kemeja Premium Oxford</h1>
+        </div>
+
+        <div class="product-rating">
+          <span style="color:var(--accent);font-size:20px;">★★★★★</span>
+          <span class="text-muted">4.9 (142 ulasan)</span>
+        </div>
+
+        <div>
+          <span class="product-price">Rp 189.000</span>
+          <span class="product-price-old">Rp 250.000</span>
+          <span class="tag tag-warning" style="margin-left:8px;">HEMAT 24%</span>
+        </div>
+
+        <p class="product-description">
+          Kemeja premium berbahan Oxford cotton berkualitas tinggi. Nyaman dipakai sehari-hari,
+          cocok untuk acara formal maupun kasual. Tersedia dalam berbagai ukuran dan warna.
+          Dilengkapi dengan kancing mutiara dan jahitan rapi.
+        </p>
+
+        <!-- Size Selector -->
+        <div class="product-options">
+          <div>
+            <strong style="font-size:var(--text-sm);">Ukuran:</strong>
+            <div class="size-selector" style="margin-top:8px;">
+              <span class="size-option active">S</span>
+              <span class="size-option">M</span>
+              <span class="size-option">L</span>
+              <span class="size-option">XL</span>
+              <span class="size-option">XXL</span>
+            </div>
+          </div>
+          <div>
+            <strong style="font-size:var(--text-sm);">Warna:</strong>
+            <div class="color-selector" style="margin-top:8px;">
+              <span class="color-option active" style="background:#fff;border-color:#333;"></span>
+              <span class="color-option" style="background:#222;"></span>
+              <span class="color-option" style="background:#336699;"></span>
+              <span class="color-option" style="background:#8B4513;"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quantity -->
+        <div>
+          <strong style="font-size:var(--text-sm);">Jumlah:</strong>
+          <div class="quantity-control" style="margin-top:8px;">
+            <button>−</button>
+            <span>1</span>
+            <button>+</button>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="product-actions">
+          <button class="btn btn-primary btn-lg" style="flex:2;">
+            🛒 Tambah ke Keranjang
+          </button>
+          <button class="btn btn-outline btn-lg" style="flex:1;">
+            ♥ Simpan
+          </button>
+        </div>
+
+        <!-- Shipping info -->
+        <div class="glass" style="padding:16px;">
+          <div style="display:flex;gap:16px;flex-wrap:wrap;">
+            <span>🚚 Gratis ongkir min. Rp 100rb</span>
+            <span>↩️ Garansi 14 hari</span>
+            <span>📦 Estimasi 2-4 hari</span>
+          </div>
+        </div>
+
+        <!-- Specs -->
+        <div class="spec-list">
+          <h4>Spesifikasi</h4>
+          <div class="spec-row">
+            <span class="spec-label">Bahan</span>
+            <span class="spec-value">Oxford Cotton 100%</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-label">Ukuran</span>
+            <span class="spec-value">S, M, L, XL, XXL</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-label">Warna</span>
+            <span class="spec-value">Putih, Hitam, Biru Navy, Coklat</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-label">Berat</span>
+            <span class="spec-value">±250 gram</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reviews Section -->
+    <section class="reviews-section">
+      <h3>Ulasan Pembeli (142)</h3>
+      <div style="display:flex;align-items:center;gap:16px;margin:16px 0;padding:16px;background:var(--neutral-gray);border-radius:var(--radius-sm);flex-wrap:wrap;">
+        <span style="font-size:32px;font-weight:var(--font-extrabold);color:var(--dark-deep);">4.9</span>
+        <span style="color:var(--accent);font-size:24px;">★★★★★</span>
+        <span class="text-muted">98% pembeli merasa puas</span>
+      </div>
+
+      <div class="review-card">
+        <div class="review-header">
+          <div class="review-avatar" style="background:linear-gradient(135deg,#FF6F61,#D8345F);"></div>
+          <div>
+            <p class="review-name">Sarah Wijaya</p>
+            <span style="color:var(--accent);">★★★★★</span>
+            <span class="review-date"> — 2 hari lalu</span>
+          </div>
+        </div>
+        <p>Bahannya lembut, jahitan rapi, ukuran sesuai. Recommended banget! Pengiriman cepat, packing aman.</p>
+      </div>
+      <div class="review-card">
+        <div class="review-header">
+          <div class="review-avatar" style="background:linear-gradient(135deg,#6A9CF1,#4A7BD6);"></div>
+          <div>
+            <p class="review-name">Budi Santoso</p>
+            <span style="color:var(--accent);">★★★★★</span>
+            <span class="review-date"> — 5 hari lalu</span>
+          </div>
+        </div>
+        <p>Kualitas bagus, cocok untuk acara formal. Sudah beli 3 warna, semuanya oke.</p>
+      </div>
+      <div class="review-card">
+        <div class="review-header">
+          <div class="review-avatar" style="background:linear-gradient(135deg,#FFDD57,#F5B041);"></div>
+          <div>
+            <p class="review-name">Dewi Lestari</p>
+            <span style="color:var(--accent);">★★★★☆</span>
+            <span class="review-date"> — 1 minggu lalu</span>
+          </div>
+        </div>
+        <p>Produk sesuai foto, hanya saja ukurannya sedikit kebesaran untuk saya. Tapi overall bagus.</p>
+      </div>
+    </section>
+
+    <!-- Related Products -->
+    <section class="related-section">
+      <h3>Produk Terkait</h3>
+      <div class="product-grid" style="margin-top:16px;">
+        <div class="card-product">
+          <div class="card-image" style="background:linear-gradient(135deg,#e0e0e0,#ccc);"></div>
+          <div class="card-body">
+            <h3 class="product-title">Kemeja Flanel Kotak</h3>
+            <div class="product-price">Rp 159K</div>
+          </div>
+        </div>
+        <div class="card-product">
+          <div class="card-image" style="background:linear-gradient(135deg,#d4d4d4,#bbb);"></div>
+          <div class="card-body">
+            <h3 class="product-title">Kemeja Lengan Pendek</h3>
+            <div class="product-price">Rp 139K</div>
+          </div>
+        </div>
+        <div class="card-product">
+          <div class="card-image" style="background:linear-gradient(135deg,#c8c8c8,#aaa);"></div>
+          <div class="card-body">
+            <h3 class="product-title">Kemeja Chambray</h3>
+            <div class="product-price">Rp 179K</div>
+          </div>
+        </div>
+        <div class="card-product">
+          <div class="card-image" style="background:linear-gradient(135deg,#e8e8e8,#d0d0d0);"></div>
+          <div class="card-body">
+            <h3 class="product-title">Kemeja Linen Premium</h3>
+            <div class="product-price">Rp 219K</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer" style="margin-top:48px;">
+    <div class="footer-grid">
+      <div>
+        <h4 style="background:var(--primary-gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">SIPSH</h4>
+        <p style="margin-top:12px;">Platform e-commerce premium.</p>
+      </div>
+      <div>
+        <h4>Belanja</h4>
+        <a href="../shop/index.html">Semua Produk</a>
+        <a href="#">Kategori</a>
+        <a href="#">Promo</a>
+      </div>
+      <div>
+        <h4>Bantuan</h4>
+        <a href="#">Pusat Bantuan</a>
+        <a href="#">Kebijakan Privasi</a>
+        <a href="#">Syarat & Ketentuan</a>
+      </div>
+      <div>
+        <h4>Perusahaan</h4>
+        <a href="#">Tentang Kami</a>
+        <a href="#">Kontak</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 SIPSH. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>
