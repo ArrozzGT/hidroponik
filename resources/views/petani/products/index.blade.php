@@ -60,7 +60,7 @@
                                 <td class="font-bold text-slate-900">Rp {{ number_format($product->price, 0, ',', '.') }}</td>
                                 <td>{{ $product->stock }} {{ $product->unit }}</td>
                                 <td>
-                                    <span class="{{ $product->status === 'tersedia' ? 'badge-green' : 'badge-red' }}">{{ ucfirst($product->status) }}</span>
+                                    <span class="{{ $product->status->value === 'tersedia' ? 'badge-green' : 'badge-red' }}">{{ ucfirst($product->status->value) }}</span>
                                 </td>
                                 <td>
                                     <div class="flex items-center gap-2">

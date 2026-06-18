@@ -10,7 +10,7 @@
     </x-slot>
 
     <div class="py-10">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 reveal">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 reveal">
             @if(session('success'))
                 <div class="bg-primary-50 border border-primary-100 text-primary-700 px-5 py-3 rounded-2xl mb-6 text-sm font-medium">{{ session('success') }}</div>
             @endif

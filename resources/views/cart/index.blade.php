@@ -12,7 +12,7 @@
     </x-slot>
 
     <div class="py-10">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 reveal">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 reveal">
             @if(session('success'))
                 <div class="max-w-7xl mx-auto mb-6 px-4 sm:px-0">
                     <div class="bg-green-50 border border-green-100 text-green-700 px-5 py-3 rounded-2xl text-sm font-medium flex items-center gap-3 animate-[fadeIn_0.3s_ease-out]">

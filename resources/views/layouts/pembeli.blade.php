@@ -24,20 +24,20 @@
          @click="sidebarOpen = false" x-cloak></div>
 
     {{-- ══ SIDEBAR ══ --}}
-    <aside id="sidebar" class="fixed lg:sticky top-0 left-0 z-40 h-full w-64 shrink-0 flex flex-col
-                  transition-transform duration-300 ease-in-out lg:translate-x-0
-                  text-white shadow-2xl"
+    <aside id="sidebar" class="fixed top-0 left-0 z-40 h-full w-64 flex flex-col
+                   transition-transform duration-300 ease-in-out
+                   text-white shadow-2xl lg:rounded-r-2xl"
            style="background: linear-gradient(180deg, #134e4a 0%, #0f766e 50%, #0d9488 100%);"
            :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
            x-cloak>
 
         {{-- Sidebar Header --}}
-        <div class="flex items-center gap-3 px-5 h-16 shrink-0 border-b border-teal-600/50">
+            <div class="flex items-center gap-3 px-5 h-16 shrink-0 border-b border-teal-600/50 overflow-hidden">
             <div class="w-9 h-9 rounded-xl flex items-center justify-center shadow-glow shrink-0"
                  style="background:linear-gradient(135deg,#2dd4bf,#0d9488);">
                 <i data-lucide="shopping-bag" style="width:18px;height:18px;color:#fff;" aria-hidden="true"></i>
             </div>
-            <span class="font-extrabold text-lg tracking-tight"
+            <span class="font-extrabold text-lg tracking-tight truncate min-w-0"
                   style="background:linear-gradient(135deg,#99f6e4,#2dd4bf);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">
                 {{ config('app.name', 'SIPSH') }}
             </span>
@@ -48,7 +48,7 @@
         <nav class="flex-1 overflow-y-auto py-4 px-3 space-y-1">
             @php
                 $pembeliNav = [
-                    ['route' => 'dashboard',          'label' => 'Dashboard',      'icon' => 'layout-dashboard'],
+                    ['route' => 'pembeli.dashboard',   'label' => 'Dashboard',      'icon' => 'layout-dashboard'],
                     ['route' => 'shop.index',         'label' => 'Toko',           'icon' => 'store'],
                     ['route' => 'cart.index',         'label' => 'Keranjang',      'icon' => 'shopping-cart',  'badge' => $cartCount ?? 0],
                     ['route' => 'orders.index',       'label' => 'Pesanan Saya',   'icon' => 'clipboard-list'],
@@ -115,7 +115,8 @@
     </aside>
 
     {{-- ══ MAIN CONTENT AREA ══ --}}
-    <div class="flex-1 flex flex-col min-w-0 min-h-screen">
+    <div class="flex-1 flex flex-col min-w-0 min-h-screen transition-all duration-300"
+         :class="sidebarOpen ? 'lg:ml-64' : 'lg:ml-0'">
 
         {{-- Top Navbar --}}
         <header class="sticky top-0 z-20 bg-white/90 backdrop-blur-xl border-b border-slate-200/80 shadow-soft">

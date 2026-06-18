@@ -59,7 +59,7 @@
                         <i data-lucide="package" class="w-5 h-5 text-green-700" aria-hidden="true"></i>
                     </div>
                 </div>
-                <p class="text-3xl font-extrabold text-slate-900">{{ $stats['my_products'] }}</p>
+                <p class="text-3xl font-extrabold text-slate-900" x-data="countUp({{ $stats['my_products'] }})" x-text="current">{{ $stats['my_products'] }}</p>
                 <p class="text-xs text-slate-500 mt-1.5 font-medium">produk terdaftar</p>
                 <div class="mt-3 h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
                     <div class="h-full rounded-full bg-green-500 transition-all duration-700" style="width:{{ min($stats['my_products'] * 10, 100) }}%"></div>
@@ -73,7 +73,7 @@
                         <i data-lucide="trending-up" class="w-5 h-5 text-blue-600" aria-hidden="true"></i>
                     </div>
                 </div>
-                <p class="text-3xl font-extrabold text-slate-900">{{ $stats['my_sales'] }}</p>
+                <p class="text-3xl font-extrabold text-slate-900" x-data="countUp({{ $stats['my_sales'] }})" x-text="current">{{ $stats['my_sales'] }}</p>
                 <p class="text-xs text-slate-500 mt-1.5 font-medium">pesanan selesai</p>
                 <div class="mt-3 h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
                     <div class="h-full rounded-full bg-blue-500 transition-all duration-700" style="width:{{ min($stats['my_sales'] * 15, 100) }}%"></div>
@@ -87,7 +87,7 @@
                         <i data-lucide="wallet" class="w-5 h-5 text-emerald-600" aria-hidden="true"></i>
                     </div>
                 </div>
-                <p class="text-3xl font-extrabold text-slate-900">Rp {{ number_format($totalRevenue, 0, ',', '.') }}</p>
+                <p class="text-3xl font-extrabold text-slate-900" x-data="countUp({{ $totalRevenue }})" x-text="'Rp ' + new Intl.NumberFormat('id-ID').format(current)">{{ $totalRevenue > 0 ? 'Rp ' . number_format($totalRevenue, 0, ',', '.') : 'Rp 0' }}</p>
                 <p class="text-xs text-slate-500 mt-1.5 font-medium">dari pesanan selesai</p>
                 <div class="mt-3 h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
                     <div class="h-full rounded-full bg-emerald-500 transition-all duration-700" style="width:{{ $totalRevenue > 0 ? min(($totalRevenue / 10000000) * 100, 100) : 0 }}%"></div>
@@ -103,7 +103,7 @@
                 </div>
                 <p class="text-3xl font-extrabold text-slate-900">
                     @if($avgRating > 0)
-                        {{ number_format($avgRating, 1) }}
+                        <span x-data="countUp({{ round($avgRating * 10) }})" x-text="(current / 10).toFixed(1)">{{ number_format($avgRating, 1) }}</span>
                     @else
                         <span class="text-slate-300">—</span>
                     @endif

@@ -16,7 +16,7 @@
                     <p class="text-sm text-slate-500">Perbarui informasi produk</p>
                 </div>
             </div>
-            <span class="{{ $product->status === 'tersedia' ? 'badge-green' : 'badge-red' }}">{{ ucfirst($product->status) }}</span>
+            <span class="{{ $product->status->value === 'tersedia' ? 'badge-green' : 'badge-red' }}">{{ ucfirst($product->status->value) }}</span>
         </div>
 
         <div class="card p-6 sm:p-8">

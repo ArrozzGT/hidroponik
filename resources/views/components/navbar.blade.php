@@ -27,8 +27,8 @@
                         </form>
                     </div>
                 @else
-                    <a href="/login" class="px-4 py-2 rounded-xl text-sm font-semibold text-green-900 hover:bg-green-50 transition-colors">Masuk</a>
-                    <a href="/register" class="px-5 py-2 rounded-xl text-sm font-semibold text-white bg-green-600 hover:bg-green-700 transition-colors shadow-lg shadow-green-600/30">Daftar</a>
+                    <a href="{{ route('login') }}" class="px-4 py-2 rounded-xl text-sm font-semibold text-green-900 hover:bg-green-50 transition-colors">Masuk</a>
+                    <a href="{{ route('register') }}" class="px-5 py-2 rounded-xl text-sm font-semibold text-white bg-green-600 hover:bg-green-700 transition-colors shadow-lg shadow-green-600/30">Daftar</a>
                 @endauth
 
                 {{-- Mobile toggle --}}
@@ -52,10 +52,10 @@
                         </button>
                     </form>
                 @else
-                    <a href="/login" class="px-3 py-2.5 rounded-xl text-sm font-semibold text-green-900 hover:bg-green-50 transition-colors">
+                    <a href="{{ route('login') }}" class="px-3 py-2.5 rounded-xl text-sm font-semibold text-green-900 hover:bg-green-50 transition-colors">
                         <i data-lucide="log-in" class="h-4 w-4 inline mr-2" aria-hidden="true"></i>Masuk
                     </a>
-                    <a href="/register" class="px-3 py-2.5 rounded-xl text-sm font-semibold text-white bg-green-600 hover:bg-green-700 transition-colors text-center mt-1">
+                    <a href="{{ route('register') }}" class="px-3 py-2.5 rounded-xl text-sm font-semibold text-white bg-green-600 hover:bg-green-700 transition-colors text-center mt-1">
                         <i data-lucide="user-plus" class="h-4 w-4 inline mr-2" aria-hidden="true"></i>Daftar
                     </a>
                 @endauth

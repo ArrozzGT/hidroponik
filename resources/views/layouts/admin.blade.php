@@ -24,19 +24,19 @@
          @click="sidebarOpen = false" x-cloak></div>
 
     {{-- ══ SIDEBAR ══ --}}
-    <aside id="sidebar" class="fixed lg:sticky top-0 left-0 z-40 h-full w-64 shrink-0 flex flex-col
-                  transition-transform duration-300 ease-in-out lg:translate-x-0
-                  bg-green-900 text-white shadow-2xl"
+    <aside id="sidebar" class="fixed top-0 left-0 z-40 h-full w-64 flex flex-col
+                  transition-transform duration-300 ease-in-out
+                  bg-green-900 text-white shadow-2xl lg:rounded-r-2xl"
            :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
            x-cloak>
         
         {{-- Sidebar Header --}}
-        <div class="flex items-center gap-3 px-5 h-16 shrink-0 border-b border-green-800/50">
+            <div class="flex items-center gap-3 px-5 h-16 shrink-0 border-b border-green-800/50 overflow-hidden">
             <div class="w-9 h-9 rounded-xl flex items-center justify-center shadow-glow shrink-0"
                  style="background:linear-gradient(135deg,#22c55e,#4ade80);">
                 <i data-lucide="leaf" style="width:18px;height:18px;color:#fff;" aria-hidden="true"></i>
             </div>
-            <span class="font-extrabold text-lg tracking-tight"
+            <span class="font-extrabold text-lg tracking-tight truncate min-w-0"
                   style="background:linear-gradient(135deg,#4ade80,#86efac);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">
                 {{ config('app.name', 'SIPSH') }}
             </span>
@@ -122,7 +122,8 @@
     </aside>
 
     {{-- ══ MAIN CONTENT AREA ══ --}}
-    <div class="flex-1 flex flex-col min-w-0 min-h-screen">
+    <div class="flex-1 flex flex-col min-w-0 min-h-screen transition-all duration-300"
+         :class="sidebarOpen ? 'lg:ml-64' : 'lg:ml-0'">
 
         {{-- Top Navbar --}}
         <header class="sticky top-0 z-20 bg-white/90 backdrop-blur-xl border-b border-slate-200/80 shadow-soft">

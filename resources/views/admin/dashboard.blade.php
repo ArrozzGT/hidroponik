@@ -29,7 +29,7 @@
                     </div>
                     <div>
                         <p class="text-xs font-bold uppercase tracking-wider text-gray-400">Total User</p>
-                        <p class="text-3xl font-extrabold text-gray-900">{{ $stats['total_users'] }}</p>
+                        <p class="text-3xl font-extrabold text-gray-900" x-data="countUp({{ $stats['total_users'] }})" x-text="current">{{ $stats['total_users'] }}</p>
                     </div>
                     <span class="ml-auto text-[10px] font-bold px-2.5 py-1 rounded-full bg-green-100 text-green-700">+8%</span>
                 </div>
@@ -44,7 +44,7 @@
                     </div>
                     <div>
                         <p class="text-xs font-bold uppercase tracking-wider text-gray-400">Total Produk</p>
-                        <p class="text-3xl font-extrabold text-gray-900">{{ $stats['total_products'] }}</p>
+                        <p class="text-3xl font-extrabold text-gray-900" x-data="countUp({{ $stats['total_products'] }})" x-text="current">{{ $stats['total_products'] }}</p>
                     </div>
                     <span class="ml-auto text-[10px] font-bold px-2.5 py-1 rounded-full bg-blue-100 text-blue-700">+5%</span>
                 </div>
@@ -59,7 +59,7 @@
                     </div>
                     <div>
                         <p class="text-xs font-bold uppercase tracking-wider text-gray-400">Total Pesanan</p>
-                        <p class="text-3xl font-extrabold text-gray-900">{{ $stats['total_orders'] }}</p>
+                        <p class="text-3xl font-extrabold text-gray-900" x-data="countUp({{ $stats['total_orders'] }})" x-text="current">{{ $stats['total_orders'] }}</p>
                     </div>
                     <span class="ml-auto text-[10px] font-bold px-2.5 py-1 rounded-full bg-amber-100 text-amber-700">+12%</span>
                 </div>
@@ -74,7 +74,7 @@
                     </div>
                     <div>
                         <p class="text-xs font-bold uppercase tracking-wider text-gray-400">Total Petani</p>
-                        <p class="text-3xl font-extrabold text-gray-900">{{ $stats['total_petani'] }}</p>
+                        <p class="text-3xl font-extrabold text-gray-900" x-data="countUp({{ $stats['total_petani'] }})" x-text="current">{{ $stats['total_petani'] }}</p>
                     </div>
                     <span class="ml-auto text-[10px] font-bold px-2.5 py-1 rounded-full bg-purple-100 text-purple-700">+3%</span>
                 </div>

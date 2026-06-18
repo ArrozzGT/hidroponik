@@ -56,28 +56,28 @@
                 <div class="w-12 h-12 rounded-2xl mx-auto mb-3 flex items-center justify-center bg-amber-100 shadow-sm">
                     <i data-lucide="clock" class="w-5 h-5 text-amber-600" aria-hidden="true"></i>
                 </div>
-                <p class="text-2xl font-extrabold text-amber-600">{{ $countBelumBayar }}</p>
+                <p class="text-2xl font-extrabold text-amber-600" x-data="countUp({{ $countBelumBayar }})" x-text="current">{{ $countBelumBayar }}</p>
                 <p class="text-xs text-slate-500 font-semibold mt-1">Belum Bayar</p>
             </div>
             <div class="stat-card text-center hover:-translate-y-1.5 transition-all duration-200 animate-[fadeIn_0.4s_ease-out] hover-lift">
                 <div class="w-12 h-12 rounded-2xl mx-auto mb-3 flex items-center justify-center bg-blue-50 shadow-sm">
                     <i data-lucide="settings" class="w-5 h-5 text-blue-600" aria-hidden="true"></i>
                 </div>
-                <p class="text-2xl font-extrabold text-blue-600">{{ $countDiproses }}</p>
+                <p class="text-2xl font-extrabold text-blue-600" x-data="countUp({{ $countDiproses }})" x-text="current">{{ $countDiproses }}</p>
                 <p class="text-xs text-slate-500 font-semibold mt-1">Diproses</p>
             </div>
             <div class="stat-card text-center hover:-translate-y-1.5 transition-all duration-200 animate-[fadeIn_0.5s_ease-out] hover-lift">
                 <div class="w-12 h-12 rounded-2xl mx-auto mb-3 flex items-center justify-center bg-purple-50 shadow-sm">
                     <i data-lucide="truck" class="w-5 h-5 text-purple-600" aria-hidden="true"></i>
                 </div>
-                <p class="text-2xl font-extrabold text-purple-600">{{ $countDikirim }}</p>
+                <p class="text-2xl font-extrabold text-purple-600" x-data="countUp({{ $countDikirim }})" x-text="current">{{ $countDikirim }}</p>
                 <p class="text-xs text-slate-500 font-semibold mt-1">Dikirim</p>
             </div>
             <div class="stat-card text-center hover:-translate-y-1.5 transition-all duration-200 animate-[fadeIn_0.6s_ease-out] hover-lift">
                 <div class="w-12 h-12 rounded-2xl mx-auto mb-3 flex items-center justify-center bg-green-50 shadow-sm">
                     <i data-lucide="package-check" class="w-5 h-5 text-green-700" aria-hidden="true"></i>
                 </div>
-                <p class="text-2xl font-extrabold text-green-700">{{ $countSelesai }}</p>
+                <p class="text-2xl font-extrabold text-green-700" x-data="countUp({{ $countSelesai }})" x-text="current">{{ $countSelesai }}</p>
                 <p class="text-xs text-slate-500 font-semibold mt-1">Selesai</p>
             </div>
         </div>

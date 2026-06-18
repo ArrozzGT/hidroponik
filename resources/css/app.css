@@ -288,12 +288,18 @@
     animation: pulseGlow 2s ease-in-out infinite;
 }
 
-/* ── scroll reveal (effects.js) ── */
+/* ── scroll reveal (effects.js + Alpine) ── */
 .reveal {
     opacity:0; transform: translateY(32px);
     transition: opacity .65s ease, transform .65s ease;
 }
 .reveal.visible { opacity:1; transform: translateY(0); }
+
+.enter-fade-up {
+    opacity:0; transform: translateY(24px);
+    transition: opacity .5s ease, transform .5s ease;
+}
+.enter-fade-up.visible { opacity:1; transform: translateY(0); }
 
 /* ── 3D Tilt Cards ── */
 .tilt-3d {
