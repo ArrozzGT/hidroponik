@@ -26,6 +26,19 @@ class OrderController extends Controller
             'status' => 'required|in:pending,processing,shipping,completed,cancelled',
         ]);
 
+        $validTransitions = [
+            'pending' => ['processing', 'cancelled'],
+            'processing' => ['shipping', 'cancelled'],
+            'shipping' => ['completed', 'cancelled'],
+            'completed' => [],
+            'cancelled' => [],
+        ];
+
+        $current = $order->status;
+        if (!in_array($request->status, $validTransitions[$current] ?? [])) {
+            return back()->with('error', "Tidak dapat mengubah status dari '$current' ke '{$request->status}'.");
+        }
+
         $order->update(['status' => $request->status]);
 
         \App\Models\ActivityLog::log('update_order_status', 'Admin mengubah status pesanan ' . $order->order_number . ' menjadi ' . $request->status);

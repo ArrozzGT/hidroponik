@@ -9,11 +9,13 @@ Route::get('/shop', [\App\Http\Controllers\ShopController::class, 'index'])->nam
 Route::get('/shop/{product:slug}', [\App\Http\Controllers\ShopController::class, 'show'])->name('shop.show');
 Route::get('/api/products/search', [\App\Http\Controllers\ShopController::class, 'suggestions'])->name('api.products.search');
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/cart', [\App\Http\Controllers\CartController::class, 'index'])->name('cart.index');
     Route::post('/cart/add/{product}', [\App\Http\Controllers\CartController::class, 'add'])->name('cart.add');
     Route::patch('/cart/update/{cart}', [\App\Http\Controllers\CartController::class, 'update'])->name('cart.update');
     Route::delete('/cart/remove/{cart}', [\App\Http\Controllers\CartController::class, 'remove'])->name('cart.remove');
+    Route::post('/cart/coupon', [\App\Http\Controllers\CartController::class, 'applyCoupon'])->name('cart.coupon');
+    Route::delete('/cart/coupon', [\App\Http\Controllers\CartController::class, 'removeCoupon'])->name('cart.coupon.remove');
     
     Route::get('/checkout', [\App\Http\Controllers\OrderController::class, 'checkout'])->name('checkout');
     Route::post('/checkout', [\App\Http\Controllers\OrderController::class, 'store'])->name('order.store');
@@ -33,7 +35,7 @@ Route::get('/dashboard', function () {
     }
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'admin'])->name('dashboard');
 
     // User Management
@@ -66,7 +68,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/reports/pdf', [\App\Http\Controllers\Admin\ReportController::class, 'exportPdf'])->name('reports.pdf');
 });
 
-Route::middleware(['auth', 'role:petani'])->prefix('petani')->name('petani.')->group(function () {
+Route::middleware(['auth', 'verified', 'role:petani'])->prefix('petani')->name('petani.')->group(function () {
     Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'petani'])->name('dashboard');
 
     // Product Management
@@ -93,11 +95,11 @@ Route::middleware(['auth', 'role:petani'])->prefix('petani')->name('petani.')->g
     Route::delete('/stok-nutrisi/{stokNutrisi}', [\App\Http\Controllers\Petani\StokNutrisiController::class, 'destroy'])->name('stok-nutrisi.destroy');
 });
 
-Route::middleware(['auth', 'role:pembeli'])->prefix('pembeli')->name('pembeli.')->group(function () {
+Route::middleware(['auth', 'verified', 'role:pembeli'])->prefix('pembeli')->name('pembeli.')->group(function () {
     Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'pembeli'])->name('dashboard');
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

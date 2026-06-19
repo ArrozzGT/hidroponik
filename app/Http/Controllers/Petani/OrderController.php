@@ -45,6 +45,19 @@ class OrderController extends Controller
             abort(403, 'Anda tidak memiliki akses ke pesanan ini.');
         }
 
+        $validTransitions = [
+            'pending' => ['processing'],
+            'processing' => ['shipping'],
+            'shipping' => [],
+            'completed' => [],
+            'cancelled' => [],
+        ];
+
+        $current = $order->status;
+        if (!in_array($request->status, $validTransitions[$current] ?? [])) {
+            return back()->with('error', "Tidak dapat mengubah status dari '$current' ke '{$request->status}'.");
+        }
+
         $order->update(['status' => $request->status]);
 
         \App\Models\ActivityLog::log(

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\Coupon;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -11,9 +12,48 @@ class CartController extends Controller
     public function index()
     {
         $carts = Cart::where('user_id', auth()->id())->with('product')->get();
-        $total = $carts->sum(fn($c) => $c->product->price * $c->quantity);
+        $total = $carts->sum(fn($c) => ($c->product?->price ?? 0) * $c->quantity);
+
+        $coupon = null;
+        $discount = 0;
+        if ($code = session('coupon_code')) {
+            $coupon = Coupon::where('code', $code)->first();
+            if ($coupon && $coupon->isValid($total)) {
+                $discount = $coupon->calculateDiscount($total);
+            } else {
+                session()->forget('coupon_code');
+                $coupon = null;
+            }
+        }
         
-        return view('cart.index', compact('carts', 'total'));
+        return view('cart.index', compact('carts', 'total', 'coupon', 'discount'));
+    }
+
+    public function applyCoupon(Request $request)
+    {
+        $request->validate(['code' => 'required|string|max:50']);
+
+        $coupon = Coupon::where('code', $request->code)->first();
+
+        if (!$coupon) {
+            return back()->with('error', 'Kode kupon tidak ditemukan.');
+        }
+
+        $subtotal = Cart::where('user_id', auth()->id())->with('product')->get()
+            ->sum(fn($c) => ($c->product?->price ?? 0) * $c->quantity);
+
+        if (!$coupon->isValid($subtotal)) {
+            return back()->with('error', 'Kupon tidak dapat digunakan. Periksa kembali syarat & ketentuan.');
+        }
+
+        session(['coupon_code' => $coupon->code]);
+        return back()->with('success', "Kupon {$coupon->code} berhasil diterapkan!");
+    }
+
+    public function removeCoupon()
+    {
+        session()->forget('coupon_code');
+        return back()->with('success', 'Kupon berhasil dihapus.');
     }
 
     public function add(Request $request, Product $product)

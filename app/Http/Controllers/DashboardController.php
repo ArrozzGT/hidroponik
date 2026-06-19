@@ -59,7 +59,7 @@ class DashboardController extends Controller
             'total_nutrisi' => StokNutrisi::where('user_id', $userId)->count(),
             'low_stok_nutrisi' => StokNutrisi::where('user_id', $userId)->get()->filter(fn($s) => $s->isLowStock())->count(),
             'unread_notifications' => Notifikasi::where('user_id', $userId)->unread()->count(),
-            'pending_verifikasi' => $user->petaniProfile->status_verifikasi === 'pending',
+            'pending_verifikasi' => optional($user->petaniProfile)->status_verifikasi === 'pending',
         ];
         return view('petani.dashboard', compact('stats', 'revenueTotal', 'recentOrders', 'avgRating'));
     }

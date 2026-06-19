@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use App\Enums\ProductStatus;
 
 class Product extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'user_id',
         'category_id',
@@ -24,17 +27,24 @@ class Product extends Model
     ];
 
     protected $casts = [
-        'price'  => 'decimal:2',
+        'price' => 'decimal:2',
+        'stock' => 'integer',
         'status' => ProductStatus::class,
         'tanggal_tanam' => 'date',
+        'lama_tanam_hari' => 'integer',
     ];
 
-    /** Auto‑generate slug on creation */
     protected static function booted()
     {
         static::creating(function (self $product) {
             if (empty($product->slug) && !empty($product->name)) {
-                $product->slug = Str::slug($product->name);
+                $base = Str::slug($product->name);
+                $slug = $base;
+                $counter = 1;
+                while (self::where('slug', $slug)->exists()) {
+                    $slug = $base . '-' . $counter++;
+                }
+                $product->slug = $slug;
             }
         });
     }

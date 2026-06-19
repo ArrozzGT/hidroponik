@@ -85,7 +85,7 @@ class ProductController extends Controller
             'image' => 'nullable|image|max:2048',
         ]);
 
-        $data = $request->except('image');
+        $data = $request->only(['category_id', 'name', 'description', 'price', 'stock', 'unit', 'lama_tanam_hari', 'tanggal_tanam']);
         $data['slug'] = Str::slug($request->name) . '-' . time();
         $data['status'] = $request->stock > 0 ? 'tersedia' : 'habis';
 

@@ -2,4 +2,4 @@
     'class' => '',
 ])
 
-<hr {{ $attributes->merge(['class' => 'border-t ' . ($class ?: 'border-[var(--border)]')]) }} />
+<hr {{ $attributes->merge(['class' => 'border-t border-gray-100' . ($class ? ' ' . $class : '')]) }} />

@@ -15,11 +15,15 @@ class ActivityLog extends Model
 
     public static function log($action, $description)
     {
-        return self::create([
-            'user_id' => auth()->id(),
-            'action' => $action,
-            'description' => $description,
-            'ip_address' => request()->ip(),
-        ]);
+        try {
+            return self::create([
+                'user_id' => auth()->id(),
+                'action' => $action,
+                'description' => $description,
+                'ip_address' => request()->ip(),
+            ]);
+        } catch (\Throwable $e) {
+            return null;
+        }
     }
 }

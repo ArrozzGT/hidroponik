@@ -7,43 +7,83 @@
 
         <title>{{ config('app.name', 'SIPSH') }}</title>
 
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" media="print" onload="this.media='all'">
         @vite(['resources/css/app.css', 'resources/css/guest.css', 'resources/js/app.js'])
     </head>
-        <body style="font-family:'Plus Jakarta Sans',sans-serif;">
-            <div class="guest-bg">
-            <div class="guest-orb guest-orb-1"></div>
-            <div class="guest-orb guest-orb-2"></div>
-            <div class="guest-orb guest-orb-3"></div>
-            <div class="guest-orb guest-orb-4"></div>
-            <div class="guest-grid"></div>
+    <body class="font-body antialiased">
+        <div class="lg:grid lg:grid-cols-2 min-h-screen">
+            {{-- Left Panel --}}
+            <div class="guest-bg relative p-12 lg:p-16 flex flex-col justify-between overflow-hidden">
+                <div class="guest-circle guest-circle-1"></div>
+                <div class="guest-circle guest-circle-2"></div>
+                <div class="guest-circle guest-circle-3"></div>
 
-            {{-- Floating Decorative Leaves --}}
-            <i data-lucide="leaf" class="guest-leaf guest-leaf-1" aria-hidden="true"></i>
-            <i data-lucide="leaf" class="guest-leaf guest-leaf-2" aria-hidden="true"></i>
-            <i data-lucide="leaf" class="guest-leaf guest-leaf-3" aria-hidden="true"></i>
-            <i data-lucide="leaf" class="guest-leaf guest-leaf-4" aria-hidden="true"></i>
-            <i data-lucide="sprout" class="guest-leaf guest-leaf-5" aria-hidden="true"></i>
-
-            <div class="guest-logo">
-                <a href="/">
-                    <div class="guest-logo-icon">
-                        <i data-lucide="leaf" style="width:22px;height:22px;color:#fff;" aria-hidden="true"></i>
+                <div class="relative z-10">
+                    <div class="flex items-center gap-3 mb-8">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-500 flex items-center justify-center">
+                            <i data-lucide="leaf" style="width:22px;height:22px;color:#fff;" aria-hidden="true"></i>
+                        </div>
+                        <span class="font-heading font-bold text-xl text-white">{{ config('app.name', 'SIPSH') }}</span>
                     </div>
-                    <span class="guest-logo-text">{{ config('app.name', 'SIPSH') }}</span>
-                </a>
-                <p class="guest-logo-sub">Sistem Informasi Penjualan Sayuran Hidroponik</p>
+
+                    <h1 class="font-heading font-bold text-3xl lg:text-4xl text-white leading-tight mb-6">
+                        Marketplace Hidroponik<br/>
+                        <span class="text-emerald-300">Terpercaya</span>
+                    </h1>
+
+                    <div class="space-y-5">
+                        <div class="flex items-start gap-4">
+                            <div class="w-8 h-8 rounded-lg bg-emerald-800/50 flex items-center justify-center shrink-0 mt-0.5">
+                                <i data-lucide="shopping-bag" style="width:16px;height:16px;color:#6ee7b7;" aria-hidden="true"></i>
+                            </div>
+                            <div>
+                                <p class="text-white font-medium">Belanja Sayuran Segar</p>
+                                <p class="text-emerald-200/70 text-sm">Langsung dari petani hidroponik terbaik</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-8 h-8 rounded-lg bg-emerald-800/50 flex items-center justify-center shrink-0 mt-0.5">
+                                <i data-lucide="truck" style="width:16px;height:16px;color:#6ee7b7;" aria-hidden="true"></i>
+                            </div>
+                            <div>
+                                <p class="text-white font-medium">Pengiriman Cepat</p>
+                                <p class="text-emerald-200/70 text-sm">Dipetik dan dikirim di hari yang sama</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-8 h-8 rounded-lg bg-emerald-800/50 flex items-center justify-center shrink-0 mt-0.5">
+                                <i data-lucide="badge-check" style="width:16px;height:16px;color:#6ee7b7;" aria-hidden="true"></i>
+                            </div>
+                            <div>
+                                <p class="text-white font-medium">Kualitas Terjamin</p>
+                                <p class="text-emerald-200/70 text-sm">Tanpa pestisida, 100% organik</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="relative z-10 text-emerald-800 text-sm">© {{ date('Y') }} {{ config('app.name', 'SIPSH') }}. All rights reserved.</p>
             </div>
 
-            <div class="guest-card">
-                {{ $slot }}
-            </div>
+            {{-- Right Panel --}}
+            <div class="bg-white p-12 lg:p-16 flex items-center justify-center">
+                <div class="guest-card">
+                    <div class="text-center mb-8">
+                        <div class="w-12 h-12 rounded-xl bg-emerald-100 flex items-center justify-center mx-auto mb-4">
+                            <i data-lucide="leaf" style="width:24px;height:24px;color:#059669;" aria-hidden="true"></i>
+                        </div>
+                        <h2 class="font-heading font-bold text-xl text-gray-900">{{ config('app.name', 'SIPSH') }}</h2>
+                        <p class="text-sm text-gray-400 mt-1">Sistem Informasi Penjualan Sayuran Hidroponik</p>
+                    </div>
 
-            <p class="guest-footer">© {{ date('Y') }} {{ config('app.name', 'SIPSH') }}. All rights reserved.</p>
+                    <div class="bg-white border border-gray-100 rounded-xl p-8">
+                        {{ $slot }}
+                    </div>
+                </div>
+            </div>
         </div>
 
-
+        @if(session('success'))<div data-toast="success" data-message="{{ session('success') }}"></div>@endif
+        @if(session('error'))<div data-toast="error" data-message="{{ session('error') }}"></div>@endif
+        <x-toast />
     </body>
 </html>

@@ -1,17 +1,25 @@
 @props([
-    'padding' => true,
-    'hover' => false,
-    'class' => '',
+    'variant' => 'default',
+    'padding' => 'md',
+    'class' => ''
 ])
 
 @php
-$base = 'bg-white rounded-2xl border';
-$borderColor = 'border-[var(--border)]';
-$shadow = 'shadow-sm';
-$hoverClass = $hover ? 'hover:-translate-y-1.5 hover:shadow-xl transition-all duration-300 cursor-pointer border-green-100/50 hover:border-green-100' : 'transition-shadow hover:shadow-md';
-$padClass = $padding ? 'p-5 sm:p-6' : '';
+$base = 'bg-white';
+$variants = [
+    'default' => 'border border-gray-100 rounded-xl',
+    'bordered' => 'border-2 border-gray-100 rounded-xl',
+    'flat' => 'bg-gray-50 rounded-xl',
+    'hover' => 'border border-gray-100 rounded-xl transition-base hover:border-gray-200',
+];
+$paddings = [
+    'none' => '',
+    'sm' => 'p-4',
+    'md' => 'p-6',
+    'lg' => 'p-8',
+];
 @endphp
 
-<div {{ $attributes->merge(['class' => trim("$base $borderColor $shadow $hoverClass $padClass $class")]) }}>
+<div {{ $attributes->merge(['class' => "$base {$variants[$variant]} {$paddings[$padding]} $class"]) }}>
     {{ $slot }}
 </div>

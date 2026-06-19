@@ -15,6 +15,7 @@ use App\Models\Notifikasi;
 use App\Models\Rekomendasi;
 use App\Models\Transaksi;
 use App\Models\LogTransaksi;
+use App\Models\Coupon;
 use App\Models\PetaniProfile;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -44,6 +45,7 @@ class DatabaseSeeder extends Seeder
         $this->seedRekomendasi();
         $this->seedActivityLogs();
         $this->seedCarts();
+        $this->seedCoupons();
     }
 
     private function seedCategories(): void
@@ -329,6 +331,39 @@ class DatabaseSeeder extends Seeder
                 'created_at' => now()->subHours(rand(1, 240)),
             ]);
         }
+    }
+
+    private function seedCoupons(): void
+    {
+        Coupon::create([
+            'code' => 'HEMATHIDROPONIK',
+            'description' => 'Diskon 10% untuk semua pembelian',
+            'type' => 'percentage',
+            'value' => 10,
+            'min_purchase' => 0,
+            'max_uses' => 100,
+            'valid_until' => now()->addMonths(3),
+        ]);
+
+        Coupon::create([
+            'code' => 'BELANJA20',
+            'description' => 'Potongan Rp 5.000 untuk minimal belanja Rp 30.000',
+            'type' => 'nominal',
+            'value' => 5000,
+            'min_purchase' => 30000,
+            'max_uses' => 50,
+            'valid_until' => now()->addMonths(2),
+        ]);
+
+        Coupon::create([
+            'code' => 'SIPSH10K',
+            'description' => 'Potongan Rp 10.000 tanpa minimal belanja',
+            'type' => 'nominal',
+            'value' => 10000,
+            'min_purchase' => 0,
+            'max_uses' => 20,
+            'valid_until' => now()->addMonths(1),
+        ]);
     }
 
     private function seedCarts(): void

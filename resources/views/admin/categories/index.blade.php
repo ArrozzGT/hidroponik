@@ -15,38 +15,33 @@
 
 @section('admin-content')
     <div class="page-shell">
+        <x-breadcrumb :crumbs="[['label' => 'Kategori']]" />
+
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div class="md:col-span-1">
-                <div class="card p-6">
+                <x-ui.card class="p-6">
                     <h3 class="text-lg font-bold text-gray-900 mb-5" id="form-title">Tambah Kategori</h3>
                     <form action="{{ route('admin.categories.store') }}" method="POST" id="category-form">
                         @csrf
                         <div id="method-field"></div>
                         <div class="mb-4">
-                            <x-input-label for="name" :value="__('Nama Kategori')" />
-                            <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" required />
-                            <x-input-error class="mt-2" :messages="$errors->get('name')" />
+                            <x-ui.input id="name" name="name" label="Nama Kategori" :error="$errors->first('name')" required />
                         </div>
                         <div class="mb-4">
-                            <x-input-label for="icon" :value="__('Icon (Emoji)')" />
-                            <x-text-input id="icon" name="icon" type="text" class="mt-1 block w-full" placeholder="🥬" />
-                            <x-input-error class="mt-2" :messages="$errors->get('icon')" />
+                            <x-ui.input id="icon" name="icon" label="Icon (Emoji)" placeholder="🥬" :error="$errors->first('icon')" />
                         </div>
                         <div class="flex items-center space-x-3">
-                            <button type="submit" class="btn-primary">Simpan</button>
-                            <button type="button" onclick="resetForm()" class="btn-ghost text-sm hidden transition-colors" id="cancel-btn">Batal</button>
+                            <button type="submit" class="bg-emerald-600 text-white hover:bg-emerald-700 px-4 py-2 text-sm rounded-lg font-medium transition-colors">Simpan</button>
+                            <button type="button" onclick="resetForm()" class="text-gray-700 hover:bg-gray-50 px-3 py-2 text-sm rounded-lg font-medium transition-colors hidden" id="cancel-btn">Batal</button>
                         </div>
                     </form>
-                </div>
+                </x-ui.card>
             </div>
 
             <div class="md:col-span-2">
-                <div class="card p-6">
-                    @if(session('success'))
-                        <div class="bg-green-50 border border-green-100 text-green-700 px-4 py-3 rounded-2xl mb-4 text-sm font-medium">{{ session('success') }}</div>
-                    @endif
+                <x-ui.card class="p-6">
                     @if(session('error'))
-                        <div class="bg-red-50 border border-red-100 text-red-700 px-4 py-3 rounded-2xl mb-4 text-sm font-medium">{{ session('error') }}</div>
+                        <div class="bg-red-50 border border-red-100 text-red-700 px-4 py-3 rounded-xl mb-4 text-sm font-medium">{{ session('error') }}</div>
                     @endif
 
                     <div class="table-wrap overflow-x-auto">
@@ -56,31 +51,39 @@
                                     <th>Icon</th>
                                     <th>Nama</th>
                                     <th>Slug</th>
+                                    <th>Produk</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($categories as $cat)
+                                @forelse($categories as $cat)
                                     <tr>
                                         <td class="text-2xl">{{ $cat->icon ?? '🥬' }}</td>
                                         <td class="font-medium text-gray-900">{{ $cat->name }}</td>
                                         <td class="text-gray-400 text-sm">{{ $cat->slug }}</td>
+                                        <td class="text-sm text-gray-500">{{ $cat->products_count ?? $cat->products->count() }}</td>
                                         <td>
                                             <div class="flex items-center space-x-2">
-                                                <button onclick="editCategory({{ json_encode($cat) }})" class="btn-ghost text-xs px-3 py-1.5">Edit</button>
+                                                <button onclick="editCategory({{ json_encode($cat) }})" class="bg-gray-100 text-gray-700 hover:bg-gray-200 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors">Edit</button>
                                                 <form action="{{ route('admin.categories.destroy', $cat) }}" method="POST" onsubmit="return confirm('Yakin hapus?')">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn-danger text-xs px-3 py-1.5">Hapus</button>
+                                                    <button type="submit" class="bg-red-100 text-red-700 hover:bg-red-200 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors">Hapus</button>
                                                 </form>
                                             </div>
                                         </td>
                                     </tr>
-                                @endforeach
+                                @empty
+                                    <tr>
+                                        <td colspan="5">
+                                            <x-empty-state icon="tag" title="Belum ada kategori" description="Tambahkan kategori produk pertama." />
+                                        </td>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
-                </div>
+                </x-ui.card>
             </div>
         </div>
     </div>
@@ -91,7 +94,7 @@
             document.getElementById('category-form').action = '/admin/categories/' + cat.id;
             document.getElementById('method-field').innerHTML = '<input type="hidden" name="_method" value="PATCH">';
             document.getElementById('name').value = cat.name;
-            document.getElementById('icon').value = cat.icon;
+            document.getElementById('icon').value = cat.icon || '';
             document.getElementById('cancel-btn').classList.remove('hidden');
         }
 

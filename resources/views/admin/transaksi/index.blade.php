@@ -3,8 +3,8 @@
 
 @section('header')
     <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:linear-gradient(135deg,#22c55e,#15803d);">
-            <i data-lucide="credit-card" style="width:20px;height:20px;color:#fff;" aria-hidden="true"></i>
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center bg-emerald-100">
+            <i data-lucide="credit-card" class="w-5 h-5 text-emerald-600" aria-hidden="true"></i>
         </div>
         <div>
             <h2 class="font-bold text-xl text-gray-900 leading-tight">Transaksi</h2>
@@ -15,11 +15,30 @@
 
 @section('admin-content')
     <div class="page-shell">
-        @if(session('success'))
-            <div class="bg-green-50 border border-green-100 text-green-700 px-5 py-3 rounded-2xl mb-6 text-sm font-medium">{{ session('success') }}</div>
-        @endif
+        <x-breadcrumb :crumbs="[['label' => 'Transaksi']]" />
 
-        <div class="card overflow-hidden">
+        @php
+            $totalTransaksi = $transaksi->sum(fn($t) => $t->order->total_price ?? 0);
+            $paidCount = $transaksi->where('status_pembayaran', 'paid')->count();
+            $unpaidCount = $transaksi->where('status_pembayaran', 'unpaid')->count();
+        @endphp
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+            <x-ui.card class="p-5 bg-emerald-50 border-emerald-100">
+                <p class="text-xs text-gray-500">Total Transaksi</p>
+                <p class="text-2xl font-heading font-bold text-gray-900">Rp {{ number_format($totalTransaksi, 0, ',', '.') }}</p>
+            </x-ui.card>
+            <x-ui.card class="p-5 bg-green-50 border-green-100">
+                <p class="text-xs text-gray-500">Lunas</p>
+                <p class="text-2xl font-heading font-bold text-green-700">{{ $paidCount }}</p>
+            </x-ui.card>
+            <x-ui.card class="p-5 bg-amber-50 border-amber-100">
+                <p class="text-xs text-gray-500">Belum Dibayar</p>
+                <p class="text-2xl font-heading font-bold text-amber-700">{{ $unpaidCount }}</p>
+            </x-ui.card>
+        </div>
+
+        <x-ui.card>
             <div class="table-wrap overflow-x-auto">
                 <table class="data-table">
                     <thead>
@@ -40,9 +59,8 @@
                                 <td>{{ $trx->order->user->name ?? '—' }}</td>
                                 <td class="text-gray-600">{{ $trx->metode_pembayaran ?? '—' }}</td>
                                 <td>
-                                    <span class="badge {{ $trx->status_pembayaran === 'paid' ? 'badge-green' : ($trx->status_pembayaran === 'failed' ? 'badge-red' : 'badge-yellow') }}">
-                                        {{ $trx->status_pembayaran }}
-                                    </span>
+                                    @php $pv = $trx->status_pembayaran === 'paid' ? 'success' : ($trx->status_pembayaran === 'failed' ? 'danger' : 'warning'); @endphp
+                                    <x-ui.badge :variant="$pv">{{ $trx->status_pembayaran }}</x-ui.badge>
                                 </td>
                                 <td class="font-bold text-gray-900">Rp {{ number_format($trx->order->total_price ?? 0, 0, ',', '.') }}</td>
                                 <td class="text-xs text-gray-400">
@@ -53,18 +71,20 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="{{ route('admin.transaksi.show', $trx) }}" class="btn-secondary !px-3 !py-1.5 text-xs">Detail</a>
+                                    <a href="{{ route('admin.transaksi.show', $trx) }}" class="bg-gray-100 text-gray-700 hover:bg-gray-200 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors">Detail</a>
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="7" class="text-center py-8 text-gray-400 italic">Belum ada transaksi.</td>
+                                <td colspan="7">
+                                    <x-empty-state icon="credit-card" title="Belum ada transaksi" description="Transaksi akan muncul di sini." />
+                                </td>
                             </tr>
                         @endforelse
                     </tbody>
                 </table>
             </div>
-            <div class="p-5 border-t border-slate-100">{{ $transaksi->links() }}</div>
-        </div>
+            <div class="p-5 border-t border-gray-100">{{ $transaksi->links() }}</div>
+        </x-ui.card>
     </div>
 @endsection

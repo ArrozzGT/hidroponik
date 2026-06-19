@@ -15,9 +15,10 @@
 
 @section('admin-content')
     <div class="page-shell">
+        <x-breadcrumb :crumbs="[['label' => 'Laporan']]" />
+
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {{-- Filter Form --}}
-            <div class="card p-8">
+            <x-ui.card padding="lg">
                 <h3 class="text-lg font-bold text-gray-900 mb-6">Filter & Unduh Laporan</h3>
                 <form action="{{ route('admin.reports.excel') }}" method="GET" class="space-y-5" id="report-form">
                     <div class="grid grid-cols-2 gap-4">
@@ -41,27 +42,26 @@
                     </div>
 
                     <div class="flex gap-3">
-                        <button type="submit" class="btn-primary flex-1 flex items-center justify-center gap-2">
+                        <button type="submit" class="bg-emerald-600 text-white hover:bg-emerald-700 px-4 py-2 text-sm rounded-lg font-medium transition-colors flex-1 flex items-center justify-center gap-2">
                             <i data-lucide="file-spreadsheet" class="w-4 h-4" aria-hidden="true"></i>
                             Excel
                         </button>
-                        <button type="button" onclick="downloadPdf()" class="btn-secondary flex-1 flex items-center justify-center gap-2">
+                        <button type="button" onclick="downloadPdf()" class="bg-gray-100 text-gray-700 hover:bg-gray-200 px-4 py-2 text-sm rounded-lg font-medium transition-colors flex-1 flex items-center justify-center gap-2">
                             <i data-lucide="file-text" class="w-4 h-4" aria-hidden="true"></i>
                             PDF
                         </button>
                     </div>
                 </form>
-            </div>
+            </x-ui.card>
 
-            {{-- Riwayat Laporan --}}
-            <div class="card p-6">
+            <x-ui.card class="p-6">
                 <h3 class="text-lg font-bold text-gray-900 mb-6 flex items-center gap-2">
                     <span class="w-1 h-5 bg-green-700 rounded-full"></span>
                     Riwayat Laporan
                 </h3>
                 <div class="space-y-3">
                     @forelse($laporan as $lap)
-                        <div class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 transition-colors">
+                        <div class="flex items-center gap-3 p-3 rounded-xl hover:bg-gray-50 transition-colors">
                             <div class="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 {{ $lap->jenis_laporan === 'pdf' ? 'bg-red-100' : 'bg-green-100' }}">
                                 <i data-lucide="{{ $lap->jenis_laporan === 'pdf' ? 'file-text' : 'file-spreadsheet' }}"
                                    class="w-4 h-4 {{ $lap->jenis_laporan === 'pdf' ? 'text-red-600' : 'text-green-600' }}" aria-hidden="true"></i>
@@ -82,7 +82,7 @@
                 @if($laporan->hasPages())
                     <div class="mt-4">{{ $laporan->links() }}</div>
                 @endif
-            </div>
+            </x-ui.card>
         </div>
     </div>
 

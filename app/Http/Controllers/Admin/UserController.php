@@ -34,6 +34,10 @@ class UserController extends Controller
 
         $status = $request->action === 'approve' ? 'approved' : 'rejected';
 
+        if (!$user->petaniProfile) {
+            return back()->with('error', 'Profil petani tidak ditemukan.');
+        }
+
         $user->petaniProfile->update([
             'status_verifikasi' => $status,
             'alasan_reject' => $request->action === 'reject' ? $request->alasan_reject : null,
@@ -74,6 +78,9 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
+        if ($user->id === auth()->id()) {
+            return back()->with('error', 'Tidak dapat menghapus akun sendiri.');
+        }
         $user->delete();
         return back()->with('success', 'User berhasil dihapus.');
     }

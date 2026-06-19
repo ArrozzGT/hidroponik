@@ -1,3 +1,4 @@
+import * as Turbo from '@hotwired/turbo'
 import './bootstrap';
 
 import Alpine from 'alpinejs';
@@ -40,6 +41,8 @@ document.addEventListener('alpine:init', () => {
         }
     }));
 
+    Alpine.store('skeleton', { loading: false });
+
     Alpine.data('revealOnScroll', () => ({
         visible: false,
         init() {
@@ -61,6 +64,12 @@ document.addEventListener('alpine:init', () => {
 });
 
 Alpine.start();
+
+document.addEventListener('turbo:load', () => {
+    Alpine.initTree(document.body);
+    initEffects();
+    createIcons({ icons, attrs: { 'aria-hidden': 'true' } });
+});
 
 function initApp() {
     initEffects();

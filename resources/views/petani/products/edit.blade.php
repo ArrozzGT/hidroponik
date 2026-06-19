@@ -6,20 +6,22 @@
 @section('petani-content')
 <div class="py-10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+        <x-breadcrumb :crumbs="[['label' => 'Produk Saya', 'url' => route('petani.products.index')], ['label' => 'Edit ' . $product->name]]" />
+
         <div class="flex items-center justify-between gap-4">
             <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl flex items-center justify-center gradient-green">
-                    <i data-lucide="pencil" class="w-5 h-5 text-white" aria-hidden="true"></i>
+                <div class="w-10 h-10 rounded-xl flex items-center justify-center bg-emerald-100">
+                    <i data-lucide="pencil" class="w-5 h-5 text-emerald-600" aria-hidden="true"></i>
                 </div>
                 <div>
-                    <h1 class="text-2xl font-extrabold text-slate-900">Edit Produk</h1>
-                    <p class="text-sm text-slate-500">Perbarui informasi produk</p>
+                    <h1 class="text-2xl font-heading font-bold text-gray-900">Edit Produk</h1>
+                    <p class="text-sm text-gray-500">Perbarui informasi produk</p>
                 </div>
             </div>
-            <span class="{{ $product->status->value === 'tersedia' ? 'badge-green' : 'badge-red' }}">{{ ucfirst($product->status->value) }}</span>
+            <x-ui.badge :variant="$product->status->value === 'tersedia' ? 'success' : 'danger'">{{ ucfirst($product->status->value) }}</x-ui.badge>
         </div>
 
-        <div class="card p-6 sm:p-8">
+        <x-ui.card padding="lg">
             <form action="{{ route('petani.products.update', $product) }}" method="POST" enctype="multipart/form-data" class="space-y-6">
                 @csrf
                 @method('PUT')
@@ -76,26 +78,34 @@
                             </div>
                         </div>
                         <div>
-                            <label for="image" class="form-label">Foto Produk</label>
+                            <label class="form-label">Foto Produk</label>
                             @if($product->image)
-                                <img src="{{ asset('storage/' . $product->image) }}" class="w-32 h-32 object-cover rounded-2xl mb-3 border border-slate-200" alt="{{ $product->name }}">
+                                <div class="mb-3">
+                                    <img src="{{ asset('storage/' . $product->image) }}" class="w-32 h-32 object-cover rounded-xl border border-gray-200" alt="{{ $product->name }}" loading="lazy">
+                                </div>
                             @endif
-                            <label for="image" class="flex flex-col items-center justify-center px-6 py-8 border-2 border-dashed border-slate-300 rounded-2xl bg-slate-50 hover:bg-green-50 cursor-pointer transition-colors">
-                                <i data-lucide="upload-cloud" class="w-9 h-9 text-green-500 mb-2" aria-hidden="true"></i>
-                                <span class="text-sm font-semibold text-slate-600">Klik untuk ganti foto</span>
-                                <span class="form-help">Kosongkan jika tidak ingin mengubah foto</span>
+                            <label for="image" class="flex flex-col items-center justify-center px-6 py-8 border-2 border-dashed border-gray-200 rounded-xl bg-gray-50 hover:bg-emerald-50 hover:border-emerald-300 cursor-pointer transition-colors">
+                                <i data-lucide="upload-cloud" class="w-9 h-9 text-emerald-500 mb-2" aria-hidden="true"></i>
+                                <span class="text-sm font-semibold text-gray-600">Klik untuk ganti foto</span>
+                                <span class="text-xs text-gray-400 mt-1">Kosongkan jika tidak ingin mengubah foto</span>
                             </label>
                             <input id="image" name="image" type="file" class="hidden">
                             @error('image') <p class="form-error">{{ $message }}</p> @enderror
                         </div>
                     </div>
                 </div>
-                <div class="flex items-center justify-end gap-3 border-t border-slate-100 pt-6">
-                    <a href="{{ route('petani.products.index') }}" class="btn-secondary"><i data-lucide="x" class="w-4 h-4" aria-hidden="true"></i> Batal</a>
-                    <button type="submit" class="btn-primary"><i data-lucide="save" class="w-4 h-4" aria-hidden="true"></i> Perbarui Produk</button>
+                <div class="flex items-center justify-end gap-3 border-t border-gray-100 pt-6">
+                    <a href="{{ route('petani.products.index') }}" class="bg-gray-100 text-gray-700 hover:bg-gray-200 px-4 py-2 text-sm rounded-lg font-medium transition-colors inline-flex items-center gap-1.5">
+                        <i data-lucide="x" class="w-4 h-4" aria-hidden="true"></i>
+                        Batal
+                    </a>
+                    <x-loading-button class="bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg">
+                        <i data-lucide="save" class="w-4 h-4" aria-hidden="true"></i>
+                        Perbarui Produk
+                    </x-loading-button>
                 </div>
             </form>
-        </div>
+        </x-ui.card>
     </div>
 </div>
 @endsection

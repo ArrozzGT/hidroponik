@@ -26,7 +26,21 @@ class ShopController extends Controller
             $query->where('name', 'like', '%' . $request->search . '%');
         }
 
-        $products = $query->latest()->paginate(12);
+        switch ($request->sort) {
+            case 'termurah':
+                $query->orderBy('price', 'asc');
+                break;
+            case 'termahal':
+                $query->orderBy('price', 'desc');
+                break;
+            case 'stok':
+                $query->orderBy('stock', 'desc');
+                break;
+            default:
+                $query->latest();
+        }
+
+        $products = $query->paginate(12);
         $categories = Category::withCount('products')->get();
 
         return view('shop.index', compact('products', 'categories'));
@@ -50,7 +64,7 @@ class ShopController extends Controller
 
     public function show(Product $product)
     {
-        $product->load(['category', 'user']);
+        $product->load(['category', 'user.petaniProfile']);
         $relatedProducts = Product::where('category_id', $product->category_id)
             ->where('id', '!=', $product->id)
             ->limit(4)->get();

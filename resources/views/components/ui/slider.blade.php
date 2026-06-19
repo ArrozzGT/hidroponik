@@ -30,7 +30,7 @@
             class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
         />
         <div
-            class="absolute top-1/2 -translate-y-1/2 -ml-3 h-6 w-6 rounded-full bg-white shadow-md border-2 border-[var(--primary)] transition-all duration-150 pointer-events-none"
+            class="absolute top-1/2 -translate-y-1/2 -ml-3 h-6 w-6 rounded-full bg-white border-2 border-emerald-600 transition-all duration-150 pointer-events-none"
             :style="'left: ' + percent + '%'"
         ></div>
     </div>

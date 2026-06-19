@@ -7,33 +7,27 @@
 
         <title>@hasSection('title') @yield('title') – @endif{{ config('app.name', 'SIPSH') }}</title>
 
-        <!-- Plus Jakarta Sans -->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" media="print" onload="this.media='all'">
-
-        <!-- Lucide Icons -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen gradient-green-subtle">
+    <body class="font-body antialiased">
+        <div class="min-h-screen bg-white">
             <x-navbar />
 
             @hasSection('header')
-                <div class="page-header">
-                    <div class="max-w-7xl mx-auto w-full py-1 px-4 sm:px-6 lg:px-8">
+                <div class="border-b border-gray-100 bg-white">
+                    <div class="max-w-7xl mx-auto w-full py-6 px-4 sm:px-6 lg:px-8">
                         @yield('header')
                     </div>
                 </div>
             @elseif(isset($header))
-                <div class="page-header">
-                    <div class="max-w-7xl mx-auto w-full py-1 px-4 sm:px-6 lg:px-8">
+                <div class="border-b border-gray-100 bg-white">
+                    <div class="max-w-7xl mx-auto w-full py-6 px-4 sm:px-6 lg:px-8">
                         {{ $header }}
                     </div>
                 </div>
             @endisset
 
-            <main class="pb-16">
+            <main class="py-8 sm:py-12 lg:py-16">
                 @hasSection('content')
                     @yield('content')
                 @else
@@ -42,6 +36,8 @@
             </main>
         </div>
 
-
+        @if(session('success'))<div data-toast="success" data-message="{{ session('success') }}"></div>@endif
+        @if(session('error'))<div data-toast="error" data-message="{{ session('error') }}"></div>@endif
+        <x-toast />
     </body>
 </html>

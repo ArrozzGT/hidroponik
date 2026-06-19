@@ -29,7 +29,11 @@ class PanenController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'product_id' => 'required|exists:products,id',
+            'product_id' => ['required', 'exists:products,id', function ($attribute, $value, $fail) {
+                if (!Product::where('id', $value)->where('user_id', auth()->id())->exists()) {
+                    $fail('Produk tidak ditemukan.');
+                }
+            }],
             'jumlah_panen_kg' => 'required|numeric|min:0.01',
             'tanggal_panen' => 'required|date',
             'kualitas' => 'required|in:A,B,C',
@@ -66,7 +70,11 @@ class PanenController extends Controller
         }
 
         $request->validate([
-            'product_id' => 'required|exists:products,id',
+            'product_id' => ['required', 'exists:products,id', function ($attribute, $value, $fail) {
+                if (!Product::where('id', $value)->where('user_id', auth()->id())->exists()) {
+                    $fail('Produk tidak ditemukan.');
+                }
+            }],
             'jumlah_panen_kg' => 'required|numeric|min:0.01',
             'tanggal_panen' => 'required|date',
             'kualitas' => 'required|in:A,B,C',

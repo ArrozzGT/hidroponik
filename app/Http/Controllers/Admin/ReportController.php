@@ -48,7 +48,8 @@ class ReportController extends Controller
         $query = Order::with(['user', 'items.product']);
         
         if ($request->start_date && $request->end_date) {
-            $query->whereBetween('created_at', [$request->start_date, $request->end_date]);
+            $query->whereDate('created_at', '>=', $request->start_date)
+                  ->whereDate('created_at', '<=', $request->end_date);
         }
 
         $orders = $query->latest()->get();

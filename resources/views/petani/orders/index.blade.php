@@ -3,8 +3,8 @@
 
 @section('header')
     <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl flex items-center justify-center shadow-md shadow-green-200" style="background:linear-gradient(135deg,#4ade80,#22c55e);">
-            <i data-lucide="clipboard-list" style="width:20px;height:20px;color:#fff;" aria-hidden="true"></i>
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center bg-emerald-100">
+            <i data-lucide="clipboard-list" class="w-5 h-5 text-emerald-600" aria-hidden="true"></i>
         </div>
         <div>
             <h2 class="font-bold text-xl text-gray-900 leading-tight">{{ __('Pesanan Masuk') }}</h2>
@@ -15,101 +15,156 @@
 
 @section('petani-content')
     <div class="reveal py-6 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        @if(session('success'))
-            <div class="bg-green-50 border border-green-100 text-green-700 px-5 py-3 rounded-2xl mb-6 text-sm font-medium">{{ session('success') }}</div>
-        @endif
+        <x-breadcrumb :crumbs="[['label' => 'Pesanan Masuk']]" />
 
-        <div class="card overflow-hidden hover-lift">
-            <div class="p-6">
-                <div class="table-wrap overflow-x-auto">
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>Order #</th>
-                                <th>Pembeli</th>
-                                <th>Produk Anda</th>
-                                <th>Status</th>
-                                <th>Pembayaran</th>
-                                <th>Tanggal</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse($orders as $order)
-                                <tr>
-                                    <td class="font-bold text-sm text-gray-900 font-mono">{{ $order->order_number }}</td>
-                                    <td>
-                                        <div class="flex items-center gap-2">
-                                            <div class="w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold text-white bg-green-700">
-                                                {{ strtoupper(substr($order->user->name, 0, 1)) }}
-                                            </div>
-                                            <div>
-                                                <span class="font-medium text-gray-800">{{ $order->user->name }}</span>
-                                                <p class="text-[10px] text-gray-400">{{ $order->shipping_address }}</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="space-y-1">
-                                            @foreach($order->items as $item)
-                                                <div class="text-xs text-gray-700">
-                                                    {{ $item->product->name ?? 'Produk Dihapus' }} (x{{ $item->quantity }})
-                                                </div>
-                                            @endforeach
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <span class="badge
-                                            {{ $order->status === 'pending' ? 'badge-yellow' : '' }}
-                                            {{ $order->status === 'processing' ? 'badge-blue' : '' }}
-                                            {{ $order->status === 'shipping' ? 'badge-purple' : '' }}
-                                            {{ $order->status === 'completed' ? 'badge-green' : '' }}
-                                            {{ $order->status === 'cancelled' ? 'badge-red' : '' }}">
-                                            {{ $order->status }}
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <span class="badge {{ $order->payment_status === 'paid' ? 'badge-green' : 'badge-gray' }}">
-                                            {{ $order->payment_status }}
-                                        </span>
-                                    </td>
-                                    <td class="text-gray-400 text-xs">{{ $order->created_at->format('d/m/Y') }}</td>
-                                    <td>
-                                        <div class="flex items-center gap-2">
-                                            @if($order->status === 'pending')
-                                                <form action="{{ route('petani.orders.update-status', $order) }}" method="POST">
-                                                    @csrf
-                                                    <input type="hidden" name="status" value="processing">
-                                                    <button type="submit" class="magnetic btn-primary text-xs px-3 py-1.5 flex items-center gap-1">
-                                                        <i data-lucide="play" style="width:12px;height:12px;" aria-hidden="true"></i> Proses
-                                                    </button>
-                                                </form>
-                                            @elseif($order->status === 'processing')
-                                                <form action="{{ route('petani.orders.update-status', $order) }}" method="POST">
-                                                    @csrf
-                                                    <input type="hidden" name="status" value="shipping">
-                                                    <button type="submit" class="magnetic btn-primary !bg-purple-600 hover:!bg-purple-700 text-xs px-3 py-1.5 flex items-center gap-1">
-                                                        <i data-lucide="truck" style="width:12px;height:12px;" aria-hidden="true"></i> Kirim
-                                                    </button>
-                                                </form>
-                                            @else
-                                                <span class="text-xs text-gray-400 italic">No Action</span>
-                                            @endif
-                                        </div>
-                                    </td>
-                                </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="7" class="text-center py-8 text-gray-400 italic">Belum ada pesanan masuk.</td>
-                                </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-                </div>
-                <div class="mt-5">
-                    {{ $orders->links() }}
-                </div>
-            </div>
+        @php
+            $tabs = ['all' => 'Semua', 'pending' => 'Pending', 'processing' => 'Diproses', 'shipping' => 'Dikirim', 'completed' => 'Selesai'];
+            $currentTab = request('status', 'all');
+        @endphp
+
+        <div class="flex items-center gap-2 mb-5 overflow-x-auto scrollbar-hide">
+            @foreach($tabs as $key => $label)
+                <a href="{{ route('petani.orders.index', ['status' => $key === 'all' ? null : $key]) }}"
+                   class="whitespace-nowrap px-4 py-2 text-sm font-medium rounded-lg transition-colors
+                          {{ $currentTab === $key ? 'bg-emerald-100 text-emerald-700' : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50' }}">
+                    {{ $label }}
+                </a>
+            @endforeach
         </div>
+
+        <x-ui.card>
+            <div class="hidden md:block table-wrap overflow-x-auto">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Order #</th>
+                            <th>Pembeli</th>
+                            <th>Produk Anda</th>
+                            <th>Status</th>
+                            <th>Pembayaran</th>
+                            <th>Tanggal</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($orders as $order)
+                            <tr>
+                                <td class="font-bold text-sm text-gray-900 font-mono">{{ $order->order_number }}</td>
+                                <td>
+                                    <div class="flex items-center gap-2">
+                                        <x-ui.avatar size="sm" fallback="{{ strtoupper(substr($order->user->name, 0, 1)) }}" />
+                                        <div>
+                                            <span class="font-medium text-gray-800">{{ $order->user->name }}</span>
+                                            <p class="text-[10px] text-gray-400 truncate max-w-[120px]">{{ $order->shipping_address }}</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="space-y-1">
+                                        @foreach($order->items as $item)
+                                            <div class="text-xs text-gray-700">
+                                                {{ $item->product->name ?? 'Produk Dihapus' }} (x{{ $item->quantity }})
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </td>
+                                <td>
+                                    @php $os = match($order->status) { 'completed' => 'success', 'processing' => 'info', 'shipping' => 'primary', 'cancelled' => 'danger', default => 'warning' }; @endphp
+                                    <x-ui.badge :variant="$os">{{ $order->status }}</x-ui.badge>
+                                </td>
+                                <td>
+                                    <x-ui.badge :variant="$order->payment_status === 'paid' ? 'success' : 'default'">{{ $order->payment_status }}</x-ui.badge>
+                                </td>
+                                <td class="text-gray-400 text-xs">{{ $order->created_at->format('d/m/Y') }}</td>
+                                <td>
+                                    <div class="flex items-center gap-2">
+                                        @if($order->status === 'pending')
+                                            <form action="{{ route('petani.orders.update-status', $order) }}" method="POST">
+                                                @csrf
+                                                <input type="hidden" name="status" value="processing">
+                                                <button type="submit" class="bg-emerald-600 text-white hover:bg-emerald-700 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors inline-flex items-center gap-1">
+                                                    <i data-lucide="play" style="width:12px;height:12px;" aria-hidden="true"></i> Proses
+                                                </button>
+                                            </form>
+                                        @elseif($order->status === 'processing')
+                                            <form action="{{ route('petani.orders.update-status', $order) }}" method="POST">
+                                                @csrf
+                                                <input type="hidden" name="status" value="shipping">
+                                                <button type="submit" class="bg-purple-600 text-white hover:bg-purple-700 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors inline-flex items-center gap-1">
+                                                    <i data-lucide="truck" style="width:12px;height:12px;" aria-hidden="true"></i> Kirim
+                                                </button>
+                                            </form>
+                                        @else
+                                            <span class="text-xs text-gray-400 italic">—</span>
+                                        @endif
+                                    </div>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="7">
+                                    <x-empty-state icon="clipboard-list" title="Belum ada pesanan masuk" description="Pesanan dari pembeli akan muncul di sini." />
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="md:hidden space-y-3">
+                @forelse($orders as $order)
+                    @php $os = match($order->status) { 'completed' => 'success', 'processing' => 'info', 'shipping' => 'primary', 'cancelled' => 'danger', default => 'warning' }; @endphp
+                    <div class="rounded-xl border border-gray-100 bg-white p-4 shadow-sm">
+                        <div class="flex items-start justify-between mb-2">
+                            <div>
+                                <p class="font-bold text-sm text-gray-900 font-mono">{{ $order->order_number }}</p>
+                                <p class="text-xs text-gray-400">{{ $order->created_at->format('d/m/Y') }}</p>
+                            </div>
+                            <div class="flex items-center gap-1.5">
+                                <x-ui.badge :variant="$os">{{ $order->status }}</x-ui.badge>
+                                <x-ui.badge :variant="$order->payment_status === 'paid' ? 'success' : 'default'">{{ $order->payment_status }}</x-ui.badge>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2 border-t border-gray-50 pt-3">
+                            <x-ui.avatar size="sm" fallback="{{ strtoupper(substr($order->user->name, 0, 1)) }}" />
+                            <div class="flex-1 min-w-0">
+                                <p class="font-medium text-gray-800 text-sm">{{ $order->user->name }}</p>
+                                <p class="text-[10px] text-gray-400 truncate">{{ $order->shipping_address }}</p>
+                            </div>
+                        </div>
+                        <div class="mt-2 space-y-1">
+                            @foreach($order->items as $item)
+                                <div class="text-xs text-gray-700">
+                                    {{ $item->product->name ?? 'Produk Dihapus' }} (x{{ $item->quantity }})
+                                </div>
+                            @endforeach
+                        </div>
+                        <div class="mt-3">
+                            @if($order->status === 'pending')
+                                <form action="{{ route('petani.orders.update-status', $order) }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="status" value="processing">
+                                    <button type="submit" class="w-full bg-emerald-600 text-white hover:bg-emerald-700 px-3 py-2 rounded-lg text-xs font-medium transition-colors inline-flex items-center justify-center gap-1">
+                                        <i data-lucide="play" style="width:12px;height:12px;" aria-hidden="true"></i> Proses Pesanan
+                                    </button>
+                                </form>
+                            @elseif($order->status === 'processing')
+                                <form action="{{ route('petani.orders.update-status', $order) }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="status" value="shipping">
+                                    <button type="submit" class="w-full bg-purple-600 text-white hover:bg-purple-700 px-3 py-2 rounded-lg text-xs font-medium transition-colors inline-flex items-center justify-center gap-1">
+                                        <i data-lucide="truck" style="width:12px;height:12px;" aria-hidden="true"></i> Kirim Pesanan
+                                    </button>
+                                </form>
+                            @else
+                                <p class="text-xs text-gray-400 italic text-center">—</p>
+                            @endif
+                        </div>
+                    </div>
+                @empty
+                    <x-empty-state icon="clipboard-list" title="Belum ada pesanan masuk" description="Pesanan dari pembeli akan muncul di sini." />
+                @endforelse
+            </div>
+        </x-ui.card>
     </div>
 @endsection
