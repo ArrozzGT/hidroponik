@@ -5,10 +5,18 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\PetaniProfile;
+use App\Services\NotificationService;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    protected $notificationService;
+
+    public function __construct(NotificationService $notificationService)
+    {
+        $this->notificationService = $notificationService;
+    }
+
     public function index()
     {
         $users = User::whereDoesntHave('roles', fn($q) => $q->where('name', 'admin'))->latest()->paginate(10);
@@ -46,7 +54,7 @@ class UserController extends Controller
 
         if ($request->action === 'approve') {
             $user->update(['status' => 'aktif']);
-            \App\Http\Controllers\NotifikasiController::send(
+            $this->notificationService->send(
                 $user->id,
                 'verification',
                 'Akun Disetujui',
@@ -55,7 +63,7 @@ class UserController extends Controller
             );
         } else {
             $user->update(['status' => 'nonaktif']);
-            \App\Http\Controllers\NotifikasiController::send(
+            $this->notificationService->send(
                 $user->id,
                 'verification',
                 'Akun Ditolak',

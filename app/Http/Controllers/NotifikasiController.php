@@ -4,10 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\Notifikasi;
 use App\Models\ActivityLog;
+use App\Services\NotificationService;
 use Illuminate\Http\Request;
 
 class NotifikasiController extends Controller
 {
+    protected $notificationService;
+
+    public function __construct(NotificationService $notificationService)
+    {
+        $this->notificationService = $notificationService;
+    }
+
     public function index()
     {
         $notifications = Notifikasi::where('user_id', auth()->id())
@@ -31,14 +39,8 @@ class NotifikasiController extends Controller
         return back()->with('success', 'Semua notifikasi telah dibaca.');
     }
 
-    public static function send($userId, $type, $title, $message, $fromUserId = null)
+    public function send($userId, $type, $title, $message, $fromUserId = null)
     {
-        return Notifikasi::create([
-            'user_id' => $userId,
-            'from_user_id' => $fromUserId,
-            'type' => $type,
-            'title' => $title,
-            'message' => $message,
-        ]);
+        return $this->notificationService->send($userId, $type, $title, $message, $fromUserId);
     }
 }

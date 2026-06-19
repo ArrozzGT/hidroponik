@@ -9,12 +9,19 @@ use App\Models\Cart;
 use App\Models\Coupon;
 use App\Models\Transaksi;
 use App\Models\LogTransaksi;
+use App\Services\NotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
+    protected $notificationService;
+
+    public function __construct(NotificationService $notificationService)
+    {
+        $this->notificationService = $notificationService;
+    }
     public function index()
     {
         $orders = Order::where('user_id', auth()->id())->latest()->paginate(10);
@@ -111,7 +118,7 @@ class OrderController extends Controller
             // Notify petani
             $petaniIds = $carts->pluck('product.user_id')->unique();
             foreach ($petaniIds as $petaniId) {
-                \App\Http\Controllers\NotifikasiController::send(
+                $this->notificationService->send(
                     $petaniId,
                     'order',
                     'Pesanan Baru Masuk',

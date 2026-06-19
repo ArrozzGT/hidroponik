@@ -17,16 +17,20 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <x-ui.card class="p-6 col-span-2 bg-white">
                 <p class="text-sm text-gray-400 font-medium">Total Pendapatan</p>
-                <p class="text-4xl font-heading font-bold text-gray-900 mt-1">Rp 850 Jt</p>
-                <div class="mt-4 flex items-end gap-1 h-16">
-                    @php
-                        $vals = [35, 48, 42, 58, 62, 55, 70, 78, 65, 82, 90, 85];
-                        $max = max($vals);
-                    @endphp
-                    @foreach($vals as $v)
-                        <div class="flex-1 bg-emerald-100 rounded-t" style="height: {{ ($v/$max)*100 }}%"></div>
+                <p class="text-4xl font-heading font-bold text-gray-900 mt-1" x-data="countUp({{ $stats['total_revenue'] }})" x-text="'Rp ' + Number(current).toLocaleString('id-ID')">Rp {{ number_format($stats['total_revenue'], 0, ',', '.') }}</p>
+                <div class="mt-4 flex items-end gap-1 h-16" title="Pendapatan per bulan (12 bulan terakhir)">
+                    @foreach($stats['revenue_chart'] as $i => $v)
+                        <div class="flex-1 {{ $i === count($stats['revenue_chart']) - 1 ? 'bg-emerald-600' : 'bg-emerald-100' }} rounded-t relative group" style="height: {{ ($v / $stats['revenue_max']) * 100 }}%">
+                            <div class="absolute -top-7 left-1/2 -translate-x-1/2 hidden group-hover:block bg-gray-800 text-white text-[10px] px-2 py-0.5 rounded whitespace-nowrap">
+                                Rp {{ number_format($v, 0, ',', '.') }}
+                            </div>
+                        </div>
                     @endforeach
-                    <div class="flex-1 bg-emerald-600 rounded-t" style="height: 100%"></div>
+                </div>
+                <div class="flex justify-between mt-1.5 text-[10px] text-gray-400">
+                    @foreach($stats['revenue_months'] as $month)
+                        <span>{{ $month }}</span>
+                    @endforeach
                 </div>
             </x-ui.card>
 

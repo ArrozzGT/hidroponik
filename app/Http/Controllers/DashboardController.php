@@ -16,6 +16,29 @@ class DashboardController extends Controller
 {
     public function admin()
     {
+        $totalRevenue = Order::where('status', 'completed')->sum('total_price');
+
+        $monthlyRevenue = Order::where('status', 'completed')
+            ->selectRaw('MONTH(created_at) as month, YEAR(created_at) as year, SUM(total_price) as total')
+            ->groupBy('year', 'month')
+            ->orderBy('year')
+            ->orderBy('month')
+            ->get()
+            ->keyBy(fn($item) => $item->year . '-' . str_pad($item->month, 2, '0', STR_PAD_LEFT));
+
+        $chartMonths = [];
+        $chartValues = [];
+        $maxVal = 0;
+        for ($i = 11; $i >= 0; $i--) {
+            $date = now()->subMonths($i);
+            $key = $date->format('Y-m');
+            $monthName = $date->locale('id')->isoFormat('MMM');
+            $chartMonths[] = $monthName;
+            $val = (int) ($monthlyRevenue->get($key)?->total ?? 0);
+            $chartValues[] = $val;
+            if ($val > $maxVal) $maxVal = $val;
+        }
+
         $stats = [
             'total_users' => User::whereDoesntHave('roles', fn($q) => $q->where('name', 'admin'))->count(),
             'total_petani' => User::role('petani')->count(),
@@ -24,6 +47,10 @@ class DashboardController extends Controller
             'total_transaksi' => Transaksi::count(),
             'pending_transaksi' => Transaksi::where('status_pembayaran', 'unpaid')->count(),
             'recent_orders' => Order::with('user')->latest()->limit(5)->get(),
+            'total_revenue' => $totalRevenue,
+            'revenue_chart' => $chartValues,
+            'revenue_months' => $chartMonths,
+            'revenue_max' => $maxVal ?: 1,
         ];
 
         $pendingPetani = User::role('petani')
