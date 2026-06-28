@@ -2,7 +2,7 @@
     'showSearch' => true,
 ])
 
-<nav x-data="{ mobileOpen: false }" class="sticky top-0 z-50 w-full bg-white border-b border-gray-100">
+<nav x-data="{ mobileOpen: false }" class="navbar-scroll sticky top-0 z-50 w-full bg-white border-b border-gray-100/0 transition-all duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex h-14 items-center justify-between gap-4">
             {{-- Logo --}}
@@ -32,7 +32,7 @@
                 @endauth
 
                 {{-- Mobile toggle --}}
-                <button @click="mobileOpen = !mobileOpen" class="sm:hidden p-2 text-gray-600 hover:text-gray-900 transition-colors" :aria-expanded="mobileOpen" aria-label="Menu">
+                <button @click="mobileOpen = !mobileOpen" class="md:hidden p-2 text-gray-600 hover:text-gray-900 transition-colors" :aria-expanded="mobileOpen" aria-label="Menu">
                     <i data-lucide="menu" class="h-5 w-5" aria-hidden="true"></i>
                 </button>
             </div>

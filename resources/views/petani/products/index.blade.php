@@ -15,7 +15,7 @@
                 </div>
                 <div>
                     <h1 class="text-2xl font-heading font-bold text-gray-900">Daftar Produk Saya</h1>
-                    <p class="text-sm text-gray-500">Kelola produk kebun Anda</p>
+                    <p class="text-sm text-gray-600">Kelola produk kebun Anda</p>
                 </div>
             </div>
             <div class="flex items-center gap-2">
@@ -55,17 +55,17 @@
                                             <img src="{{ asset('storage/' . $product->image) }}" class="w-12 h-12 rounded-lg object-cover" alt="{{ $product->name }}" loading="lazy"
                                                  onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
                                             <div class="w-12 h-12 rounded-lg hidden items-center justify-center bg-gray-50">
-                                                <i data-lucide="image-off" class="w-5 h-5 text-gray-300" aria-hidden="true"></i>
+                                                <i data-lucide="image-off" class="w-5 h-5 text-gray-600" aria-hidden="true"></i>
                                             </div>
                                         @else
                                             <div class="w-12 h-12 rounded-lg flex items-center justify-center bg-gray-50">
-                                                <i data-lucide="image-off" class="w-5 h-5 text-gray-300" aria-hidden="true"></i>
+                                                <i data-lucide="image-off" class="w-5 h-5 text-gray-600" aria-hidden="true"></i>
                                             </div>
                                         @endif
                                         <span class="font-heading font-semibold text-gray-900 truncate max-w-[180px]">{{ $product->name }}</span>
                                     </div>
                                 </td>
-                                <td>{{ $product->category->name ?? '-' }}</td>
+                                <td><span class="truncate max-w-[160px] inline-block">{{ $product->category->name ?? '-' }}</span></td>
                                 <td class="font-medium text-gray-900">Rp {{ number_format($product->price, 0, ',', '.') }}</td>
                                 <td>
                                     <div class="flex items-center gap-2">
@@ -117,23 +117,23 @@
                                 <img src="{{ asset('storage/' . $product->image) }}" class="w-14 h-14 rounded-lg object-cover shrink-0" alt="{{ $product->name }}" loading="lazy"
                                      onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
                                 <div class="w-14 h-14 rounded-lg hidden items-center justify-center bg-gray-50 shrink-0">
-                                    <i data-lucide="image-off" class="w-6 h-6 text-gray-300" aria-hidden="true"></i>
+                                    <i data-lucide="image-off" class="w-6 h-6 text-gray-600" aria-hidden="true"></i>
                                 </div>
                             @else
                                 <div class="w-14 h-14 rounded-lg flex items-center justify-center bg-gray-50 shrink-0">
-                                    <i data-lucide="image-off" class="w-6 h-6 text-gray-300" aria-hidden="true"></i>
+                                    <i data-lucide="image-off" class="w-6 h-6 text-gray-600" aria-hidden="true"></i>
                                 </div>
                             @endif
                             <div class="flex-1 min-w-0">
                                 <p class="font-heading font-semibold text-gray-900 text-sm truncate">{{ $product->name }}</p>
-                                <p class="text-xs text-gray-500">{{ $product->category->name ?? '-' }}</p>
+                                <p class="text-xs text-gray-600 truncate">{{ $product->category->name ?? '-' }}</p>
                             </div>
                             <x-ui.badge :variant="$product->status->value === 'tersedia' ? 'success' : 'danger'">{{ ucfirst($product->status->value) }}</x-ui.badge>
                         </div>
                         <div class="flex items-center justify-between border-t border-gray-100 pt-3">
                             <div>
                                 <p class="font-medium text-gray-900">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
-                                <p class="text-xs text-gray-500">Stok: {{ $product->stock }} {{ $product->unit }}</p>
+                                <p class="text-xs text-gray-600">Stok: {{ $product->stock }} {{ $product->unit }}</p>
                             </div>
                             <div class="flex items-center gap-2">
                                 <a href="{{ route('petani.products.edit', $product) }}" class="bg-gray-100 text-gray-700 hover:bg-gray-200 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors">Edit</a>

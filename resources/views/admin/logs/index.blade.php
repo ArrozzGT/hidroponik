@@ -8,7 +8,7 @@
         </div>
         <div>
             <h2 class="font-bold text-xl text-gray-900 leading-tight">{{ __('Log Aktivitas Sistem') }}</h2>
-            <p class="text-sm text-gray-400 mt-0.5">Semua aktivitas yang tercatat</p>
+            <p class="text-sm text-gray-500 mt-0.5">Semua aktivitas yang tercatat</p>
         </div>
     </div>
 @endsection
@@ -49,10 +49,10 @@
                         <tbody>
                             @forelse($logs as $log)
                                 <tr x-data="{ open: false }">
-                                    <td class="whitespace-nowrap text-xs text-gray-400">{{ $log->created_at->format('d/m/Y H:i:s') }}</td>
+                                    <td class="whitespace-nowrap text-xs text-gray-500">{{ $log->created_at->format('d/m/Y H:i:s') }}</td>
                                     <td class="whitespace-nowrap">
                                         <div class="text-sm font-medium text-gray-900">{{ $log->user->name ?? 'System/Guest' }}</div>
-                                        <div class="text-[11px] text-gray-400">{{ $log->user->email ?? '-' }}</div>
+                                        <div class="text-[11px] text-gray-500">{{ $log->user->email ?? '-' }}</div>
                                     </td>
                                     <td class="whitespace-nowrap">
                                         @php
@@ -60,16 +60,16 @@
                                         @endphp
                                         <x-ui.badge :variant="$av">{{ str_replace('_', ' ', $log->action) }}</x-ui.badge>
                                     </td>
-                                    <td class="text-sm text-gray-500 max-w-xs">
+                                    <td class="text-sm text-gray-600 max-w-xs">
                                         <button @click="open = !open" class="text-left cursor-pointer hover:text-gray-700">
                                             <span x-show="!open" class="truncate block max-w-[200px]">{{ \Illuminate\Support\Str::limit($log->description, 60) }}</span>
-                                            <span x-show="open" class="block">{{ $log->description }}</span>
+                                            <span x-show="open" class="block break-words">{{ $log->description }}</span>
                                             @if(strlen($log->description) > 60)
                                                 <span x-text="open ? 'Lebih sedikit' : 'Selengkapnya'" class="text-xs text-emerald-600 hover:underline ml-1"></span>
                                             @endif
                                         </button>
                                     </td>
-                                    <td class="whitespace-nowrap text-xs text-gray-300 font-mono">{{ $log->ip_address }}</td>
+                                    <td class="whitespace-nowrap text-xs text-gray-500 font-mono">{{ $log->ip_address }}</td>
                                 </tr>
                             @empty
                                 <tr>

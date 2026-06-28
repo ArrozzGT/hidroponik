@@ -41,7 +41,7 @@ $sideClasses = [
         @if ($title)
             <div class="flex items-center justify-between p-5 border-b border-gray-100">
                 <h3 class="text-base font-heading font-semibold text-gray-900">{{ $title }}</h3>
-                <button @click="open = false" class="p-1.5 rounded-lg hover:bg-gray-50 transition-colors text-gray-400 hover:text-gray-600">
+                <button @click="open = false" class="p-1.5 rounded-lg hover:bg-gray-50 transition-colors text-gray-500 hover:text-gray-600">
                     <i data-lucide="x" style="width:18px;height:18px;" aria-hidden="true"></i>
                 </button>
             </div>
@@ -53,7 +53,7 @@ $sideClasses = [
 
         @if (!$title)
             <div class="absolute top-4 right-4">
-                <button @click="open = false" class="p-1.5 rounded-lg hover:bg-gray-50 transition-colors text-gray-400 hover:text-gray-600">
+                <button @click="open = false" class="p-1.5 rounded-lg hover:bg-gray-50 transition-colors text-gray-500 hover:text-gray-600">
                     <i data-lucide="x" style="width:18px;height:18px;" aria-hidden="true"></i>
                 </button>
             </div>

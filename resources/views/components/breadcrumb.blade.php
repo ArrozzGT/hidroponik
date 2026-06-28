@@ -1,4 +1,4 @@
-<nav aria-label="Breadcrumb" class="flex items-center gap-1.5 text-sm text-gray-400 mb-5">
+<nav aria-label="Breadcrumb" class="flex items-center gap-1.5 text-sm text-gray-600 mb-5">
     <a href="{{ route('dashboard') }}" class="hover:text-emerald-600 transition-colors">
         <i data-lucide="layout-dashboard" class="w-4 h-4" aria-hidden="true"></i>
     </a>

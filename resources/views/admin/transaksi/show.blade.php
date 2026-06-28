@@ -8,7 +8,7 @@
         </a>
         <div>
             <h2 class="font-bold text-xl text-gray-900 leading-tight">Detail Transaksi</h2>
-            <p class="text-sm text-gray-400 mt-0.5">{{ $transaksi->order->order_number ?? '—' }}</p>
+            <p class="text-sm text-gray-500 mt-0.5">{{ $transaksi->order->order_number ?? '—' }}</p>
         </div>
     </div>
 @endsection
@@ -26,19 +26,19 @@
                     </h3>
                     <div class="grid grid-cols-2 gap-4 text-sm">
                         <div>
-                            <span class="text-gray-400">Order #</span>
+                            <span class="text-gray-500">Order #</span>
                             <p class="font-bold text-gray-900 font-mono">{{ $transaksi->order->order_number }}</p>
                         </div>
                         <div>
-                            <span class="text-gray-400">Pembeli</span>
-                            <p class="font-semibold text-gray-900">{{ $transaksi->order->user->name }}</p>
+                            <span class="text-gray-500">Pembeli</span>
+                            <p class="font-semibold text-gray-900 truncate">{{ $transaksi->order->user->name }}</p>
                         </div>
                         <div>
-                            <span class="text-gray-400">Total</span>
+                            <span class="text-gray-500">Total</span>
                             <p class="font-bold text-green-700">Rp {{ number_format($transaksi->order->total_price, 0, ',', '.') }}</p>
                         </div>
                         <div>
-                            <span class="text-gray-400">Status Pesanan</span>
+                            <span class="text-gray-500">Status Pesanan</span>
                             <p><x-ui.badge :variant="$transaksi->order->status === 'completed' ? 'success' : 'warning'">{{ $transaksi->order->status }}</x-ui.badge></p>
                         </div>
                     </div>
@@ -52,7 +52,7 @@
                             <tbody>
                                 @foreach($transaksi->order->items as $item)
                                     <tr>
-                                        <td>{{ $item->product->name ?? '—' }}</td>
+                                        <td><span class="truncate max-w-[200px] inline-block">{{ $item->product->name ?? '—' }}</span></td>
                                         <td>{{ $item->quantity }}</td>
                                         <td>Rp {{ number_format($item->price, 0, ',', '.') }}</td>
                                         <td class="font-bold">Rp {{ number_format($item->quantity * $item->price, 0, ',', '.') }}</td>
@@ -72,16 +72,16 @@
                         @forelse($transaksi->logs as $log)
                             <div class="flex items-start gap-3 text-sm">
                                 <div class="w-7 h-7 rounded-lg flex items-center justify-center bg-gray-100 shrink-0">
-                                    <i data-lucide="activity" class="w-3.5 h-3.5 text-gray-500" aria-hidden="true"></i>
+                                    <i data-lucide="activity" class="w-3.5 h-3.5 text-gray-600" aria-hidden="true"></i>
                                 </div>
-                                <div>
-                                    <p class="font-medium text-gray-800">{{ $log->aksi }}</p>
-                                    <p class="text-xs text-gray-400">{{ $log->detail_perubahan ?? '' }}</p>
-                                    <p class="text-[10px] text-gray-400 mt-0.5">{{ $log->created_at->format('d/m/Y H:i') }} • {{ $log->user->name ?? 'Sistem' }}</p>
+                                <div class="min-w-0">
+                                    <p class="font-medium text-gray-800 truncate">{{ $log->aksi }}</p>
+                                    <p class="text-xs text-gray-500 truncate">{{ $log->detail_perubahan ?? '' }}</p>
+                                    <p class="text-[10px] text-gray-500 mt-0.5 truncate">{{ $log->created_at->format('d/m/Y H:i') }} • {{ $log->user->name ?? 'Sistem' }}</p>
                                 </div>
                             </div>
                         @empty
-                            <p class="text-sm text-gray-400 italic">Belum ada log transaksi.</p>
+                            <p class="text-sm text-gray-500 italic">Belum ada log transaksi.</p>
                         @endforelse
                     </div>
                 </x-ui.card>
@@ -95,20 +95,32 @@
                     </h3>
                     <div class="space-y-3 text-sm">
                         <div class="flex justify-between">
-                            <span class="text-gray-400">Metode</span>
+                            <span class="text-gray-500">Metode</span>
                             <span class="font-semibold">{{ $transaksi->metode_pembayaran ?? '—' }}</span>
                         </div>
+                        @if($transaksi->va_number)
                         <div class="flex justify-between">
-                            <span class="text-gray-400">Status</span>
+                            <span class="text-gray-500">VA Number</span>
+                            <span class="font-mono font-bold text-gray-800">{{ $transaksi->va_number }}</span>
+                        </div>
+                        @endif
+                        @if($transaksi->expiry_time)
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">VA Expiry</span>
+                            <span class="text-gray-600">{{ $transaksi->expiry_time->format('d/m/Y H:i') }}</span>
+                        </div>
+                        @endif
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Status</span>
                             @php $pv = $transaksi->status_pembayaran === 'paid' ? 'success' : ($transaksi->status_pembayaran === 'failed' ? 'danger' : 'warning'); @endphp
                             <x-ui.badge :variant="$pv">{{ $transaksi->status_pembayaran }}</x-ui.badge>
                         </div>
                         <div class="flex justify-between">
-                            <span class="text-gray-400">Konfirmasi</span>
+                            <span class="text-gray-500">Konfirmasi</span>
                             <span class="text-gray-600">{{ $transaksi->tanggal_konfirmasi ? $transaksi->tanggal_konfirmasi->format('d/m/Y H:i') : '—' }}</span>
                         </div>
                         <div class="flex justify-between">
-                            <span class="text-gray-400">Oleh</span>
+                            <span class="text-gray-500">Oleh</span>
                             <span class="font-semibold">{{ $transaksi->confirmedBy->name ?? '—' }}</span>
                         </div>
                     </div>
@@ -132,14 +144,6 @@
                         </div>
                     @endif
 
-                    @if($transaksi->bukti_pembayaran)
-                        <div class="mt-6">
-                            <span class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Bukti Pembayaran</span>
-                            <div class="mt-2">
-                                <img src="{{ asset('storage/' . $transaksi->bukti_pembayaran) }}" class="w-full rounded-xl border border-gray-200" alt="Bukti Pembayaran" loading="lazy">
-                            </div>
-                        </div>
-                    @endif
                 </x-ui.card>
             </div>
         </div>

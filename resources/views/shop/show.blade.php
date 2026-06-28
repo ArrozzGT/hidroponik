@@ -2,6 +2,8 @@
     <div class="py-8 min-h-screen">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
+            <x-back-button class="mb-4" />
+
             <x-breadcrumb :crumbs="[
                 ['label' => 'Shop', 'url' => route('shop.index')],
                 ['label' => $product->category->name, 'url' => route('shop.index', ['category' => $product->category->slug])],
@@ -21,12 +23,12 @@
                                  onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
                             <div class="w-full h-[500px] lg:h-[600px] hidden flex-col items-center justify-center bg-gray-50">
                                 <i data-lucide="sprout" style="width:64px;height:64px;color:#d1d5db;" aria-hidden="true"></i>
-                                <span class="text-sm text-gray-400 mt-3 font-medium">Foto belum tersedia</span>
+                                <span class="text-sm text-gray-600 mt-3 font-medium">Foto belum tersedia</span>
                             </div>
                         @else
                             <div class="w-full h-[500px] lg:h-[600px] flex flex-col items-center justify-center bg-gray-50">
                                 <i data-lucide="sprout" style="width:64px;height:64px;color:#d1d5db;" aria-hidden="true"></i>
-                                <span class="text-sm text-gray-400 mt-3 font-medium">Foto belum tersedia</span>
+                                <span class="text-sm text-gray-600 mt-3 font-medium">Foto belum tersedia</span>
                             </div>
                         @endif
 
@@ -42,7 +44,7 @@
 
                 {{-- RIGHT: Info --}}
                 <div class="lg:col-span-2 flex flex-col">
-                    <span class="text-xs font-medium text-emerald-600 uppercase tracking-wider">
+                    <span class="text-xs font-medium text-emerald-600 uppercase tracking-wider truncate block">
                         {{ $product->category->name }}
                     </span>
 
@@ -52,11 +54,11 @@
                         <span class="text-2xl font-bold text-gray-900">
                             Rp {{ number_format($product->price, 0, ',', '.') }}
                         </span>
-                        <span class="text-sm text-gray-400">/ {{ $product->unit }}</span>
+                        <span class="text-sm text-gray-600">/ {{ $product->unit }}</span>
                     </div>
 
                     @if($product->lama_tanam_hari || $product->tanggal_tanam)
-                        <div class="flex items-center gap-4 mt-4 text-sm text-gray-500">
+                        <div class="flex items-center gap-4 mt-4 text-sm text-gray-600">
                             @if($product->lama_tanam_hari)
                                 <span class="flex items-center gap-1.5">
                                     <i data-lucide="calendar" style="width:14px;height:14px;" class="text-emerald-600" aria-hidden="true"></i>
@@ -102,7 +104,7 @@
                                             <button type="button" @click="if(qty < max) qty++"
                                                     class="px-3 py-1 text-gray-600 hover:bg-gray-50 transition-colors">+</button>
                                         </div>
-                                        <span class="text-sm text-gray-400">maks. {{ $product->stock }} {{ $product->unit }}</span>
+                                        <span class="text-sm text-gray-600">maks. {{ $product->stock }} {{ $product->unit }}</span>
                                     </div>
                                     <input type="hidden" name="quantity" x-model="qty">
                                     <button type="submit"
@@ -122,7 +124,7 @@
                             </a>
                         @endauth
                     @else
-                        <button disabled class="w-full py-3 bg-gray-100 text-gray-400 rounded-lg font-medium text-sm cursor-not-allowed">
+                        <button disabled class="w-full py-3 bg-gray-100 text-gray-600 rounded-lg font-medium text-sm cursor-not-allowed">
                             Stok Habis
                         </button>
                     @endif
@@ -134,10 +136,10 @@
                             </div>
                             <div class="min-w-0 flex-1">
                                 <p class="font-heading font-semibold text-gray-900 text-sm truncate">{{ $product->user->name }}</p>
-                                <p class="text-xs text-gray-400 truncate">
+                                <p class="text-xs text-gray-600 truncate">
                                     {{ $product->user->petaniProfile->nama_kebun ?? 'Kebun Hidroponik' }}
                                 </p>
-                                <p class="text-xs text-gray-400 truncate">
+                                <p class="text-xs text-gray-600 truncate">
                                     {{ $product->user->petaniProfile->lokasi_kebun ?? 'Lokasi tidak tersedia' }}
                                 </p>
                             </div>
@@ -189,7 +191,7 @@
                                 <div class="p-3">
                                     <h4 class="font-heading font-semibold text-gray-900 text-sm truncate group-hover:text-emerald-600 transition-colors">{{ $rel->name }}</h4>
                                     <p class="text-emerald-700 font-bold text-sm mt-1">Rp {{ number_format($rel->price, 0, ',', '.') }}</p>
-                                    <p class="text-xs text-gray-400">/ {{ $rel->unit }}</p>
+                                    <p class="text-xs text-gray-600">/ {{ $rel->unit }}</p>
                                 </div>
                             </a>
                         @endforeach

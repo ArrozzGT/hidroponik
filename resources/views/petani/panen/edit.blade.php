@@ -8,7 +8,7 @@
         </div>
         <div>
             <h2 class="font-bold text-xl text-gray-900 leading-tight">Edit Data Panen</h2>
-            <p class="text-sm text-gray-400 mt-0.5">Perbarui data hasil panen</p>
+            <p class="text-sm text-gray-500 mt-0.5">Perbarui data hasil panen</p>
         </div>
     </div>
 @endsection

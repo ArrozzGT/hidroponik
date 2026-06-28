@@ -1,6 +1,6 @@
 <x-guest-layout>
     <h2 class="text-lg font-heading font-bold text-gray-900 mb-1">Masuk ke Akun</h2>
-    <p class="text-sm text-gray-500 mb-6">Masukkan email dan password untuk melanjutkan</p>
+    <p class="text-sm text-gray-600 mb-6">Masukkan email dan password untuk melanjutkan</p>
 
     <x-auth-session-status :status="session('status')" />
 
@@ -34,7 +34,7 @@
     </form>
 
     <div class="mt-5 pt-5 border-t border-gray-200 text-center">
-        <p class="text-xs text-gray-500">
+        <p class="text-xs text-gray-600">
             Belum punya akun?
             <a href="{{ route('register') }}" class="font-medium text-emerald-600 hover:text-emerald-700 transition-colors">Daftar Sekarang</a>
         </p>

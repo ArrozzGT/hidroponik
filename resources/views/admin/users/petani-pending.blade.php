@@ -8,7 +8,7 @@
         </div>
         <div>
             <h2 class="font-bold text-xl text-gray-900 leading-tight">{{ __('Verifikasi Petani Baru') }}</h2>
-            <p class="text-sm text-gray-400 mt-0.5">Setujui atau tolak permohonan petani</p>
+            <p class="text-sm text-gray-600 mt-0.5">Setujui atau tolak permohonan petani</p>
         </div>
     </div>
 @endsection
@@ -32,17 +32,17 @@
                                 @else
                                     <div class="w-16 h-16 bg-green-100 rounded-xl flex items-center justify-center text-green-600 font-bold text-xl">{{ substr($p->name, 0, 1) }}</div>
                                 @endif
-                                <div>
-                                    <h3 class="font-bold text-lg text-gray-900">{{ $p->name }}</h3>
-                                    <p class="text-sm text-gray-400">{{ $p->email }}</p>
-                                    <p class="text-sm text-gray-400">{{ $p->no_hp }}</p>
+                                <div class="min-w-0">
+                                    <h3 class="font-bold text-lg text-gray-900 truncate">{{ $p->name }}</h3>
+                                    <p class="text-sm text-gray-600 truncate">{{ $p->email }}</p>
+                                    <p class="text-sm text-gray-600 truncate">{{ $p->no_hp }}</p>
                                 </div>
                             </div>
 
                             <div class="bg-gray-50/50 rounded-xl p-4 space-y-2 mb-5">
-                                <p class="text-sm"><span class="font-semibold text-gray-700">Nama Kebun:</span> <span class="text-gray-500">{{ $p->petaniProfile->nama_kebun ?? '-' }}</span></p>
-                                <p class="text-sm"><span class="font-semibold text-gray-700">Lokasi:</span> <span class="text-gray-500">{{ $p->petaniProfile->lokasi_kebun ?? '-' }}</span></p>
-                                <p class="text-sm"><span class="font-semibold text-gray-700">Deskripsi:</span> <span class="text-gray-500 truncate max-w-[200px] inline-block">{{ $p->petaniProfile->deskripsi_kebun ?? '-' }}</span></p>
+                                <p class="text-sm"><span class="font-semibold text-gray-700">Nama Kebun:</span> <span class="text-gray-600">{{ $p->petaniProfile->nama_kebun ?? '-' }}</span></p>
+                                <p class="text-sm"><span class="font-semibold text-gray-700">Lokasi:</span> <span class="text-gray-600">{{ $p->petaniProfile->lokasi_kebun ?? '-' }}</span></p>
+                                <p class="text-sm"><span class="font-semibold text-gray-700">Deskripsi:</span> <span class="text-gray-600 truncate max-w-[200px] inline-block">{{ $p->petaniProfile->deskripsi_kebun ?? '-' }}</span></p>
                             </div>
 
                             <div class="flex space-x-3">

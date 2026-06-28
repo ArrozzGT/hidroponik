@@ -9,7 +9,7 @@
         </div>
         <div>
             <h2 class="font-heading font-bold text-xl text-gray-900 leading-tight">Notifikasi</h2>
-            <p class="text-sm text-gray-400 mt-0.5">Pemberitahuan dan informasi sistem</p>
+            <p class="text-sm text-gray-500 mt-0.5">Pemberitahuan dan informasi sistem</p>
         </div>
     </div>
 @endsection
@@ -33,7 +33,7 @@
         </div>
 
         @forelse($grouped as $date => $items)
-            <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
+            <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
                 {{ \Carbon\Carbon::parse($date)->isToday() ? 'Hari Ini' : (\Carbon\Carbon::parse($date)->isYesterday() ? 'Kemarin' : \Carbon\Carbon::parse($date)->format('d M Y')) }}
             </p>
             <div class="space-y-2 mb-6">
@@ -47,8 +47,8 @@
                             <div class="w-2 h-2 rounded-full mt-2 flex-shrink-0 {{ !$notif->is_read ? 'bg-emerald-500' : 'bg-gray-300' }}"></div>
                             <div class="flex-1 min-w-0">
                                 <div class="flex items-start justify-between gap-2">
-                                    <h4 class="font-heading font-semibold text-sm text-gray-900">{{ $notif->title }}</h4>
-                                    <span class="text-[10px] text-gray-400 shrink-0">{{ $notif->created_at->diffForHumans() }}</span>
+                                    <h4 class="font-heading font-semibold text-sm text-gray-900 truncate">{{ $notif->title }}</h4>
+                                    <span class="text-[10px] text-gray-500 shrink-0">{{ $notif->created_at->diffForHumans() }}</span>
                                 </div>
                                 <p class="text-sm text-gray-600 mt-1">{{ $notif->message }}</p>
                             </div>

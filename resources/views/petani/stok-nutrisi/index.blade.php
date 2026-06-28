@@ -8,7 +8,7 @@
         </div>
         <div>
             <h2 class="font-bold text-xl text-gray-900 leading-tight">Stok Nutrisi</h2>
-            <p class="text-sm text-gray-400 mt-0.5">Kelola persediaan nutrisi hidroponik</p>
+            <p class="text-sm text-gray-500 mt-0.5">Kelola persediaan nutrisi hidroponik</p>
         </div>
     </div>
 @endsection
@@ -41,14 +41,14 @@
                         <div class="flex items-start justify-between mb-3">
                             <div>
                                 <h3 class="font-bold text-gray-900">{{ $s->nama_nutrisi }}</h3>
-                                <p class="text-xs text-gray-400 mt-0.5">Stok Minimal: {{ number_format($s->stok_minimum_liter, 2) }} L</p>
+                                <p class="text-xs text-gray-500 mt-0.5">Stok Minimal: {{ number_format($s->stok_minimum_liter, 2) }} L</p>
                             </div>
                             <span class="w-9 h-9 rounded-xl flex items-center justify-center {{ $isLow ? 'bg-red-100' : 'bg-green-100' }}">
                                 <i data-lucide="droplets" class="w-5 h-5 {{ $isLow ? 'text-red-600' : 'text-green-600' }}" aria-hidden="true"></i>
                             </span>
                         </div>
                         <p class="text-2xl font-extrabold {{ $isLow ? 'text-red-600' : 'text-gray-900' }}">
-                            {{ number_format($s->stok_tersedia_liter, 2) }} <span class="text-sm font-medium text-gray-400">L</span>
+                            {{ number_format($s->stok_tersedia_liter, 2) }} <span class="text-sm font-medium text-gray-500">L</span>
                         </p>
                         <div class="mt-3 h-2 w-full bg-gray-100 rounded-full overflow-hidden">
                             <div class="h-full rounded-full transition-all duration-500 {{ $isLow ? 'bg-red-500' : ($pct > 50 ? 'bg-emerald-500' : 'bg-amber-500') }}" style="width: {{ $pct }}%"></div>

@@ -4,7 +4,7 @@
             <i data-lucide="mail" class="w-6 h-6 text-emerald-600" aria-hidden="true"></i>
         </div>
         <h2 class="text-lg font-heading font-bold text-gray-900 mb-1">Lupa Password?</h2>
-        <p class="text-xs text-gray-500 max-w-xs mx-auto leading-relaxed">Masukkan email Anda dan kami akan mengirimkan link untuk reset password.</p>
+        <p class="text-xs text-gray-600 max-w-xs mx-auto leading-relaxed">Masukkan email Anda dan kami akan mengirimkan link untuk reset password.</p>
     </div>
 
     <x-auth-session-status :status="session('status')" />
@@ -23,7 +23,7 @@
     </form>
 
     <div class="mt-5 text-center">
-        <a href="{{ route('login') }}" class="text-sm font-medium text-gray-400 inline-flex items-center gap-1.5 hover:text-gray-600 transition-colors">
+        <a href="{{ route('login') }}" class="text-sm font-medium text-gray-600 inline-flex items-center gap-1.5 hover:text-gray-600 transition-colors">
             <i data-lucide="arrow-left" class="w-3.5 h-3.5" aria-hidden="true"></i>
             Kembali ke halaman masuk
         </a>

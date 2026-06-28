@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Transaksi;
 use App\Models\LogTransaksi;
 use App\Models\ActivityLog;
+use App\Services\PaymentGatewayService;
 use Illuminate\Http\Request;
 
 class TransaksiController extends Controller
@@ -29,14 +30,15 @@ class TransaksiController extends Controller
         ]);
 
         $oldStatus = $transaksi->status_pembayaran;
-        $transaksi->update([
-            'status_pembayaran' => $request->status_pembayaran,
-            'tanggal_konfirmasi' => now(),
-            'confirmed_by' => auth()->id(),
-        ]);
 
         if ($request->status_pembayaran === 'paid') {
-            $transaksi->order->update(['payment_status' => 'paid']);
+            PaymentGatewayService::simulateCallback($transaksi);
+        } else {
+            $transaksi->update([
+                'status_pembayaran' => 'failed',
+                'tanggal_konfirmasi' => now(),
+                'confirmed_by' => auth()->id(),
+            ]);
         }
 
         LogTransaksi::create([

@@ -6,6 +6,8 @@
 @section('petani-content')
 <div class="py-10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+        <x-back-button class="mb-4" />
+
         <x-breadcrumb :crumbs="[['label' => 'Produk Saya', 'url' => route('petani.products.index')], ['label' => 'Tambah Baru']]" />
 
         <div class="flex items-center justify-between gap-4">
@@ -15,7 +17,7 @@
                 </div>
                 <div>
                     <h1 class="text-2xl font-heading font-bold text-gray-900">Tambah Produk Baru</h1>
-                    <p class="text-sm text-gray-500">Tambahkan produk dari kebun Anda</p>
+                    <p class="text-sm text-gray-600">Tambahkan produk dari kebun Anda</p>
                 </div>
             </div>
             <a href="{{ route('petani.products.index') }}" class="bg-gray-100 text-gray-700 hover:bg-gray-200 px-4 py-2 text-sm rounded-lg font-medium transition-colors inline-flex items-center gap-1.5">
@@ -85,7 +87,7 @@
                             <label for="image" class="flex flex-col items-center justify-center px-6 py-8 border-2 border-dashed border-gray-200 rounded-xl bg-gray-50 hover:bg-emerald-50 hover:border-emerald-300 cursor-pointer transition-colors">
                                 <i data-lucide="upload-cloud" class="w-9 h-9 text-emerald-500 mb-2" aria-hidden="true"></i>
                                 <span class="text-sm font-semibold text-gray-600">Klik untuk upload foto</span>
-                                <span class="text-xs text-gray-400 mt-1">JPG, PNG, WebP maks 2MB</span>
+                                <span class="text-xs text-gray-500 mt-1">JPG, PNG, WebP maks 2MB</span>
                             </label>
                             <input id="image" name="image" type="file" class="hidden">
                             @error('image') <p class="form-error">{{ $message }}</p> @enderror

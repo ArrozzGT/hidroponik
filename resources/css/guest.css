@@ -1,5 +1,5 @@
 .guest-bg {
-    background: linear-gradient(135deg, #064e3b 0%, #022c22 100%);
+    background: linear-gradient(135deg, #065f46 0%, #047857 100%);
 }
 
 .guest-circle {
@@ -10,19 +10,19 @@
 
 .guest-circle-1 {
     width: 400px; height: 400px;
-    background: radial-gradient(circle, rgba(52,211,153,0.12), transparent 70%);
+    background: radial-gradient(circle, rgba(52,211,153,0.15), transparent 70%);
     top: -120px; right: -80px;
 }
 
 .guest-circle-2 {
     width: 300px; height: 300px;
-    background: radial-gradient(circle, rgba(16,185,129,0.08), transparent 70%);
+    background: radial-gradient(circle, rgba(16,185,129,0.1), transparent 70%);
     bottom: -80px; left: -60px;
 }
 
 .guest-circle-3 {
     width: 180px; height: 180px;
-    background: radial-gradient(circle, rgba(110,231,183,0.06), transparent 70%);
+    background: radial-gradient(circle, rgba(110,231,183,0.08), transparent 70%);
     top: 40%; left: -40px;
 }
 

@@ -27,35 +27,35 @@
             $countSelesai     = \App\Models\Order::where('user_id', $userId)->where('status','completed')->count();
         @endphp
 
-        <div>
+        <div class="reveal">
             <h2 class="font-heading font-semibold text-gray-900 mb-4">Status Pesanan</h2>
             <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
                 <div class="bg-amber-50 border border-amber-100 rounded-xl p-5 flex items-center gap-4">
                     <i data-lucide="clock" style="width:24px;height:24px;color:#d97706;" aria-hidden="true"></i>
                     <div>
                         <p class="text-2xl font-heading font-bold text-gray-900" x-data="countUp({{ $countBelumBayar }})" x-text="current">{{ $countBelumBayar }}</p>
-                        <p class="text-xs text-gray-500">Belum Bayar</p>
+                        <p class="text-xs text-gray-600">Belum Bayar</p>
                     </div>
                 </div>
                 <div class="bg-blue-50 border border-blue-100 rounded-xl p-5 flex items-center gap-4">
                     <i data-lucide="settings" style="width:24px;height:24px;color:#2563eb;" aria-hidden="true"></i>
                     <div>
                         <p class="text-2xl font-heading font-bold text-gray-900" x-data="countUp({{ $countDiproses }})" x-text="current">{{ $countDiproses }}</p>
-                        <p class="text-xs text-gray-500">Diproses</p>
+                        <p class="text-xs text-gray-600">Diproses</p>
                     </div>
                 </div>
                 <div class="bg-purple-50 border border-purple-100 rounded-xl p-5 flex items-center gap-4">
                     <i data-lucide="truck" style="width:24px;height:24px;color:#7c3aed;" aria-hidden="true"></i>
                     <div>
                         <p class="text-2xl font-heading font-bold text-gray-900" x-data="countUp({{ $countDikirim }})" x-text="current">{{ $countDikirim }}</p>
-                        <p class="text-xs text-gray-500">Dikirim</p>
+                        <p class="text-xs text-gray-600">Dikirim</p>
                     </div>
                 </div>
                 <div class="bg-emerald-50 border border-emerald-100 rounded-xl p-5 flex items-center gap-4">
                     <i data-lucide="package-check" style="width:24px;height:24px;color:#059669;" aria-hidden="true"></i>
                     <div>
                         <p class="text-2xl font-heading font-bold text-gray-900" x-data="countUp({{ $countSelesai }})" x-text="current">{{ $countSelesai }}</p>
-                        <p class="text-xs text-gray-500">Selesai</p>
+                        <p class="text-xs text-gray-600">Selesai</p>
                     </div>
                 </div>
             </div>
@@ -90,7 +90,7 @@
                             <div class="flex items-start justify-between">
                                 <div>
                                     <p class="font-medium text-sm text-gray-900">{{ $order->order_number }}</p>
-                                    <p class="text-xs text-gray-400 mt-0.5">{{ $order->created_at->diffForHumans() }}</p>
+                                    <p class="text-xs text-gray-600 mt-0.5">{{ $order->created_at->diffForHumans() }}</p>
                                 </div>
                                 <div class="text-right">
                                     <x-ui.badge :variant="$statusBadge">{{ ucfirst($order->status) }}</x-ui.badge>
@@ -99,7 +99,7 @@
                             </div>
                             @if($order->payment_status === 'unpaid' && $order->status !== 'cancelled')
                                 <div class="mt-3 bg-amber-50 border border-amber-200 text-amber-800 text-xs rounded-lg px-4 py-2">
-                                    Upload bukti pembayaran untuk melanjutkan pesanan.
+                                    Lakukan pembayaran via Virtual Account untuk melanjutkan pesanan.
                                 </div>
                             @endif
                         </a>

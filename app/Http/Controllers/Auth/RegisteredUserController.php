@@ -38,6 +38,8 @@ class RegisteredUserController extends Controller
             'no_hp' => ['required', 'string', 'max:15'],
         ];
 
+        $rules['terms'] = ['accepted'];
+
         if ($request->role === 'petani') {
             $rules['nama_kebun'] = ['required', 'string', 'max:255'];
             $rules['lokasi_kebun'] = ['required', 'string', 'max:255'];
@@ -46,7 +48,9 @@ class RegisteredUserController extends Controller
             $rules['lokasi_kebun'] = ['nullable', 'string', 'max:255'];
         }
 
-        $request->validate($rules);
+        $request->validate($rules, [
+            'terms.accepted' => 'Anda harus menyetujui Syarat & Ketentuan.',
+        ]);
 
         $user = User::create([
             'name' => $request->name,

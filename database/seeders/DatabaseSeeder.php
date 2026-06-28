@@ -465,7 +465,7 @@ class DatabaseSeeder extends Seeder
         foreach ($orders as $order) {
             $transaksi = Transaksi::create([
                 'order_id' => $order->id,
-                'metode_pembayaran' => ['Transfer Bank', 'QRIS', 'COD'][array_rand(['Transfer Bank', 'QRIS', 'COD'])],
+                'metode_pembayaran' => ['bca_va', 'mandiri_va', 'bri_va', 'bni_va', 'permata_va'][array_rand(['bca_va', 'mandiri_va', 'bri_va', 'bni_va', 'permata_va'])],
                 'status_pembayaran' => $order->payment_status,
                 'tanggal_konfirmasi' => $order->payment_status === 'paid' ? $order->updated_at : null,
                 'confirmed_by' => $order->payment_status === 'paid' ? ($admin?->id ?? null) : null,

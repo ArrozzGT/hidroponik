@@ -8,7 +8,7 @@
         </div>
         <div>
             <h2 class="font-bold text-xl text-gray-900 leading-tight">Edit Stok Nutrisi</h2>
-            <p class="text-sm text-gray-400 mt-0.5">Perbarui data stok nutrisi</p>
+            <p class="text-sm text-gray-500 mt-0.5">Perbarui data stok nutrisi</p>
         </div>
     </div>
 @endsection

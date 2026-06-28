@@ -10,6 +10,7 @@ use App\Models\Coupon;
 use App\Models\Transaksi;
 use App\Models\LogTransaksi;
 use App\Services\NotificationService;
+use App\Services\PaymentGatewayService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
@@ -32,9 +33,10 @@ class OrderController extends Controller
     {
         $carts = Cart::where('user_id', auth()->id())->with('product')->get();
         if ($carts->isEmpty()) return redirect()->route('shop.index');
-        
+
         $total = $carts->sum(fn($c) => $c->product->price * $c->quantity);
-        return view('orders.checkout', compact('carts', 'total'));
+        $channels = PaymentGatewayService::getAvailableChannels();
+        return view('orders.checkout', compact('carts', 'total', 'channels'));
     }
 
     public function store(Request $request)
@@ -42,6 +44,7 @@ class OrderController extends Controller
         $request->validate([
             'shipping_address' => 'required|string',
             'metode_pengiriman' => 'required|in:ambil_ditempat,antar_kurir,ekspedisi',
+            'metode_pembayaran' => 'required|in:bca_va,mandiri_va,bri_va,bni_va,permata_va',
             'note' => 'nullable|string',
         ]);
 
@@ -102,16 +105,27 @@ class OrderController extends Controller
                 ]);
             }
 
-            // Create Transaction Record
-            $transaksi = Transaksi::create([
+            // Generate Virtual Account
+            $vaData = PaymentGatewayService::generateVA($order, $request->metode_pembayaran);
+
+            // Create Transaction Record with VA info
+            $transaksi = Transaksi::create(array_merge([
                 'order_id' => $order->id,
+                'metode_pembayaran' => $request->metode_pembayaran,
                 'status_pembayaran' => 'unpaid',
-            ]);
+            ], $vaData));
 
             LogTransaksi::create([
                 'transaksi_id' => $transaksi->id,
                 'aksi' => 'order_created',
                 'detail_perubahan' => 'Pesanan baru dibuat, menunggu pembayaran',
+                'user_id' => auth()->id(),
+            ]);
+
+            LogTransaksi::create([
+                'transaksi_id' => $transaksi->id,
+                'aksi' => 'va_generated',
+                'detail_perubahan' => 'Virtual Account ' . $request->metode_pembayaran . ' : ' . $vaData['va_number'],
                 'user_id' => auth()->id(),
             ]);
 
@@ -132,47 +146,42 @@ class OrderController extends Controller
 
             \App\Models\ActivityLog::log('checkout', 'User membuat pesanan baru: ' . $order->order_number);
 
-            return redirect()->route('orders.show', $order)->with('success', 'Pesanan berhasil dibuat. Silakan lakukan pembayaran.');
+            return redirect()->route('orders.show', $order)->with('success', 'Pesanan berhasil dibuat. Silakan lakukan pembayaran via Virtual Account.');
         });
     }
 
     public function show(Order $order)
     {
         if ($order->user_id !== auth()->id()) abort(403);
-        $order->load('items.product');
-        return view('orders.show', compact('order'));
+        $order->load('items.product', 'transaksi');
+        $channel = null;
+        $instructions = [];
+        $channels = PaymentGatewayService::getAvailableChannels();
+        if ($order->transaksi && $order->transaksi->payment_channel) {
+            $channel = $order->transaksi->payment_channel;
+            $instructions = PaymentGatewayService::getPaymentInstructions($channel);
+        }
+        return view('orders.show', compact('order', 'channel', 'instructions', 'channels'));
     }
 
-    public function uploadPayment(Request $request, Order $order)
+    public function callback(Request $request, Order $order)
     {
-        if ($order->user_id !== auth()->id()) abort(403);
-        
-        $request->validate([
-            'payment_proof' => 'required|image|max:2048',
-        ]);
-
-        $path = $request->file('payment_proof')->store('payments', 'public');
-        $order->update([
-            'payment_proof' => $path,
-            'payment_status' => 'paid',
-            'status' => 'processing',
-        ]);
-
-        // Update transaksi
-        $transaksi = Transaksi::where('order_id', $order->id)->first();
-        if ($transaksi) {
-            $transaksi->update([
-                'status_pembayaran' => 'paid',
-                'bukti_pembayaran' => $path,
-            ]);
-            LogTransaksi::create([
-                'transaksi_id' => $transaksi->id,
-                'aksi' => 'payment_uploaded',
-                'detail_perubahan' => 'Pembeli upload bukti pembayaran',
-                'user_id' => auth()->id(),
-            ]);
+        $transaksi = $order->transaksi;
+        if (!$transaksi || $transaksi->status_pembayaran !== 'unpaid') {
+            return back()->with('error', 'Transaksi tidak valid atau sudah dibayar.');
         }
 
-        return back()->with('success', 'Bukti pembayaran berhasil diupload.');
+        PaymentGatewayService::simulateCallback($transaksi);
+
+        LogTransaksi::create([
+            'transaksi_id' => $transaksi->id,
+            'aksi' => 'payment_confirmed',
+            'detail_perubahan' => 'Pembayaran via Virtual Account dikonfirmasi',
+            'user_id' => auth()->id(),
+        ]);
+
+        \App\Models\ActivityLog::log('callback_payment', 'Pembayaran dikonfirmasi untuk pesanan ' . $order->order_number);
+
+        return back()->with('success', 'Pembayaran berhasil dikonfirmasi.');
     }
 }

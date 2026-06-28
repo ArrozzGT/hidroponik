@@ -9,7 +9,7 @@
             </div>
             <div>
                 <h2 class="font-heading font-bold text-xl text-gray-900 leading-tight">{{ __('Manajemen User') }}</h2>
-                <p class="text-sm text-gray-400 mt-0.5">Kelola semua pengguna SIPSH</p>
+                <p class="text-sm text-gray-600 mt-0.5">Kelola semua pengguna SIPSH</p>
             </div>
         </div>
         <a href="{{ route('admin.users.petani-pending') }}" class="bg-emerald-600 text-white hover:bg-emerald-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors inline-flex items-center gap-2">
@@ -45,7 +45,7 @@
                                         <span class="font-medium text-sm text-gray-900 truncate max-w-[160px]">{{ $user->name }}</span>
                                     </div>
                                 </td>
-                                <td class="text-sm text-gray-500">{{ $user->email }}</td>
+                                <td class="text-sm text-gray-600">{{ $user->email }}</td>
                                 <td>
                                     @php $rc = $user->hasRole('petani') ? 'success' : 'default'; @endphp
                                     <x-ui.badge :variant="$rc">{{ ucfirst($user->getRoleNames()->first()) }}</x-ui.badge>
@@ -54,7 +54,7 @@
                                     @php $us = $user->status === 'aktif' ? 'success' : 'danger'; @endphp
                                     <x-ui.badge :variant="$us">{{ ucfirst($user->status) }}</x-ui.badge>
                                 </td>
-                                <td class="text-xs text-gray-400">{{ $user->created_at->format('d/m/Y') }}</td>
+                                <td class="text-xs text-gray-600">{{ $user->created_at->format('d/m/Y') }}</td>
                                 <td>
                                     <div class="flex items-center space-x-2">
                                         <form action="{{ route('admin.users.toggle-status', $user) }}" method="POST">
@@ -92,7 +92,7 @@
                             <x-ui.avatar size="md" fallback="{{ strtoupper(substr($user->name, 0, 1)) }}" />
                             <div class="flex-1 min-w-0">
                                 <p class="font-medium text-sm text-gray-900 truncate">{{ $user->name }}</p>
-                                <p class="text-xs text-gray-500 truncate">{{ $user->email }}</p>
+                                <p class="text-xs text-gray-600 truncate">{{ $user->email }}</p>
                             </div>
                             <div class="flex items-center gap-1.5">
                                 <x-ui.badge :variant="$rc">{{ ucfirst($user->getRoleNames()->first()) }}</x-ui.badge>

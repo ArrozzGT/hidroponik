@@ -4,7 +4,7 @@
             <i data-lucide="mail-check" class="w-6 h-6 text-emerald-600" aria-hidden="true"></i>
         </div>
         <h2 class="text-lg font-heading font-bold text-gray-900 mb-1">Verifikasi Email</h2>
-        <p class="text-sm text-gray-500 leading-relaxed max-w-sm mx-auto">
+        <p class="text-sm text-gray-600 leading-relaxed max-w-sm mx-auto">
             Terima kasih sudah mendaftar! Silakan verifikasi email Anda dengan mengklik link yang kami kirimkan.
         </p>
     </div>

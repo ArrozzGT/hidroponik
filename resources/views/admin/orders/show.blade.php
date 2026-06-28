@@ -11,7 +11,7 @@
                 <h2 class="font-bold text-xl text-gray-900 leading-tight">
                     Detail Pesanan #{{ $order->order_number }}
                 </h2>
-                <p class="text-sm text-gray-400 mt-0.5">{{ $order->created_at->format('d M Y H:i') }}</p>
+                <p class="text-sm text-gray-600 mt-0.5">{{ $order->created_at->format('d M Y H:i') }}</p>
             </div>
         </div>
         <a href="{{ route('admin.orders.index') }}" class="bg-gray-100 text-gray-700 hover:bg-gray-200 px-3 py-2 text-sm rounded-lg font-medium transition-colors inline-flex items-center gap-1">
@@ -38,9 +38,9 @@
                                         <i data-lucide="sprout" style="width:20px;height:20px;color:#d1d5db;" aria-hidden="true"></i>
                                     </div>
                                 @endif
-                                <div class="flex-1">
-                                    <h4 class="font-semibold text-gray-900">{{ $item->product->name ?? 'Produk Dihapus' }}</h4>
-                                    <p class="text-xs text-gray-400">{{ $item->quantity }} x Rp {{ number_format($item->price, 0, ',', '.') }}</p>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="font-semibold text-gray-900 truncate">{{ $item->product->name ?? 'Produk Dihapus' }}</h4>
+                                    <p class="text-xs text-gray-600">{{ $item->quantity }} x Rp {{ number_format($item->price, 0, ',', '.') }}</p>
                                 </div>
                                 <span class="font-bold text-gray-900">Rp {{ number_format($item->price * $item->quantity, 0, ',', '.') }}</span>
                             </div>
@@ -61,9 +61,9 @@
                         <i data-lucide="truck" class="w-4 h-4 text-emerald-600" aria-hidden="true"></i>
                         <span class="text-sm font-medium text-gray-700">{{ $metodeLabels[$order->metode_pengiriman] ?? $order->metode_pengiriman }}</span>
                     </div>
-                    <p class="text-sm text-gray-500 leading-relaxed">{{ $order->shipping_address }}</p>
+                    <p class="text-sm text-gray-600 leading-relaxed">{{ $order->shipping_address }}</p>
                     @if($order->note)
-                        <div class="mt-4 p-4 bg-gray-50 rounded-xl text-sm text-gray-500 italic">{{ $order->note }}</div>
+                        <div class="mt-4 p-4 bg-gray-50 rounded-xl text-sm text-gray-600 italic">{{ $order->note }}</div>
                     @endif
                 </x-ui.card>
 
@@ -71,10 +71,10 @@
                     <h3 class="font-bold text-gray-900 mb-4">Informasi Pembeli</h3>
                     <div class="flex items-center space-x-4">
                         <x-ui.avatar size="xl" :src="$order->user->foto ? asset('storage/' . $order->user->foto) : null" fallback="{{ substr($order->user->name, 0, 1) }}" />
-                        <div>
-                            <p class="font-bold text-gray-900">{{ $order->user->name }}</p>
-                            <p class="text-sm text-gray-400">{{ $order->user->email }}</p>
-                            <p class="text-sm text-gray-400">{{ $order->user->no_hp }}</p>
+                        <div class="min-w-0">
+                            <p class="font-bold text-gray-900 truncate">{{ $order->user->name }}</p>
+                            <p class="text-sm text-gray-600 truncate">{{ $order->user->email }}</p>
+                            <p class="text-sm text-gray-600 truncate">{{ $order->user->no_hp }}</p>
                         </div>
                     </div>
                 </x-ui.card>
@@ -104,16 +104,28 @@
                 <x-ui.card class="p-6">
                     <h3 class="font-bold text-gray-900 mb-4">Pembayaran</h3>
                     <div class="flex items-center justify-between mb-4">
-                        <span class="text-sm text-gray-500">Status</span>
+                        <span class="text-sm text-gray-600">Status</span>
                         <x-ui.badge :variant="$order->payment_status === 'paid' ? 'success' : 'default'">
                             {{ $order->payment_status }}
                         </x-ui.badge>
                     </div>
-                    @if($order->payment_proof)
-                        <a href="{{ asset('storage/' . $order->payment_proof) }}" target="_blank" class="flex items-center justify-center gap-2 p-4 bg-gray-50 rounded-xl text-sm text-emerald-600 font-semibold hover:bg-emerald-50 transition-colors">
-                            <i data-lucide="image" style="width:18px;height:18px;" aria-hidden="true"></i>
-                            Lihat Bukti Transfer
-                        </a>
+                    @if($order->transaksi && $order->transaksi->va_number)
+                        <div class="mt-3 p-3 bg-gray-50 rounded-lg text-sm">
+                            <div class="flex justify-between mb-1">
+                                <span class="text-gray-500">Metode</span>
+                                <span class="font-medium">{{ $order->transaksi->metode_pembayaran ?? 'VA' }}</span>
+                            </div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-gray-500">VA Number</span>
+                                <span class="font-mono font-bold">{{ $order->transaksi->va_number }}</span>
+                            </div>
+                            @if($order->transaksi->expiry_time)
+                            <div class="flex justify-between">
+                                <span class="text-gray-500">Berlaku</span>
+                                <span class="text-gray-600">{{ $order->transaksi->expiry_time->format('d/m/Y H:i') }}</span>
+                            </div>
+                            @endif
+                        </div>
                     @endif
                 </x-ui.card>
 
@@ -122,12 +134,12 @@
                     <div class="space-y-3">
                         <div class="flex items-center space-x-3">
                             <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
-                            <span class="text-sm text-gray-500">Dibuat: {{ $order->created_at->format('d/m/Y H:i') }}</span>
+                            <span class="text-sm text-gray-600">Dibuat: {{ $order->created_at->format('d/m/Y H:i') }}</span>
                         </div>
                         @if($order->payment_status === 'paid')
                             <div class="flex items-center space-x-3">
                                 <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
-                                <span class="text-sm text-gray-500">Pembayaran: {{ $order->updated_at->format('d/m/Y H:i') }}</span>
+                                <span class="text-sm text-gray-600">Pembayaran: {{ $order->updated_at->format('d/m/Y H:i') }}</span>
                             </div>
                         @endif
                     </div>

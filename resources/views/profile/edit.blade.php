@@ -6,7 +6,7 @@
             </div>
             <div>
                 <h2 class="font-heading font-bold text-xl text-gray-900 leading-tight">{{ __('Profile') }}</h2>
-                <p class="text-sm text-gray-400 mt-0.5">Kelola informasi akun Anda</p>
+                <p class="text-sm text-gray-600 mt-0.5">Kelola informasi akun Anda</p>
             </div>
         </div>
     </x-slot>
@@ -17,8 +17,8 @@
 
             <div class="flex border-b border-gray-100 mb-6">
                 <a href="#profile" class="px-5 py-3 text-sm font-medium text-emerald-600 border-b-2 border-emerald-600">Profil</a>
-                <a href="#password" class="px-5 py-3 text-sm font-medium text-gray-500 hover:text-gray-700 transition-colors">Kata Sandi</a>
-                <a href="#delete" class="px-5 py-3 text-sm font-medium text-gray-500 hover:text-gray-700 transition-colors">Hapus Akun</a>
+                <a href="#password" class="px-5 py-3 text-sm font-medium text-gray-600 hover:text-gray-700 transition-colors">Kata Sandi</a>
+                <a href="#delete" class="px-5 py-3 text-sm font-medium text-gray-600 hover:text-gray-700 transition-colors">Hapus Akun</a>
             </div>
 
             <div id="profile">

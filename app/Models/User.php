@@ -97,4 +97,27 @@ class User extends Authenticatable
     {
         return $this->hasMany(Order::class);
     }
+
+    public function isAdmin(): bool
+    {
+        return $this->hasRole('admin');
+    }
+
+    public function isPetani(): bool
+    {
+        return $this->hasRole('petani');
+    }
+
+    public function isPembeli(): bool
+    {
+        return $this->hasRole('pembeli');
+    }
+
+    public function getRoleLabelAttribute(): string
+    {
+        if ($this->isAdmin()) return 'Admin';
+        if ($this->isPetani()) return 'Petani';
+        if ($this->isPembeli()) return 'Pembeli';
+        return 'Pengguna';
+    }
 }

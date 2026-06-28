@@ -10,6 +10,7 @@
         @vite(['resources/css/app.css', 'resources/css/guest.css', 'resources/js/app.js'])
     </head>
     <body class="font-body antialiased">
+        <div class="scroll-progress" aria-hidden="true"></div>
         <div class="lg:grid lg:grid-cols-2 min-h-screen">
             {{-- Left Panel --}}
             <div class="guest-bg relative p-12 lg:p-16 flex flex-col justify-between overflow-hidden">
@@ -72,7 +73,7 @@
                             <i data-lucide="leaf" style="width:24px;height:24px;color:#059669;" aria-hidden="true"></i>
                         </div>
                         <h2 class="font-heading font-bold text-xl text-gray-900">{{ config('app.name', 'SIPSH') }}</h2>
-                        <p class="text-sm text-gray-400 mt-1">Sistem Informasi Penjualan Sayuran Hidroponik</p>
+                        <p class="text-sm text-gray-500 mt-1">Sistem Informasi Penjualan Sayuran Hidroponik</p>
                     </div>
 
                     <div class="bg-white border border-gray-100 rounded-xl p-8">
@@ -81,6 +82,10 @@
                 </div>
             </div>
         </div>
+
+        <button class="back-to-top fixed bottom-6 right-6 z-50 w-10 h-10 rounded-full bg-emerald-600 text-white shadow-lg flex items-center justify-center transition-all duration-300 opacity-0 invisible hover:bg-emerald-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2" aria-label="Kembali ke atas">
+            <i data-lucide="chevron-up" class="h-5 w-5" aria-hidden="true"></i>
+        </button>
 
         @if(session('success'))<div data-toast="success" data-message="{{ session('success') }}"></div>@endif
         @if(session('error'))<div data-toast="error" data-message="{{ session('error') }}"></div>@endif

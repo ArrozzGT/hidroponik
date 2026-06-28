@@ -16,26 +16,38 @@
     <x-navbar :showSearch="false" />
     <main>
     {{-- HERO --}}
-    <section class="bg-emerald-900 overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+    <section class="relative bg-gradient-to-br from-primary-800 via-primary-700 to-primary-800 animate-gradient-x overflow-hidden">
+        {{-- Floating Bubbles --}}
+        <div class="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
+            <div class="absolute w-64 h-64 rounded-full bg-emerald-400/5 -top-20 -left-20 animate-float" style="animation-delay: 0s; animation-duration: 7s;"></div>
+            <div class="absolute w-48 h-48 rounded-full bg-emerald-300/5 top-1/3 -right-16 animate-float" style="animation-delay: 1.2s; animation-duration: 9s;"></div>
+            <div class="absolute w-80 h-80 rounded-full bg-teal-400/5 -bottom-32 left-1/4 animate-float" style="animation-delay: 2.5s; animation-duration: 8s;"></div>
+            <div class="absolute w-40 h-40 rounded-full bg-white/5 top-1/4 left-1/3 animate-float" style="animation-delay: 0.8s; animation-duration: 10s;"></div>
+            <div class="absolute w-56 h-56 rounded-full bg-emerald-200/5 bottom-1/4 right-1/4 animate-float" style="animation-delay: 3s; animation-duration: 7.5s;"></div>
+            <div class="absolute w-36 h-36 rounded-full bg-teal-300/5 top-2/3 left-1/6 animate-float" style="animation-delay: 1.8s; animation-duration: 8.5s;"></div>
+        </div>
+
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
             <div class="grid lg:grid-cols-2 gap-16 items-center">
                 {{-- Left Content --}}
                 <div class="animate-fade-in-up">
-                    <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 text-white/90 text-sm font-medium mb-6 stagger-1">
+                    <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/15 text-white text-sm font-medium mb-6 stagger-1">
                         Marketplace Hidroponik Terpercaya
                     </span>
-                    <h1 class="text-5xl lg:text-7xl font-heading font-bold text-white leading-tight mb-6 stagger-2">
-                        Sayuran Segar<br>Langsung dari Petani
-                    </h1>
+                    <div class="typewriter-wrapper stagger-2">
+                        <h1 class="text-5xl lg:text-7xl font-heading font-bold text-white leading-tight mb-6">
+                            Sayuran Segar<br>Langsung dari Petani
+                        </h1>
+                    </div>
                     <p class="text-emerald-200/80 text-lg max-w-lg mb-8 leading-relaxed stagger-3">
                         Platform marketplace terpercaya untuk sayuran hidroponik berkualitas premium.
                         Segar, sehat, dan dikirim langsung ke rumah Anda.
                     </p>
                     <div class="flex flex-wrap gap-4 stagger-4">
-                        <a href="{{ route('shop.index') }}" class="magnetic bg-emerald-500 hover:bg-emerald-400 text-emerald-950 font-semibold px-8 py-3 rounded-lg transition-colors inline-block">
+                        <a href="{{ route('shop.index') }}" class="magnetic bg-emerald-500 hover:bg-emerald-400 text-white font-semibold px-8 py-3 rounded-lg transition-colors inline-block ripple-container">
                             Mulai Belanja
                         </a>
-                        <a href="{{ route('register') }}" class="magnetic border border-white/30 text-white hover:bg-white/10 px-8 py-3 rounded-lg transition-colors font-medium inline-block">
+                        <a href="{{ route('register') }}" class="magnetic border border-white/30 text-white hover:bg-white/10 px-8 py-3 rounded-lg transition-colors font-medium inline-block ripple-container">
                             Daftar Sebagai Petani
                         </a>
                     </div>
@@ -43,24 +55,32 @@
                     {{-- Stats --}}
                     <div class="grid grid-cols-3 gap-6 mt-12 stagger-5">
                         <div class="bg-white/5 border border-white/10 rounded-xl p-5">
-                            <p class="text-3xl font-heading font-bold text-white">500+</p>
+                            <p class="text-3xl font-heading font-bold text-white">
+                                <span x-data="countUp(500)" x-text="current"></span><span class="text-emerald-300">+</span>
+                            </p>
                             <p class="text-emerald-200/70 text-sm">Produk</p>
                         </div>
                         <div class="bg-white/5 border border-white/10 rounded-xl p-5">
-                            <p class="text-3xl font-heading font-bold text-white">150+</p>
+                            <p class="text-3xl font-heading font-bold text-white">
+                                <span x-data="countUp(150)" x-text="current"></span><span class="text-emerald-300">+</span>
+                            </p>
                             <p class="text-emerald-200/70 text-sm">Petani</p>
                         </div>
                         <div class="bg-white/5 border border-white/10 rounded-xl p-5">
-                            <p class="text-3xl font-heading font-bold text-white">10K+</p>
+                            <p class="text-3xl font-heading font-bold text-white">
+                                <span x-data="countUp(10000)" x-text="current.toLocaleString()"></span><span class="text-emerald-300">+</span>
+                            </p>
                             <p class="text-emerald-200/70 text-sm">Pelanggan</p>
                         </div>
                     </div>
                 </div>
 
                 {{-- Right Image --}}
-                <div class="relative hidden lg:block">
-                    <img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?w=800" alt="Fresh Vegetables"
-                        class="rounded-xl w-full object-cover aspect-[4/3]" loading="lazy" width="800" height="600">
+                <div class="relative hidden lg:block perspective-1000">
+                    <div class="parallax-container rounded-xl overflow-hidden" x-data x-init="initParallax($el)">
+                        <img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?w=800" alt="Fresh Vegetables"
+                            class="w-full object-cover aspect-[4/3] transition-transform duration-300 hover:scale-105" loading="lazy" width="800" height="600">
+                    </div>
                 </div>
             </div>
         </div>
@@ -71,7 +91,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <h2 class="text-3xl lg:text-4xl font-heading font-bold text-gray-900 mb-3">Kenapa Pilih SIPSH?</h2>
-                <p class="text-gray-500 max-w-2xl mx-auto">
+                <p class="text-gray-600 max-w-2xl mx-auto">
                     Kami berkomitmen memberikan pengalaman berbelanja sayuran terbaik dengan jaminan kualitas premium
                 </p>
             </div>
@@ -87,11 +107,11 @@
             <div class="grid md:grid-cols-3 gap-12">
                 @foreach ($features as $i => $f)
                     <div class="text-center animate-fade-in-up stagger-{{ $i + 1 }}">
-                        <div class="w-12 h-12 rounded-xl bg-emerald-50 flex items-center justify-center mx-auto mb-5">
+                        <div class="w-12 h-12 rounded-xl bg-emerald-100 flex items-center justify-center mx-auto mb-5">
                             <i data-lucide="{{ $f['icon'] }}" class="h-6 w-6 text-emerald-600" aria-hidden="true"></i>
                         </div>
                         <h3 class="text-lg font-heading font-semibold text-gray-900 mb-2">{{ $f['title'] }}</h3>
-                        <p class="text-gray-500 text-sm leading-relaxed">{{ $f['desc'] }}</p>
+                        <p class="text-gray-600 text-sm leading-relaxed">{{ $f['desc'] }}</p>
                     </div>
                 @endforeach
             </div>
@@ -103,7 +123,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <h2 class="text-3xl lg:text-4xl font-heading font-bold text-gray-900 mb-3">Cara Kerja</h2>
-                <p class="text-gray-500 max-w-xl mx-auto">Hanya butuh beberapa langkah untuk mendapatkan sayuran segar pilihan Anda.</p>
+                <p class="text-gray-600 max-w-xl mx-auto">Hanya butuh beberapa langkah untuk mendapatkan sayuran segar pilihan Anda.</p>
             </div>
 
             <div class="relative">
@@ -121,11 +141,11 @@
                     @endphp
                     @foreach ($steps as $si => $s)
                         <div class="text-center relative animate-fade-in-up stagger-{{ $si + 1 }}">
-                            <div class="w-10 h-10 rounded-full bg-emerald-600 text-white flex items-center justify-center mx-auto mb-5 font-heading font-bold relative z-10">
+                            <div class="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center mx-auto mb-5 font-heading font-bold relative z-10">
                                 {{ $s['num'] }}
                             </div>
                             <h3 class="text-base font-heading font-semibold text-gray-900 mb-2">{{ $s['title'] }}</h3>
-                            <p class="text-sm text-gray-500 leading-relaxed">{{ $s['desc'] }}</p>
+                            <p class="text-sm text-gray-600 leading-relaxed">{{ $s['desc'] }}</p>
                         </div>
                     @endforeach
                 </div>
@@ -138,7 +158,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <h2 class="text-3xl lg:text-4xl font-heading font-bold text-gray-900 mb-3">Apa Kata Mereka</h2>
-                <p class="text-gray-500 max-w-2xl mx-auto">Ribuan pelanggan puas telah mempercayai SIPSH untuk kebutuhan sayuran segar mereka</p>
+                <p class="text-gray-600 max-w-2xl mx-auto">Ribuan pelanggan puas telah mempercayai SIPSH untuk kebutuhan sayuran segar mereka</p>
             </div>
 
             <div class="grid md:grid-cols-2 gap-8">
@@ -160,12 +180,12 @@
                         </div>
                         <p class="text-gray-600 mb-6 italic leading-relaxed">"{{ $t['text'] }}"</p>
                         <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-heading font-bold text-sm">
+                            <div class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center font-heading font-bold text-sm">
                                 {{ $t['initial'] }}
                             </div>
                             <div>
                                 <p class="font-heading font-semibold text-gray-900 text-sm">{{ $t['name'] }}</p>
-                                <p class="text-xs text-gray-400">{{ $t['role'] }}</p>
+                                <p class="text-xs text-gray-600">{{ $t['role'] }}</p>
                             </div>
                         </div>
                     </div>
@@ -175,14 +195,14 @@
     </section>
 
     {{-- CTA --}}
-    <section class="bg-emerald-800 py-24 reveal">
+    <section class="bg-emerald-700 py-24 reveal">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 class="text-3xl lg:text-4xl font-heading font-bold text-white mb-4">Siap Memulai?</h2>
             <p class="text-emerald-200 text-lg mb-8 max-w-2xl mx-auto">
                 Bergabunglah dengan ribuan petani dan pembeli yang telah merasakan manfaat sayuran hidroponik segar
             </p>
             <div class="flex flex-wrap gap-4 justify-center">
-                <a href="{{ route('shop.index') }}" class="magnetic bg-white text-emerald-800 font-semibold px-8 py-3 rounded-lg hover:bg-emerald-50 transition-colors inline-block">
+                <a href="{{ route('shop.index') }}" class="magnetic bg-white text-emerald-700 font-semibold px-8 py-3 rounded-lg hover:bg-emerald-50 transition-colors inline-block">
                     Belanja Sekarang
                 </a>
                 <a href="{{ route('register') }}" class="magnetic border border-white/30 text-white font-medium px-8 py-3 rounded-lg hover:bg-white/10 transition-colors inline-block">

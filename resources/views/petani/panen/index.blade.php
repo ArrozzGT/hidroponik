@@ -8,7 +8,7 @@
         </div>
         <div>
             <h2 class="font-bold text-xl text-gray-900 leading-tight">Data Panen</h2>
-            <p class="text-sm text-gray-400 mt-0.5">Catat dan kelola hasil panen kebun Anda</p>
+            <p class="text-sm text-gray-600 mt-0.5">Catat dan kelola hasil panen kebun Anda</p>
         </div>
     </div>
 @endsection
@@ -24,16 +24,16 @@
 
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
             <x-ui.card class="p-5 bg-emerald-50 border-emerald-100">
-                <p class="text-xs text-gray-500">Total Panen</p>
-                <p class="text-2xl font-heading font-bold text-gray-900">{{ number_format($totalPanen, 2) }} <span class="text-sm font-medium text-gray-400">Kg</span></p>
+                <p class="text-xs text-gray-600">Total Panen</p>
+                <p class="text-2xl font-heading font-bold text-gray-900">{{ number_format($totalPanen, 2) }} <span class="text-sm font-medium text-gray-600">Kg</span></p>
             </x-ui.card>
             <x-ui.card class="p-5 bg-blue-50 border-blue-100">
-                <p class="text-xs text-gray-500">Rata-rata per Panen</p>
-                <p class="text-2xl font-heading font-bold text-gray-900">{{ number_format($avgPanen, 2) }} <span class="text-sm font-medium text-gray-400">Kg</span></p>
+                <p class="text-xs text-gray-600">Rata-rata per Panen</p>
+                <p class="text-2xl font-heading font-bold text-gray-900">{{ number_format($avgPanen, 2) }} <span class="text-sm font-medium text-gray-600">Kg</span></p>
             </x-ui.card>
             <x-ui.card class="p-5 bg-amber-50 border-amber-100">
-                <p class="text-xs text-gray-500">Total Catatan Panen</p>
-                <p class="text-2xl font-heading font-bold text-gray-900">{{ $panen->count() }} <span class="text-sm font-medium text-gray-400">kali</span></p>
+                <p class="text-xs text-gray-600">Total Catatan Panen</p>
+                <p class="text-2xl font-heading font-bold text-gray-900">{{ $panen->count() }} <span class="text-sm font-medium text-gray-600">kali</span></p>
             </x-ui.card>
         </div>
 
@@ -70,7 +70,7 @@
                                     @endphp
                                     <x-ui.badge :variant="$qVariant">{{ $p->kualitas }}</x-ui.badge>
                                 </td>
-                                <td class="text-gray-500 text-sm max-w-xs truncate">{{ $p->keterangan ?? '—' }}</td>
+                                <td class="text-gray-600 text-sm max-w-xs truncate">{{ $p->keterangan ?? '—' }}</td>
                                 <td>
                                     <div class="flex items-center gap-2">
                                         <a href="{{ route('petani.panen.edit', $p) }}" class="bg-gray-100 text-gray-700 hover:bg-gray-200 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors">Edit</a>
@@ -104,16 +104,16 @@
                     @endphp
                     <div class="rounded-xl border border-gray-100 bg-white p-4 shadow-sm">
                         <div class="flex items-start justify-between mb-2">
-                            <div>
-                                <p class="font-bold text-gray-800 text-sm">{{ $p->product->name ?? '—' }}</p>
-                                <p class="text-xs text-gray-400">{{ $p->tanggal_panen->format('d/m/Y') }}</p>
+                            <div class="min-w-0">
+                                <p class="font-bold text-gray-800 text-sm truncate">{{ $p->product->name ?? '—' }}</p>
+                                <p class="text-xs text-gray-600">{{ $p->tanggal_panen->format('d/m/Y') }}</p>
                             </div>
                             <x-ui.badge :variant="$qVariant">{{ $p->kualitas }}</x-ui.badge>
                         </div>
                         <div class="flex items-center justify-between border-t border-gray-50 pt-3">
                             <div>
                                 <p class="font-bold text-gray-900">{{ number_format($p->jumlah_panen_kg, 2) }} Kg</p>
-                                <p class="text-xs text-gray-500 truncate max-w-[160px]">{{ $p->keterangan ?? '—' }}</p>
+                                <p class="text-xs text-gray-600 truncate max-w-[160px]">{{ $p->keterangan ?? '—' }}</p>
                             </div>
                             <div class="flex items-center gap-2 shrink-0">
                                 <a href="{{ route('petani.panen.edit', $p) }}" class="bg-gray-100 text-gray-700 hover:bg-gray-200 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors">Edit</a>

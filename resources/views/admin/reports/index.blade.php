@@ -8,7 +8,7 @@
         </div>
         <div>
             <h2 class="font-bold text-xl text-gray-900 leading-tight">Laporan Transaksi</h2>
-            <p class="text-sm text-gray-400 mt-0.5">Filter dan unduh laporan transaksi toko</p>
+            <p class="text-sm text-gray-500 mt-0.5">Filter dan unduh laporan transaksi toko</p>
         </div>
     </div>
 @endsection
@@ -68,15 +68,15 @@
                             </div>
                             <div class="flex-1 min-w-0">
                                 <p class="font-semibold text-sm text-gray-900 uppercase">{{ $lap->jenis_laporan }}</p>
-                                <p class="text-xs text-gray-400">
+                                <p class="text-xs text-gray-500">
                                     {{ $lap->periode_awal ? $lap->periode_awal->format('d/m/Y') : 'Semua' }}
                                     – {{ $lap->periode_akhir ? $lap->periode_akhir->format('d/m/Y') : 'Semua' }}
                                 </p>
                             </div>
-                            <span class="text-[10px] text-gray-400">{{ $lap->created_at->diffForHumans() }}</span>
+                            <span class="text-[10px] text-gray-500">{{ $lap->created_at->diffForHumans() }}</span>
                         </div>
                     @empty
-                        <p class="text-sm text-gray-400 italic text-center py-8">Belum ada riwayat laporan.</p>
+                        <p class="text-sm text-gray-500 italic text-center py-8">Belum ada riwayat laporan.</p>
                     @endforelse
                 </div>
                 @if($laporan->hasPages())

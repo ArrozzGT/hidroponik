@@ -8,7 +8,7 @@
         </div>
         <div>
             <h2 class="font-bold text-xl text-gray-900 leading-tight">Catat Panen Baru</h2>
-            <p class="text-sm text-gray-400 mt-0.5">Input hasil panen dari kebun Anda</p>
+            <p class="text-sm text-gray-500 mt-0.5">Input hasil panen dari kebun Anda</p>
         </div>
     </div>
 @endsection

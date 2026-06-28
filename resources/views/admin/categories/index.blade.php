@@ -8,7 +8,7 @@
         </div>
         <div>
             <h2 class="font-bold text-xl text-gray-900 leading-tight">{{ __('Manajemen Kategori') }}</h2>
-            <p class="text-sm text-gray-400 mt-0.5">Kelola kategori produk</p>
+            <p class="text-sm text-gray-500 mt-0.5">Kelola kategori produk</p>
         </div>
     </div>
 @endsection
@@ -59,9 +59,9 @@
                                 @forelse($categories as $cat)
                                     <tr>
                                         <td class="text-2xl">{{ $cat->icon ?? '🥬' }}</td>
-                                        <td class="font-medium text-gray-900">{{ $cat->name }}</td>
-                                        <td class="text-gray-400 text-sm">{{ $cat->slug }}</td>
-                                        <td class="text-sm text-gray-500">{{ $cat->products_count ?? $cat->products->count() }}</td>
+                                        <td class="font-medium text-gray-900 truncate max-w-[200px]">{{ $cat->name }}</td>
+                                        <td class="text-gray-500 text-sm">{{ $cat->slug }}</td>
+                                        <td class="text-sm text-gray-600">{{ $cat->products_count ?? $cat->products->count() }}</td>
                                         <td>
                                             <div class="flex items-center space-x-2">
                                                 <button onclick="editCategory({{ json_encode($cat) }})" class="bg-gray-100 text-gray-700 hover:bg-gray-200 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors">Edit</button>

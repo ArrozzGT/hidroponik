@@ -4,7 +4,7 @@
             <i data-lucide="key-round" class="w-6 h-6 text-emerald-600" aria-hidden="true"></i>
         </div>
         <h2 class="text-lg font-heading font-bold text-gray-900 mb-1">Reset Password</h2>
-        <p class="text-sm text-gray-500">Buat password baru untuk akun Anda.</p>
+        <p class="text-sm text-gray-600">Buat password baru untuk akun Anda.</p>
     </div>
 
     <form method="POST" action="{{ route('password.store') }}" class="space-y-4">
@@ -31,7 +31,7 @@
     </form>
 
     <div class="mt-5 text-center">
-        <a href="{{ route('login') }}" class="text-sm font-medium text-gray-400 inline-flex items-center gap-1.5 hover:text-gray-600 transition-colors">
+        <a href="{{ route('login') }}" class="text-sm font-medium text-gray-500 inline-flex items-center gap-1.5 hover:text-gray-600 transition-colors">
             <i data-lucide="arrow-left" class="w-3.5 h-3.5" aria-hidden="true"></i>
             Kembali ke halaman masuk
         </a>

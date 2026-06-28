@@ -10,9 +10,9 @@
 $base = 'inline-flex items-center justify-center gap-2 font-medium rounded-lg transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2';
 
 $variants = [
-    'primary' => 'bg-emerald-600 text-white hover:bg-emerald-700',
+    'primary' => 'bg-emerald-500 text-white hover:bg-emerald-600',
     'secondary' => 'bg-gray-100 text-gray-700 hover:bg-gray-200',
-    'outline' => 'border-2 border-emerald-600 text-emerald-700 hover:bg-emerald-50',
+    'outline' => 'border-2 border-emerald-500 text-emerald-600 hover:bg-emerald-50',
     'ghost' => 'text-gray-700 hover:bg-gray-50',
     'danger' => 'bg-red-600 text-white hover:bg-red-700',
 ];
@@ -24,7 +24,7 @@ $sizes = [
     'icon' => 'p-2',
 ];
 
-$classes = trim("$base $variants[$variant] $sizes[$size]");
+$classes = trim("ripple-container $base $variants[$variant] $sizes[$size]");
 @endphp
 
 @if ($href)

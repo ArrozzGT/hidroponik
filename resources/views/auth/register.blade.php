@@ -1,13 +1,13 @@
 <x-guest-layout>
     <div x-data="registerForm()" x-cloak>
         <h2 class="text-lg font-heading font-bold text-gray-900 mb-1">Daftar Akun Baru</h2>
-        <p class="text-sm text-gray-500 mb-6">Bergabunglah dengan ribuan pengguna lainnya</p>
+        <p class="text-sm text-gray-600 mb-6">Bergabunglah dengan ribuan pengguna lainnya</p>
 
         <div class="flex items-center justify-center mb-6">
             <template x-for="(s, i) in steps" :key="i">
                 <div class="flex items-center">
                     <div x-text="i + 1"
-                        :class="step >= i + 1 ? 'w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center text-xs font-bold' : 'w-8 h-8 rounded-full bg-gray-100 text-gray-400 flex items-center justify-center text-xs font-bold'">
+                        :class="step >= i + 1 ? 'w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center text-xs font-bold' : 'w-8 h-8 rounded-full bg-gray-100 text-gray-500 flex items-center justify-center text-xs font-bold'">
                     </div>
                     <div x-show="i < steps.length - 1"
                         :class="step > i + 1 ? 'w-12 h-0.5 bg-emerald-600 mx-1' : 'w-12 h-0.5 bg-gray-200 mx-1'">
@@ -22,7 +22,7 @@
 
             <div x-show="step === 1">
                 <h3 class="font-heading font-semibold text-gray-900 mb-1">Pilih Tipe Akun</h3>
-                <p class="text-sm text-gray-500 mb-5">Silakan pilih tipe akun Anda</p>
+                <p class="text-sm text-gray-600 mb-5">Silakan pilih tipe akun Anda</p>
 
                 <div class="flex flex-col gap-3">
                     <div @click="role = 'pembeli'" :class="role === 'pembeli' ? 'border-2 border-emerald-500 bg-emerald-50' : 'border-2 border-gray-200 hover:border-emerald-300'" class="rounded-xl p-5 cursor-pointer transition-colors">
@@ -32,7 +32,7 @@
                             </div>
                             <div>
                                 <p class="font-heading font-semibold text-gray-900 text-sm">Pembeli</p>
-                                <p class="text-xs text-gray-500">Saya ingin membeli sayuran</p>
+                                <p class="text-xs text-gray-600">Saya ingin membeli sayuran</p>
                             </div>
                         </div>
                     </div>
@@ -44,7 +44,7 @@
                             </div>
                             <div>
                                 <p class="font-heading font-semibold text-gray-900 text-sm">Petani</p>
-                                <p class="text-xs text-gray-500">Saya ingin menjual sayuran</p>
+                                <p class="text-xs text-gray-600">Saya ingin menjual sayuran</p>
                             </div>
                         </div>
                     </div>
@@ -57,7 +57,7 @@
 
             <div x-show="step === 2">
                 <h3 class="font-heading font-semibold text-gray-900 mb-1">Informasi Pribadi</h3>
-                <p class="text-sm text-gray-500 mb-5">Lengkapi data pribadi Anda</p>
+                <p class="text-sm text-gray-600 mb-5">Lengkapi data pribadi Anda</p>
 
                 <div class="space-y-3">
                     <div>
@@ -92,7 +92,7 @@
 
             <div x-show="step === 3">
                 <h3 class="font-heading font-semibold text-gray-900 mb-1">Informasi Tambahan</h3>
-                <p class="text-sm text-gray-500 mb-5">Beberapa informasi tambahan</p>
+                <p class="text-sm text-gray-600 mb-5">Beberapa informasi tambahan</p>
 
                 <div class="space-y-3">
                     <div>
@@ -114,9 +114,26 @@
                     </div>
 
                     <div class="bg-gray-50 rounded-lg p-4">
-                        <p class="text-xs text-gray-500">
-                            Dengan mendaftar, Anda menyetujui <a href="#" class="text-emerald-600 font-medium">Syarat & Ketentuan</a> serta <a href="#" class="text-emerald-600 font-medium">Kebijakan Privasi</a> kami.
-                        </p>
+                        <label class="flex items-start gap-3 cursor-pointer group">
+                            <input type="checkbox" name="terms" required class="mt-0.5 w-4 h-4 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500 cursor-pointer" />
+                            <span class="text-xs text-gray-600 leading-relaxed">
+                                Saya setuju dengan
+                                <a href="{{ route('terms') }}" target="_blank" class="text-emerald-600 font-semibold hover:text-emerald-700 hover:underline transition-colors">
+                                    Syarat & Ketentuan
+                                </a>
+                                dan
+                                <a href="{{ route('privacy') }}" target="_blank" class="text-emerald-600 font-semibold hover:text-emerald-700 hover:underline transition-colors">
+                                    Kebijakan Privasi
+                                </a>
+                                SIPSH
+                            </span>
+                        </label>
+                        @error('terms')
+                            <p class="mt-1.5 text-xs text-red-600 flex items-center gap-1 ml-7">
+                                <i data-lucide="alert-circle" class="w-3 h-3"></i>
+                                {{ $message }}
+                            </p>
+                        @enderror
                     </div>
 
                     <div class="flex gap-3 pt-2">
@@ -132,7 +149,7 @@
         </form>
 
         <div class="mt-5 pt-4 border-t border-gray-200 text-center">
-            <p class="text-xs text-gray-500">
+            <p class="text-xs text-gray-600">
                 Sudah punya akun?
                 <a href="{{ route('login') }}" class="font-medium text-emerald-600 hover:text-emerald-700 transition-colors">Masuk di sini</a>
             </p>

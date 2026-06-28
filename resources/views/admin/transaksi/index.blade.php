@@ -8,7 +8,7 @@
         </div>
         <div>
             <h2 class="font-bold text-xl text-gray-900 leading-tight">Transaksi</h2>
-            <p class="text-sm text-gray-400 mt-0.5">Kelola pembayaran pesanan</p>
+            <p class="text-sm text-gray-500 mt-0.5">Kelola pembayaran pesanan</p>
         </div>
     </div>
 @endsection
@@ -25,15 +25,15 @@
 
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
             <x-ui.card class="p-5 bg-emerald-50 border-emerald-100">
-                <p class="text-xs text-gray-500">Total Transaksi</p>
+                <p class="text-xs text-gray-600">Total Transaksi</p>
                 <p class="text-2xl font-heading font-bold text-gray-900">Rp {{ number_format($totalTransaksi, 0, ',', '.') }}</p>
             </x-ui.card>
             <x-ui.card class="p-5 bg-green-50 border-green-100">
-                <p class="text-xs text-gray-500">Lunas</p>
+                <p class="text-xs text-gray-600">Lunas</p>
                 <p class="text-2xl font-heading font-bold text-green-700">{{ $paidCount }}</p>
             </x-ui.card>
             <x-ui.card class="p-5 bg-amber-50 border-amber-100">
-                <p class="text-xs text-gray-500">Belum Dibayar</p>
+                <p class="text-xs text-gray-600">Belum Dibayar</p>
                 <p class="text-2xl font-heading font-bold text-amber-700">{{ $unpaidCount }}</p>
             </x-ui.card>
         </div>
@@ -56,18 +56,18 @@
                         @forelse($transaksi as $trx)
                             <tr>
                                 <td><span class="font-mono font-bold text-gray-800">{{ $trx->order->order_number ?? '—' }}</span></td>
-                                <td>{{ $trx->order->user->name ?? '—' }}</td>
+                                <td><span class="truncate max-w-[160px] inline-block">{{ $trx->order->user->name ?? '—' }}</span></td>
                                 <td class="text-gray-600">{{ $trx->metode_pembayaran ?? '—' }}</td>
                                 <td>
                                     @php $pv = $trx->status_pembayaran === 'paid' ? 'success' : ($trx->status_pembayaran === 'failed' ? 'danger' : 'warning'); @endphp
                                     <x-ui.badge :variant="$pv">{{ $trx->status_pembayaran }}</x-ui.badge>
                                 </td>
                                 <td class="font-bold text-gray-900">Rp {{ number_format($trx->order->total_price ?? 0, 0, ',', '.') }}</td>
-                                <td class="text-xs text-gray-400">
+                                <td class="text-xs text-gray-500">
                                     @if($trx->tanggal_konfirmasi)
                                         {{ $trx->tanggal_konfirmasi->format('d/m/Y H:i') }}
                                     @else
-                                        <span class="text-gray-300">—</span>
+                                        <span class="text-gray-500">—</span>
                                     @endif
                                 </td>
                                 <td>

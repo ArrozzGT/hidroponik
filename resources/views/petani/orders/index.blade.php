@@ -8,7 +8,7 @@
         </div>
         <div>
             <h2 class="font-bold text-xl text-gray-900 leading-tight">{{ __('Pesanan Masuk') }}</h2>
-            <p class="text-sm text-gray-400 mt-0.5">Kelola pesanan pembeli untuk produk Anda</p>
+            <p class="text-sm text-gray-600 mt-0.5">Kelola pesanan pembeli untuk produk Anda</p>
         </div>
     </div>
 @endsection
@@ -26,7 +26,7 @@
             @foreach($tabs as $key => $label)
                 <a href="{{ route('petani.orders.index', ['status' => $key === 'all' ? null : $key]) }}"
                    class="whitespace-nowrap px-4 py-2 text-sm font-medium rounded-lg transition-colors
-                          {{ $currentTab === $key ? 'bg-emerald-100 text-emerald-700' : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50' }}">
+                          {{ $currentTab === $key ? 'bg-emerald-100 text-emerald-700' : 'text-gray-600 hover:text-gray-700 hover:bg-gray-50' }}">
                     {{ $label }}
                 </a>
             @endforeach
@@ -53,21 +53,21 @@
                                 <td>
                                     <div class="flex items-center gap-2">
                                         <x-ui.avatar size="sm" fallback="{{ strtoupper(substr($order->user->name, 0, 1)) }}" />
-                                        <div>
-                                            <span class="font-medium text-gray-800">{{ $order->user->name }}</span>
-                                            <p class="text-[10px] text-gray-400 truncate max-w-[120px]">{{ $order->shipping_address }}</p>
+                                        <div class="min-w-0">
+                                            <span class="font-medium text-gray-800 truncate block">{{ $order->user->name }}</span>
+                                            <p class="text-[10px] text-gray-600 truncate max-w-[120px]">{{ $order->shipping_address }}</p>
                                         </div>
                                     </div>
                                 </td>
                                 <td>
                                     <div class="space-y-1">
                                         @foreach($order->items as $item)
-                                            <div class="text-xs text-gray-700">
-                                                {{ $item->product->name ?? 'Produk Dihapus' }} (x{{ $item->quantity }})
-                                            </div>
-                                        @endforeach
-                                    </div>
-                                </td>
+                                <div class="text-xs text-gray-700 truncate">
+                                    {{ $item->product->name ?? 'Produk Dihapus' }} (x{{ $item->quantity }})
+                                </div>
+                            @endforeach
+                                        </div>
+                                    </td>
                                 <td>
                                     @php $os = match($order->status) { 'completed' => 'success', 'processing' => 'info', 'shipping' => 'primary', 'cancelled' => 'danger', default => 'warning' }; @endphp
                                     <x-ui.badge :variant="$os">{{ $order->status }}</x-ui.badge>
@@ -75,7 +75,7 @@
                                 <td>
                                     <x-ui.badge :variant="$order->payment_status === 'paid' ? 'success' : 'default'">{{ $order->payment_status }}</x-ui.badge>
                                 </td>
-                                <td class="text-gray-400 text-xs">{{ $order->created_at->format('d/m/Y') }}</td>
+                                <td class="text-gray-600 text-xs">{{ $order->created_at->format('d/m/Y') }}</td>
                                 <td>
                                     <div class="flex items-center gap-2">
                                         @if($order->status === 'pending')
@@ -95,7 +95,7 @@
                                                 </button>
                                             </form>
                                         @else
-                                            <span class="text-xs text-gray-400 italic">—</span>
+                                            <span class="text-xs text-gray-600 italic">—</span>
                                         @endif
                                     </div>
                                 </td>
@@ -118,7 +118,7 @@
                         <div class="flex items-start justify-between mb-2">
                             <div>
                                 <p class="font-bold text-sm text-gray-900 font-mono">{{ $order->order_number }}</p>
-                                <p class="text-xs text-gray-400">{{ $order->created_at->format('d/m/Y') }}</p>
+                                <p class="text-xs text-gray-600">{{ $order->created_at->format('d/m/Y') }}</p>
                             </div>
                             <div class="flex items-center gap-1.5">
                                 <x-ui.badge :variant="$os">{{ $order->status }}</x-ui.badge>
@@ -129,7 +129,7 @@
                             <x-ui.avatar size="sm" fallback="{{ strtoupper(substr($order->user->name, 0, 1)) }}" />
                             <div class="flex-1 min-w-0">
                                 <p class="font-medium text-gray-800 text-sm">{{ $order->user->name }}</p>
-                                <p class="text-[10px] text-gray-400 truncate">{{ $order->shipping_address }}</p>
+                                <p class="text-[10px] text-gray-600 truncate">{{ $order->shipping_address }}</p>
                             </div>
                         </div>
                         <div class="mt-2 space-y-1">
@@ -157,7 +157,7 @@
                                     </button>
                                 </form>
                             @else
-                                <p class="text-xs text-gray-400 italic text-center">—</p>
+                                <p class="text-xs text-gray-600 italic text-center">—</p>
                             @endif
                         </div>
                     </div>

@@ -4,7 +4,7 @@
             <i data-lucide="shield" class="w-6 h-6 text-emerald-600" aria-hidden="true"></i>
         </div>
         <h2 class="text-lg font-heading font-bold text-gray-900 mb-1">Konfirmasi Password</h2>
-        <p class="text-sm text-gray-500 leading-relaxed">
+        <p class="text-sm text-gray-600 leading-relaxed">
             Ini adalah area aman. Silakan konfirmasi password Anda sebelum melanjutkan.
         </p>
     </div>

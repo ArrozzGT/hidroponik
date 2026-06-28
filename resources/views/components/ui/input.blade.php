@@ -25,7 +25,7 @@ $inputType = $attributes->get('type', 'text');
 
     <div class="relative" @if($toggleable) x-data="{ show: false }" @endif>
         @if ($hasIcon)
-            <div class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
+            <div class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none">
                 <i data-lucide="{{ $icon }}" class="h-4 w-4" aria-hidden="true"></i>
             </div>
         @endif
@@ -33,7 +33,7 @@ $inputType = $attributes->get('type', 'text');
         <input
             id="{{ $id }}"
             {{ $attributes->merge([
-                'class' => 'block w-full px-3 py-2 border rounded-lg text-sm focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 focus:ring-offset-0 transition-colors ' . ($hasIcon ? 'pl-9 ' : '') . ($toggleable ? 'pr-9 ' : '') . ($error ? 'border-red-400' : 'border-gray-200'),
+                'class' => 'block w-full px-3 py-2 border rounded-lg text-sm focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400 focus:ring-offset-0 transition-colors ' . ($hasIcon ? 'pl-9 ' : '') . ($toggleable ? 'pr-9 ' : '') . ($error ? 'border-red-400' : 'border-gray-200'),
             ]) }}
             @if($toggleable)
                 :type="show ? 'text' : '{{ $inputType }}'"
@@ -42,7 +42,7 @@ $inputType = $attributes->get('type', 'text');
 
         @if($toggleable)
             <button type="button" @click="show = !show"
-                class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 p-1 transition-colors"
+                class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-600 p-1 transition-colors"
                 tabindex="-1" aria-label="Toggle password visibility">
                 <svg x-show="!show" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0zM2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
@@ -55,7 +55,7 @@ $inputType = $attributes->get('type', 'text');
     </div>
 
     @if ($help && !$error)
-        <p class="text-xs text-gray-400 mt-1">{{ $help }}</p>
+        <p class="text-xs text-gray-500 mt-1">{{ $help }}</p>
     @endif
 
     @if ($error)

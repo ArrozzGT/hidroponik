@@ -15,7 +15,7 @@
 
             <h1 class="text-7xl font-heading font-bold text-emerald-600 mb-2">404</h1>
             <h2 class="text-xl font-heading font-semibold text-gray-900 mb-3">Halaman tidak ditemukan</h2>
-            <p class="text-gray-500 text-sm mb-8 leading-relaxed">
+            <p class="text-gray-600 text-sm mb-8 leading-relaxed">
                 Maaf, halaman yang Anda cari tidak tersedia atau telah dipindahkan.<br>
                 Silakan kembali ke beranda atau lihat produk kami.
             </p>

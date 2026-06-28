@@ -8,7 +8,7 @@
         </div>
         <div>
             <h2 class="font-bold text-xl text-gray-900 leading-tight">{{ __('Manajemen Pesanan') }}</h2>
-            <p class="text-sm text-gray-400 mt-0.5">Kelola semua pesanan masuk</p>
+            <p class="text-sm text-gray-500 mt-0.5">Kelola semua pesanan masuk</p>
         </div>
     </div>
 @endsection
@@ -76,7 +76,7 @@
                                     <td class="font-bold text-gray-900">Rp {{ number_format($order->total_price, 0, ',', '.') }}</td>
                                     <td><x-ui.badge :variant="$os">{{ $order->status }}</x-ui.badge></td>
                                     <td><x-ui.badge :variant="$ps">{{ $order->payment_status }}</x-ui.badge></td>
-                                    <td class="text-gray-400 text-xs">{{ $order->created_at->format('d/m/Y') }}</td>
+                                    <td class="text-gray-500 text-xs">{{ $order->created_at->format('d/m/Y') }}</td>
                                     <td>
                                         <a href="{{ route('admin.orders.show', $order) }}" class="bg-gray-100 text-gray-700 hover:bg-gray-200 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors inline-flex items-center gap-1">
                                             <i data-lucide="eye" style="width:12px;height:12px;" aria-hidden="true"></i> Detail
@@ -104,7 +104,7 @@
                             <div class="flex items-start justify-between mb-3">
                                 <div>
                                     <p class="font-bold text-sm text-gray-900 font-mono">{{ $order->order_number }}</p>
-                                    <p class="text-xs text-gray-400 mt-0.5">{{ $order->created_at->format('d/m/Y') }}</p>
+                                    <p class="text-xs text-gray-500 mt-0.5">{{ $order->created_at->format('d/m/Y') }}</p>
                                 </div>
                                 <p class="font-bold text-sm text-gray-900">Rp {{ number_format($order->total_price, 0, ',', '.') }}</p>
                             </div>

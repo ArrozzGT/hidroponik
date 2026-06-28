@@ -6,7 +6,7 @@
             </div>
             <div>
                 <h2 class="text-lg font-bold text-gray-900">{{ __('Profile Information') }}</h2>
-                <p class="text-sm text-gray-400">{{ __("Update your account's profile information and email address.") }}</p>
+                <p class="text-sm text-gray-500">{{ __("Update your account's profile information and email address.") }}</p>
             </div>
         </div>
     </header>
@@ -26,14 +26,14 @@
                     <img src="{{ asset('storage/' . $user->foto) }}" alt="Avatar" class="w-20 h-20 rounded-xl object-cover shadow-elegant" loading="lazy"
                          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
                     <div class="w-20 h-20 rounded-xl shadow-elegant hidden items-center justify-center bg-gray-100">
-                        <svg class="w-8 h-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0"/></svg>
+                        <svg class="w-8 h-8 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0"/></svg>
                     </div>
                 </div>
             @endif
             <div class="mt-1 flex items-center justify-center px-4 py-5 border-2 border-dashed border-gray-200 rounded-xl bg-gray-50/50 hover:bg-gray-100/50 transition-colors cursor-pointer">
                 <label for="foto" class="flex flex-col items-center cursor-pointer">
-                    <svg class="w-6 h-6 text-gray-300 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316zM16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z"/></svg>
-                    <span class="text-xs text-gray-400 font-medium">Klik untuk upload foto</span>
+                    <svg class="w-6 h-6 text-gray-500 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316zM16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z"/></svg>
+                    <span class="text-xs text-gray-500 font-medium">Klik untuk upload foto</span>
                 </label>
                 <input id="foto" name="foto" type="file" class="hidden" />
             </div>
@@ -53,7 +53,7 @@
 
             @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
                 <div class="mt-3">
-                    <p class="text-sm text-gray-500">
+                    <p class="text-sm text-gray-600">
                         {{ __('Email Anda belum diverifikasi.') }}
                         <button form="send-verification" class="text-primary-600 font-semibold hover:underline transition-colors">{{ __('Klik di sini untuk mengirim ulang email verifikasi.') }}</button>
                     </p>

@@ -5,18 +5,18 @@
 @section('header')
     <div>
         <h2 class="font-heading font-bold text-xl text-gray-900">Admin Dashboard</h2>
-        <p class="text-sm text-gray-400 mt-0.5">Ringkasan sistem SIPSH</p>
+        <p class="text-sm text-gray-600 mt-0.5">Ringkasan sistem SIPSH</p>
     </div>
 @endsection
 
 @section('admin-content')
-    <div class="space-y-6">
+    <div class="space-y-6 reveal">
 
         <x-breadcrumb :crumbs="[['label' => 'Dashboard']]" />
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <x-ui.card class="p-6 col-span-2 bg-white">
-                <p class="text-sm text-gray-400 font-medium">Total Pendapatan</p>
+                <p class="text-sm text-gray-600 font-medium">Total Pendapatan</p>
                 <p class="text-4xl font-heading font-bold text-gray-900 mt-1" x-data="countUp({{ $stats['total_revenue'] }})" x-text="'Rp ' + Number(current).toLocaleString('id-ID')">Rp {{ number_format($stats['total_revenue'], 0, ',', '.') }}</p>
                 <div class="mt-4 flex items-end gap-1 h-16" title="Pendapatan per bulan (12 bulan terakhir)">
                     @foreach($stats['revenue_chart'] as $i => $v)
@@ -27,7 +27,7 @@
                         </div>
                     @endforeach
                 </div>
-                <div class="flex justify-between mt-1.5 text-[10px] text-gray-400">
+                <div class="flex justify-between mt-1.5 text-[10px] text-gray-600">
                     @foreach($stats['revenue_months'] as $month)
                         <span>{{ $month }}</span>
                     @endforeach
@@ -39,7 +39,7 @@
                     <i data-lucide="users" style="width:20px;height:20px;color:#2563eb;" aria-hidden="true"></i>
                     <div>
                         <p class="text-2xl font-heading font-bold text-gray-900" x-data="countUp({{ $stats['total_users'] }})" x-text="current">{{ $stats['total_users'] }}</p>
-                        <p class="text-xs text-gray-500">Total User</p>
+                        <p class="text-xs text-gray-600">Total User</p>
                     </div>
                 </div>
             </x-ui.card>
@@ -49,7 +49,7 @@
                     <i data-lucide="package" style="width:20px;height:20px;color:#059669;" aria-hidden="true"></i>
                     <div>
                         <p class="text-2xl font-heading font-bold text-gray-900" x-data="countUp({{ $stats['total_products'] }})" x-text="current">{{ $stats['total_products'] }}</p>
-                        <p class="text-xs text-gray-500">Total Produk</p>
+                        <p class="text-xs text-gray-600">Total Produk</p>
                     </div>
                 </div>
             </x-ui.card>
@@ -59,7 +59,7 @@
                     <i data-lucide="clipboard-list" style="width:20px;height:20px;color:#d97706;" aria-hidden="true"></i>
                     <div>
                         <p class="text-2xl font-heading font-bold text-gray-900" x-data="countUp({{ $stats['total_orders'] }})" x-text="current">{{ $stats['total_orders'] }}</p>
-                        <p class="text-xs text-gray-500">Total Pesanan</p>
+                        <p class="text-xs text-gray-600">Total Pesanan</p>
                     </div>
                 </div>
             </x-ui.card>
@@ -69,7 +69,7 @@
                     <i data-lucide="sprout" style="width:20px;height:20px;color:#16a34a;" aria-hidden="true"></i>
                     <div>
                         <p class="text-2xl font-heading font-bold text-gray-900" x-data="countUp({{ $stats['total_petani'] }})" x-text="current">{{ $stats['total_petani'] }}</p>
-                        <p class="text-xs text-gray-500">Total Petani</p>
+                        <p class="text-xs text-gray-600">Total Petani</p>
                     </div>
                 </div>
             </x-ui.card>
@@ -108,21 +108,21 @@
                             <tr>
                                 <td><span class="font-mono font-medium text-gray-800 text-xs">{{ $order->order_number }}</span></td>
                                 <td>
-                                    <div class="flex items-center gap-2">
+                                    <div class="flex items-center gap-2 min-w-0">
                                         <x-ui.avatar size="sm" fallback="{{ strtoupper(substr($order->user?->name, 0, 1)) }}" />
-                                        <span class="text-sm text-gray-700">{{ $order->user?->name }}</span>
+                                        <span class="text-sm text-gray-700 truncate">{{ $order->user?->name }}</span>
                                     </div>
                                 </td>
                                 <td><span class="font-medium text-emerald-700">Rp {{ number_format($order->total_price, 0, ',', '.') }}</span></td>
                                 <td><x-ui.badge :variant="$sc">{{ ucfirst($order->status) }}</x-ui.badge></td>
-                                <td class="text-gray-400 text-xs">{{ $order->created_at->format('d M Y') }}</td>
+                                <td class="text-gray-600 text-xs">{{ $order->created_at->format('d M Y') }}</td>
                                 <td>
                                     <a href="{{ route('admin.orders.show', $order) }}" class="text-xs text-emerald-600 font-medium hover:underline">Detail</a>
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="6" class="text-center py-8 text-gray-400">Belum ada pesanan.</td>
+                                <td colspan="6" class="text-center py-8 text-gray-600">Belum ada pesanan.</td>
                             </tr>
                         @endforelse
                     </tbody>
@@ -139,7 +139,7 @@
                             <x-ui.avatar size="md" fallback="{{ strtoupper(substr($petani->name, 0, 2)) }}" />
                             <div class="flex-1 min-w-0">
                                 <p class="text-sm font-medium text-gray-900 truncate">{{ $petani->name }}</p>
-                                <p class="text-xs text-gray-400 truncate">{{ $petani->email }}</p>
+                                <p class="text-xs text-gray-600 truncate">{{ $petani->email }}</p>
                             </div>
                             <div class="flex gap-1.5">
                                 <form action="{{ route('admin.users.verify', $petani) }}" method="POST">
@@ -155,7 +155,7 @@
                             </div>
                         </div>
                     @empty
-                        <p class="text-sm text-gray-400 py-4 text-center">Tidak ada petani yang menunggu verifikasi.</p>
+                        <p class="text-sm text-gray-600 py-4 text-center">Tidak ada petani yang menunggu verifikasi.</p>
                     @endforelse
                 </div>
             </x-ui.card>

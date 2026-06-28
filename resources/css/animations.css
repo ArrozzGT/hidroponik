@@ -1,0 +1,209 @@
+/* ============ ANIMATED GRADIENT ============ */
+@keyframes gradient-x {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* ============ FLOATING BUBBLES ============ */
+@keyframes float {
+  0%, 100% { transform: translateY(0) translateX(0) scale(1); opacity: 0.6; }
+  25% { transform: translateY(-20px) translateX(10px) scale(1.05); opacity: 0.8; }
+  50% { transform: translateY(-10px) translateX(-5px) scale(0.95); opacity: 0.5; }
+  75% { transform: translateY(-30px) translateX(8px) scale(1.02); opacity: 0.7; }
+}
+
+/* ============ TYPEWRITER ============ */
+@keyframes typewrite {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes blink-caret {
+  0%, 100% { border-color: currentColor; }
+  50% { border-color: transparent; }
+}
+
+/* ============ RIPPLE ============ */
+@keyframes ripple-effect {
+  to { transform: scale(4); opacity: 0; }
+}
+
+/* ============ PULSE SOFT ============ */
+@keyframes pulse-soft {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.12); opacity: 0.85; }
+}
+
+/* ============ BOUNCE SOFT ============ */
+@keyframes bounce-soft {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+/* ============ FLY TO CART ============ */
+@keyframes fly-to-cart {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(0.5) translateY(-200px) translateX(100px);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.1) translateY(-400px) translateX(300px);
+  }
+}
+
+/* ============ SCROLL PROGRESS ============ */
+@keyframes progress-glow {
+  0%, 100% { box-shadow: 0 0 4px rgba(5, 150, 105, 0.4); }
+  50% { box-shadow: 0 0 10px rgba(5, 150, 105, 0.7); }
+}
+
+/* ============ SKELETON SHIMMER ============ */
+@keyframes shimmer-sweep {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ============ PARALLAX CONTAINER ============ */
+.parallax-container {
+  perspective: 1px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.parallax-layer {
+  position: absolute;
+  inset: 0;
+  transform: translateZ(-1px) scale(2);
+  will-change: transform;
+}
+
+/* ============ ANIMATED GRADIENT BG ============ */
+.animate-gradient-x {
+  background-size: 200% 200%;
+  animation: gradient-x 8s ease infinite;
+}
+
+/* ============ FLOATING BUBBLES ============ */
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* ============ TYPEWRITER ============ */
+.typewriter-wrapper {
+  display: inline-block;
+}
+
+.typewriter-text {
+  display: inline;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 2px solid currentColor;
+  width: 0;
+  animation:
+    typewrite 2s steps(30, end) forwards,
+    blink-caret 0.75s step-end infinite;
+}
+
+.typewriter-text.done {
+  border-right-color: transparent;
+  animation: none;
+  width: 100%;
+}
+
+/* ============ RIPPLE ============ */
+.ripple-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.ripple-effect {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(0);
+  animation: ripple-effect 0.6s linear;
+  pointer-events: none;
+}
+
+/* ============ CART BADGE PULSE ============ */
+.cart-badge-pulse {
+  animation: pulse-soft 2s ease-in-out infinite;
+}
+
+/* ============ SOCIAL BOUNCE ============ */
+.social-bounce {
+  transition: transform 0.2s ease;
+}
+
+.social-bounce:hover {
+  animation: bounce-soft 0.4s ease;
+}
+
+/* ============ FLY TO CART ANIMATION ============ */
+.fly-to-cart {
+  position: fixed !important;
+  z-index: 9999;
+  pointer-events: none;
+  animation: fly-to-cart 0.8s ease-in forwards;
+}
+
+/* ============ SCROLL PROGRESS ============ */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #10b981, #34d399);
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+  z-index: 9999;
+  animation: progress-glow 2s ease-in-out infinite;
+}
+
+/* ============ SHIMMER ENHANCED ============ */
+.shimmer-sweep {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.2) 25%,
+    rgba(255, 255, 255, 0.4) 50%,
+    rgba(255, 255, 255, 0.2) 75%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer-sweep 1.5s ease-in-out infinite;
+}
+
+/* ============ TURBO TRANSITION ============ */
+.turbo-fade-in {
+  animation: fadeIn 0.2s ease-out both;
+}
+
+/* ============ REDUCED MOTION ============ */
+@media (prefers-reduced-motion: reduce) {
+  .animate-gradient-x,
+  .animate-float,
+  .typewriter-text,
+  .ripple-effect,
+  .cart-badge-pulse,
+  .fly-to-cart,
+  .scroll-progress,
+  .shimmer-sweep,
+  .social-bounce:hover {
+    animation: none !important;
+  }
+
+  .typewriter-text {
+    width: 100% !important;
+    border-right-color: transparent !important;
+  }
+
+  .parallax-layer {
+    transform: none !important;
+  }
+}

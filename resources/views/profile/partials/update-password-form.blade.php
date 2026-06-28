@@ -6,7 +6,7 @@
             </div>
             <div>
                 <h2 class="text-lg font-bold text-gray-900">{{ __('Update Password') }}</h2>
-                <p class="text-sm text-gray-400">{{ __('Ensure your account is using a long, random password to stay secure.') }}</p>
+                <p class="text-sm text-gray-500">{{ __('Ensure your account is using a long, random password to stay secure.') }}</p>
             </div>
         </div>
     </header>

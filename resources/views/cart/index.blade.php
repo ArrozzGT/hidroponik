@@ -6,13 +6,15 @@
             </div>
             <div>
                 <h2 class="font-heading font-bold text-xl text-gray-900 leading-tight">{{ __('Keranjang Belanja') }}</h2>
-                <p class="text-sm text-gray-400 mt-0.5">Review pesanan Anda sebelum checkout</p>
+                <p class="text-sm text-gray-600 mt-0.5">Review pesanan Anda sebelum checkout</p>
             </div>
         </div>
     </x-slot>
 
     <div class="py-10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <x-back-button class="mb-4" />
+
             <x-breadcrumb :crumbs="[['label' => 'Keranjang']]" />
 
             @if($carts->isEmpty())
@@ -38,11 +40,11 @@
                                                  class="w-full h-full object-cover" loading="lazy"
                                                  onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
                                             <div class="w-full h-full hidden items-center justify-center">
-                                                <i data-lucide="package" class="w-8 h-8 text-gray-300" aria-hidden="true"></i>
+                                                <i data-lucide="package" class="w-8 h-8 text-gray-600" aria-hidden="true"></i>
                                             </div>
                                         @else
                                             <div class="w-full h-full flex items-center justify-center">
-                                                <i data-lucide="package" class="w-8 h-8 text-gray-300" aria-hidden="true"></i>
+                                                <i data-lucide="package" class="w-8 h-8 text-gray-600" aria-hidden="true"></i>
                                             </div>
                                         @endif
                                     </div>
@@ -51,13 +53,13 @@
                                         <div class="flex items-start justify-between gap-2">
                                             <div class="min-w-0">
                                                 <a href="{{ route('shop.show', $cart->product->slug) }}" class="font-heading font-semibold text-sm sm:text-base text-gray-900 truncate block hover:text-emerald-600 transition-colors">{{ $cart->product->name }}</a>
-                                                <p class="text-xs text-gray-400 mt-0.5">Stok: {{ $cart->product->stock }}</p>
+                                                <p class="text-xs text-gray-600 mt-0.5">Stok: {{ $cart->product->stock }}</p>
                                             </div>
                                             <form action="{{ route('cart.remove', $cart) }}" method="POST" class="flex-shrink-0"
                                                   onsubmit="return confirm('Hapus {{ $cart->product->name }} dari keranjang?')">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="w-8 h-8 rounded-lg flex items-center justify-center text-gray-400 hover:text-red-500 hover:bg-red-50 transition-colors" title="Hapus">
+                                                <button type="submit" class="w-8 h-8 rounded-lg flex items-center justify-center text-gray-600 hover:text-red-500 hover:bg-red-50 transition-colors" title="Hapus">
                                                     <i data-lucide="trash-2" class="w-4 h-4" aria-hidden="true"></i>
                                                 </button>
                                             </form>
@@ -85,12 +87,12 @@
                                             </div>
 
                                             <div class="text-right">
-                                                <p class="text-xs text-gray-400 font-medium">Subtotal</p>
+                                                <p class="text-xs text-gray-600 font-medium">Subtotal</p>
                                                 <p class="font-heading font-semibold text-sm sm:text-base text-emerald-700">Rp {{ number_format($subtotal, 0, ',', '.') }}</p>
                                             </div>
                                         </div>
 
-                                        <p class="text-xs text-gray-400 mt-2">Rp {{ number_format($cart->product->price, 0, ',', '.') }} / {{ $cart->product->unit }}</p>
+                                        <p class="text-xs text-gray-600 mt-2">Rp {{ number_format($cart->product->price, 0, ',', '.') }} / {{ $cart->product->unit }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -114,19 +116,19 @@
                                 @endphp
 
                                 <div class="flex items-center justify-between text-sm">
-                                    <span class="text-gray-500">Subtotal ({{ $carts->count() }} item)</span>
+                                    <span class="text-gray-600">Subtotal ({{ $carts->count() }} item)</span>
                                     <span class="font-medium text-gray-900">Rp {{ number_format($subtotalTotal, 0, ',', '.') }}</span>
                                 </div>
 
                                 @if($discount > 0)
                                     <div class="flex items-center justify-between text-sm">
-                                        <span class="text-gray-500">Diskon Kupon</span>
+                                        <span class="text-gray-600">Diskon Kupon</span>
                                         <span class="font-medium text-red-600">-Rp {{ number_format($discount, 0, ',', '.') }}</span>
                                     </div>
                                 @endif
 
                                 <div class="flex items-center justify-between text-sm">
-                                    <span class="text-gray-500">Pengiriman</span>
+                                    <span class="text-gray-600">Pengiriman</span>
                                     <span class="font-medium text-emerald-600 text-xs">GRATIS</span>
                                 </div>
 

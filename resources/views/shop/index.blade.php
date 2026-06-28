@@ -9,8 +9,8 @@
     </script>
 
     {{-- HERO SECTION --}}
-    <div class="bg-emerald-800">
-        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+    <div class="bg-emerald-700">
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 text-white/80">
             <x-breadcrumb :crumbs="[['label' => 'Belanja']]" />
         </div>
         <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
@@ -38,7 +38,7 @@
                 @endif
                 <div class="relative">
                     <div class="flex items-center bg-white rounded-lg overflow-hidden border border-white/20">
-                        <div class="flex items-center pl-5 text-gray-400">
+                        <div class="flex items-center pl-5 text-gray-600">
                             <i data-lucide="search" style="width:18px;height:18px;" aria-hidden="true"></i>
                         </div>
                         <input
@@ -68,11 +68,11 @@
                                     <img x-show="p.image" :src="'/storage/' + p.image" alt=""
                                          class="w-full h-full object-cover" loading="lazy"
                                          onerror.once="this.style.display='none'">
-                                    <i x-show="!p.image" data-lucide="sprout" class="w-6 h-6 text-gray-300" aria-hidden="true"></i>
+                                    <i x-show="!p.image" data-lucide="sprout" class="w-6 h-6 text-gray-500" aria-hidden="true"></i>
                                 </div>
                                 <div class="flex-1 min-w-0 text-left">
                                     <p class="font-semibold text-gray-900 text-sm truncate" x-text="p.name"></p>
-                                    <p class="text-xs text-gray-400 mt-0.5">
+                                    <p class="text-xs text-gray-600 mt-0.5">
                                         <span x-text="'Rp ' + new Intl.NumberFormat('id-ID').format(p.price)"></span>
                                         <span x-text="'/ ' + p.unit"></span>
                                     </p>
@@ -143,11 +143,11 @@
     </div>
 
     {{-- PRODUCT GRID --}}
-    <div class="py-10">
+    <div class="py-10 reveal">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
             @if(request('search') || request('category'))
-                <p class="text-sm text-gray-400 mb-5">
+                <p class="text-sm text-gray-600 mb-5">
                     Menampilkan <strong class="text-gray-700">{{ $products->total() }}</strong> produk
                     @if(request('search')) untuk "<strong class="text-gray-700">{{ request('search') }}</strong>" @endif
                     @if(request('category')) dalam kategori <strong class="text-gray-700">{{ $categories->firstWhere('slug', request('category'))?->name }}</strong> @endif
@@ -164,7 +164,7 @@
                 <x-skeleton :count="8" :cols="4" />
                 <div x-show="!($store.skeleton?.loading ?? false)" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 sm:gap-6">
                     @foreach($products as $i => $product)
-                        <div class="tilt-3d bg-white border border-gray-100 rounded-xl overflow-hidden group transition-colors hover:border-gray-200 animate-fade-in-up stagger-{{ min($i + 1, 6) }}">
+                        <div class="tilt-3d bg-white border border-gray-100 rounded-xl overflow-hidden group transition-colors hover:border-gray-200 reveal" style="transition-delay: {{ $i * 60 }}ms; transition-duration: 0.5s">
 
                             <a href="{{ route('shop.show', $product->slug) }}" class="block relative aspect-square overflow-hidden bg-gray-50">
                                 @if($product->image)
@@ -181,7 +181,7 @@
                                     </div>
                                 @endif
 
-                                <span class="absolute top-3 left-3 bg-white/90 text-xs px-2 py-1 rounded-md font-medium text-gray-700">
+                                <span class="absolute top-3 left-3 bg-white/90 text-xs px-2 py-1 rounded-md font-medium text-gray-700 truncate max-w-[calc(100%-1.5rem)]">
                                     {{ $product->category->name }}
                                 </span>
 
@@ -200,7 +200,7 @@
                                         {{ $product->name }}
                                     </h3>
                                 </a>
-                                <p class="text-xs text-gray-400 mt-0.5 truncate">
+                                <p class="text-xs text-gray-600 mt-0.5 truncate">
                                     {{ $product->user->petaniProfile->nama_kebun ?? $product->user->name }}
                                 </p>
 
@@ -208,12 +208,12 @@
                                     <span class="text-base font-bold text-emerald-700">
                                         Rp {{ number_format($product->price, 0, ',', '.') }}
                                     </span>
-                                    <span class="text-xs text-gray-400">/ {{ $product->unit }}</span>
+                                    <span class="text-xs text-gray-600">/ {{ $product->unit }}</span>
                                 </div>
 
                                 <div class="mt-3">
                                     @if($product->stock == 0)
-                                        <button disabled class="w-full py-2 bg-gray-100 text-gray-400 rounded-lg text-xs font-medium cursor-not-allowed">
+                                        <button disabled class="w-full py-2 bg-gray-100 text-gray-600 rounded-lg text-xs font-medium cursor-not-allowed">
                                             Stok Habis
                                         </button>
                                     @else
@@ -253,7 +253,7 @@
                     <div class="mt-10 flex justify-center">
                         <div class="flex items-center gap-1">
                             @if($products->onFirstPage())
-                                <span class="px-3 py-2 rounded-md text-gray-300 bg-white border border-gray-100 cursor-not-allowed text-sm">
+                                <span class="px-3 py-2 rounded-md text-gray-600 bg-gray-50 border border-gray-100 cursor-not-allowed text-sm">
                                     ← Prev
                                 </span>
                             @else
@@ -280,7 +280,7 @@
                                     Next →
                                 </a>
                             @else
-                                <span class="px-3 py-2 rounded-md text-gray-300 bg-white border border-gray-100 cursor-not-allowed text-sm">
+                                <span class="px-3 py-2 rounded-md text-gray-600 bg-gray-50 border border-gray-100 cursor-not-allowed text-sm">
                                     Next →
                                 </span>
                             @endif

@@ -24,7 +24,7 @@ $fontSizes = [
     @if ($src)
         <img src="{{ $src }}" alt="{{ $alt }}" class="h-full w-full object-cover" loading="lazy" />
     @else
-        <div class="h-full w-full flex items-center justify-center bg-gray-100 text-gray-500 font-medium {{ $fontSizes[$size] ?? 'text-xs' }}">
+        <div class="h-full w-full flex items-center justify-center bg-gray-100 text-gray-600 font-medium {{ $fontSizes[$size] ?? 'text-xs' }}">
             {{ $fallback }}
         </div>
     @endif

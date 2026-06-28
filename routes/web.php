@@ -21,7 +21,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/checkout', [\App\Http\Controllers\OrderController::class, 'store'])->name('order.store');
     Route::get('/orders', [\App\Http\Controllers\OrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/{order}', [\App\Http\Controllers\OrderController::class, 'show'])->name('orders.show');
-    Route::post('/orders/{order}/payment', [\App\Http\Controllers\OrderController::class, 'uploadPayment'])->name('orders.payment');
+    Route::post('/orders/{order}/callback', [\App\Http\Controllers\OrderController::class, 'callback'])->name('orders.callback');
 });
 
 Route::get('/dashboard', function () {
@@ -109,5 +109,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/notifications/{notifikasi}/read', [\App\Http\Controllers\NotifikasiController::class, 'markAsRead'])->name('notifications.read');
     Route::post('/notifications/read-all', [\App\Http\Controllers\NotifikasiController::class, 'markAllAsRead'])->name('notifications.read-all');
 });
+
+// Halaman Terms & Ketentuan
+Route::get('/terms', function () {
+    return view('auth.terms');
+})->name('terms');
+
+Route::get('/privacy', function () {
+    return view('auth.privacy');
+})->name('privacy');
+
+Route::post('/terms/accept', function () {
+    session(['terms_accepted' => true]);
+    return redirect()->route('register');
+})->name('terms.accept');
 
 require __DIR__.'/auth.php';

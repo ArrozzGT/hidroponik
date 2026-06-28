@@ -10,6 +10,9 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-body antialiased">
+        {{-- Scroll Progress Bar --}}
+        <div class="scroll-progress" aria-hidden="true"></div>
+
         <div class="min-h-screen bg-white">
             <x-navbar />
 
@@ -35,6 +38,11 @@
                 @endif
             </main>
         </div>
+
+        {{-- Back to Top --}}
+        <button class="back-to-top fixed bottom-6 right-6 z-50 w-10 h-10 rounded-full bg-emerald-600 text-white shadow-lg flex items-center justify-center transition-all duration-300 opacity-0 invisible hover:bg-emerald-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2" aria-label="Kembali ke atas">
+            <i data-lucide="chevron-up" class="h-5 w-5" aria-hidden="true"></i>
+        </button>
 
         @if(session('success'))<div data-toast="success" data-message="{{ session('success') }}"></div>@endif
         @if(session('error'))<div data-toast="error" data-message="{{ session('error') }}"></div>@endif

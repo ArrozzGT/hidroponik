@@ -34,13 +34,13 @@
         @endif
 
         @php $totalRevenue = $revenueTotal ?? 0; @endphp
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 reveal">
             <x-ui.card class="p-6 bg-green-50 border-green-100">
                 <div class="flex items-center gap-3">
                     <i data-lucide="package" style="width:20px;height:20px;color:#16a34a;" aria-hidden="true"></i>
                     <div>
                         <p class="text-2xl font-heading font-bold text-gray-900" x-data="countUp({{ $stats['my_products'] }})" x-text="current">{{ $stats['my_products'] }}</p>
-                        <p class="text-xs text-gray-500">Produk Saya</p>
+                        <p class="text-xs text-gray-600">Produk Saya</p>
                     </div>
                 </div>
             </x-ui.card>
@@ -49,12 +49,12 @@
                     <i data-lucide="trending-up" style="width:20px;height:20px;color:#2563eb;" aria-hidden="true"></i>
                     <div>
                         <p class="text-2xl font-heading font-bold text-gray-900" x-data="countUp({{ $stats['my_sales'] }})" x-text="current">{{ $stats['my_sales'] }}</p>
-                        <p class="text-xs text-gray-500">Total Penjualan</p>
+                        <p class="text-xs text-gray-600">Total Penjualan</p>
                     </div>
                 </div>
             </x-ui.card>
             <x-ui.card class="p-6 bg-emerald-50 border-emerald-100 col-span-2">
-                <p class="text-xs text-gray-500 mb-1">Pendapatan</p>
+                <p class="text-xs text-gray-600 mb-1">Pendapatan</p>
                 <p class="text-3xl font-heading font-bold text-gray-900" x-data="countUp({{ $totalRevenue }})" x-text="'Rp ' + new Intl.NumberFormat('id-ID').format(current)">{{ $totalRevenue > 0 ? 'Rp ' . number_format($totalRevenue, 0, ',', '.') : 'Rp 0' }}</p>
                 <div class="mt-3 h-1.5 w-full bg-emerald-200 rounded-full">
                     <div class="h-full rounded-full bg-emerald-600 transition-all" style="width:{{ $totalRevenue > 0 ? min(($totalRevenue / 10000000) * 100, 100) : 0 }}%"></div>
@@ -68,10 +68,10 @@
                             @if($avgRating > 0)
                                 <span x-data="countUp({{ round($avgRating * 10) }})" x-text="(current / 10).toFixed(1)">{{ number_format($avgRating, 1) }}</span>
                             @else
-                                <span class="text-gray-300">—</span>
+                                <span class="text-gray-500">—</span>
                             @endif
                         </p>
-                        <p class="text-xs text-gray-500">Rating</p>
+                        <p class="text-xs text-gray-600">Rating</p>
                     </div>
                 </div>
             </x-ui.card>
@@ -107,10 +107,10 @@
                                 @endphp
                                 <tr>
                                     <td><span class="font-mono text-xs font-medium text-gray-800">{{ $order->order_number }}</span></td>
-                                    <td><span class="text-sm text-gray-700">{{ $order->user?->name ?? 'Pembeli' }}</span></td>
+                                    <td><span class="text-sm text-gray-700 truncate max-w-[160px] inline-block">{{ $order->user?->name ?? 'Pembeli' }}</span></td>
                                     <td><span class="font-medium text-emerald-700">Rp {{ number_format($order->total_price, 0, ',', '.') }}</span></td>
                                     <td><x-ui.badge :variant="$sc">{{ ucfirst($order->status) }}</x-ui.badge></td>
-                                    <td class="text-gray-400 text-xs">{{ $order->created_at->format('d M Y') }}</td>
+                                    <td class="text-gray-600 text-xs">{{ $order->created_at->format('d M Y') }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -126,28 +126,28 @@
                     <i data-lucide="plus-circle" style="width:28px;height:28px;color:#16a34a;" aria-hidden="true"></i>
                     <div>
                         <p class="font-medium text-gray-900">Tambah Produk</p>
-                        <p class="text-xs text-gray-500">Buat produk baru</p>
+                        <p class="text-xs text-gray-600">Buat produk baru</p>
                     </div>
                 </a>
                 <a href="{{ route('petani.panen.create') }}" class="bg-teal-50 border border-teal-100 rounded-xl p-6 flex items-center gap-4 hover:bg-teal-100/50 transition-colors">
                     <i data-lucide="tractor" style="width:28px;height:28px;color:#0d9488;" aria-hidden="true"></i>
                     <div>
                         <p class="font-medium text-gray-900">Catat Panen</p>
-                        <p class="text-xs text-gray-500">Input hasil panen</p>
+                        <p class="text-xs text-gray-600">Input hasil panen</p>
                     </div>
                 </a>
                 <a href="{{ route('petani.stok-nutrisi.index') }}" class="bg-amber-50 border border-amber-100 rounded-xl p-6 flex items-center gap-4 hover:bg-amber-100/50 transition-colors">
                     <i data-lucide="flask-conical" style="width:28px;height:28px;color:#d97706;" aria-hidden="true"></i>
                     <div>
                         <p class="font-medium text-gray-900">Stok Nutrisi</p>
-                        <p class="text-xs text-gray-500">Kelola nutrisi</p>
+                        <p class="text-xs text-gray-600">Kelola nutrisi</p>
                     </div>
                 </a>
                 <a href="{{ route('petani.orders.index') }}" class="bg-blue-50 border border-blue-100 rounded-xl p-6 flex items-center gap-4 hover:bg-blue-100/50 transition-colors">
                     <i data-lucide="clipboard-list" style="width:28px;height:28px;color:#2563eb;" aria-hidden="true"></i>
                     <div>
                         <p class="font-medium text-gray-900">Lihat Pesanan</p>
-                        <p class="text-xs text-gray-500">Riwayat & status</p>
+                        <p class="text-xs text-gray-600">Riwayat & status</p>
                     </div>
                 </a>
             </div>
