@@ -23,3 +23,8 @@ Homestead.json
 Homestead.yaml
 Thumbs.db
 NUL
+
+# Database dump
+# opencode & hermes
+/.opencode
+/.hermes
