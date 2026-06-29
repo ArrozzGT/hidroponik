@@ -23,3 +23,9 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+
+# AI agent local scripts
+openclaude.bat
+openclaude.ps1
+opencode.json
+.opencode/
