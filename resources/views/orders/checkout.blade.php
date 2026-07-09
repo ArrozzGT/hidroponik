@@ -94,7 +94,8 @@
                                     </label>
                                     <textarea id="note" name="note" rows="2"
                                               placeholder="Contoh: Minta dikemas rapi, jangan dihancurkan"
-                                              class="block w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 focus:ring-offset-0 transition-colors min-h-[88px] resize-none">{{ old('note') }}</textarea>
+                                              class="block w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 focus:ring-offset-0 transition-colors min-h-[88px] resize-none {{ $errors->has('note') ? 'border-red-400' : '' }}">{{ old('note') }}</textarea>
+                                    @error('note')<p class="mt-1.5 text-xs text-red-600">{{ $message }}</p>@enderror
                                 </div>
                             </div>
 

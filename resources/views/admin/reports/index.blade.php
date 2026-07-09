@@ -24,11 +24,13 @@
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <label for="start_date" class="form-label">Tanggal Mulai</label>
-                            <input id="start_date" name="start_date" type="date" class="form-input" required>
+                            <input id="start_date" name="start_date" type="date" class="form-input {{ $errors->has('start_date') ? 'border-red-400' : '' }}" required>
+                            @error('start_date')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
                         </div>
                         <div>
                             <label for="end_date" class="form-label">Tanggal Selesai</label>
-                            <input id="end_date" name="end_date" type="date" class="form-input" required>
+                            <input id="end_date" name="end_date" type="date" class="form-input {{ $errors->has('end_date') ? 'border-red-400' : '' }}" required>
+                            @error('end_date')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
                         </div>
                     </div>
 

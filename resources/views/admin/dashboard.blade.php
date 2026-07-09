@@ -147,11 +147,15 @@
                                     <input type="hidden" name="action" value="approve">
                                     <button class="bg-emerald-600 text-white px-3 py-1 text-xs rounded-md hover:bg-emerald-700 transition-colors">Approve</button>
                                 </form>
-                                <form action="{{ route('admin.users.verify', $petani) }}" method="POST">
-                                    @csrf
-                                    <input type="hidden" name="action" value="reject">
-                                    <button class="border border-gray-200 text-gray-600 px-3 py-1 text-xs rounded-md hover:bg-gray-50 transition-colors">Reject</button>
-                                </form>
+                                <button onclick="this.nextElementSibling.classList.toggle('hidden')" class="border border-gray-200 text-gray-600 px-3 py-1 text-xs rounded-md hover:bg-gray-50 transition-colors">Reject</button>
+                                <div class="hidden mt-2">
+                                    <form action="{{ route('admin.users.verify', $petani) }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="action" value="reject">
+                                        <textarea name="alasan_reject" placeholder="Alasan penolakan..." class="form-input text-xs mb-1" rows="2" required></textarea>
+                                        <button type="submit" class="bg-red-600 text-white px-2 py-1 text-xs rounded-md hover:bg-red-700 transition-colors w-full">Kirim Penolakan</button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     @empty

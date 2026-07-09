@@ -8,6 +8,7 @@
         <title>{{ config('app.name', 'SIPSH') }}</title>
 
         @vite(['resources/css/app.css', 'resources/css/guest.css', 'resources/js/app.js'])
+        <script defer src="{{ asset('vendor/lucide.min.js') }}"></script>
     </head>
     <body class="font-body antialiased">
         <div class="scroll-progress" aria-hidden="true"></div>

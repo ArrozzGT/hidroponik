@@ -87,9 +87,4 @@
         </a>
     </div>
 
-    <script>
-        document.addEventListener('alpine:initialized', () => {
-            if (typeof lucide !== 'undefined') lucide.createIcons();
-        });
-    </script>
 </x-guest-layout>

@@ -91,7 +91,7 @@
     <script>
         function editCategory(cat) {
             document.getElementById('form-title').innerText = 'Edit Kategori';
-            document.getElementById('category-form').action = '/admin/categories/' + cat.id;
+            document.getElementById('category-form').action = '{{ route('admin.categories.index') }}/' + cat.id;
             document.getElementById('method-field').innerHTML = '<input type="hidden" name="_method" value="PATCH">';
             document.getElementById('name').value = cat.name;
             document.getElementById('icon').value = cat.icon || '';

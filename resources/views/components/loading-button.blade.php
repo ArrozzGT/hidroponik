@@ -1,6 +1,6 @@
 <button {{ $attributes->merge(['type' => 'submit', 'class' => 'inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium transition-colors']) }}
         x-data="{ loading: false }"
-        x-on:submit="$el.closest('form')?.addEventListener('submit', () => loading = true)"
+        x-init="$el.closest('form')?.addEventListener('submit', () => loading = true)"
         :disabled="loading">
     <span x-show="loading" class="flex items-center gap-2">
         <svg class="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none">

@@ -1,6 +1,9 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\Product;
+use App\Enums\ProductStatus;
+
 class WelcomeController extends Controller
 {
     public function index()
@@ -8,6 +11,13 @@ class WelcomeController extends Controller
         if (auth()->check()) {
             return redirect()->route('dashboard');
         }
-        return view('welcome');
+
+        $featuredProducts = Product::where('status', ProductStatus::TERSEDIA)
+            ->with('category', 'user.petaniProfile')
+            ->latest()
+            ->take(8)
+            ->get();
+
+        return view('welcome', compact('featuredProducts'));
     }
 }

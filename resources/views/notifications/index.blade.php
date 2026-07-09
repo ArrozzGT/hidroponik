@@ -41,7 +41,7 @@
                     <div class="bg-white border border-gray-100 rounded-xl p-5 transition-all cursor-pointer hover:border-gray-200
                         {{ !$notif->is_read ? 'border-l-4 border-l-emerald-500 bg-emerald-50/40' : '' }}"
                         @if(!$notif->is_read)
-                            onclick="fetch('{{ route('notifications.read', $notif) }}', {method: 'POST', headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'}}).then(() => { this.classList.remove('border-l-emerald-500', 'bg-emerald-50/40') })"
+                            onclick="fetch('{{ route('notifications.read', $notif) }}', {method: 'POST', headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'}}).then(() => { this.classList.remove('border-l-emerald-500', 'bg-emerald-50/40') }).catch(() => {})"
                         @endif>
                         <div class="flex items-start gap-4">
                             <div class="w-2 h-2 rounded-full mt-2 flex-shrink-0 {{ !$notif->is_read ? 'bg-emerald-500' : 'bg-gray-300' }}"></div>

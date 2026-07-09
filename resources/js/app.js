@@ -2,8 +2,9 @@ import * as Turbo from '@hotwired/turbo'
 import './bootstrap';
 
 import Alpine from 'alpinejs';
-import { createIcons, icons } from 'lucide';
-import { initEffects } from './effects';
+import { initEffects, cleanupEffects } from './effects';
+
+let heroCleanup = null;
 
 window.Alpine = Alpine;
 
@@ -65,19 +66,22 @@ document.addEventListener('alpine:init', () => {
 
 Alpine.start();
 
+document.addEventListener('turbo:before-cache', () => {
+    cleanupEffects();
+    if (heroCleanup) {
+        heroCleanup();
+        heroCleanup = null;
+    }
+});
+
 document.addEventListener('turbo:load', () => {
     Alpine.initTree(document.body);
     initEffects();
-    createIcons({ icons, attrs: { 'aria-hidden': 'true' } });
+    window.lucide?.createIcons({ attrs: { 'aria-hidden': 'true' } });
+
+    if (document.getElementById('hero-3d-canvas') && !heroCleanup) {
+        import('./hero-3d').then(({ initHero3D }) => {
+            heroCleanup = initHero3D();
+        });
+    }
 });
-
-function initApp() {
-    initEffects();
-    createIcons({ icons, attrs: { 'aria-hidden': 'true' } });
-}
-
-if (document.readyState === 'complete') {
-    initApp();
-} else {
-    document.addEventListener('DOMContentLoaded', initApp);
-}
