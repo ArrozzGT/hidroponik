@@ -1,184 +1,208 @@
-# 🚀 Deploy SIPSH ke Railway.app (Gratis)
+# 🚀 Deploy SIPSH ke InfinityFree (Gratis)
 
-## Apa yang kamu dapat
-- **Hosting** Laravel gratis (dengan Railway $5 credit/bulan)
-- **Database** PostgreSQL gratis otomatis
-- **Auto-deploy** dari GitHub — tinggal push, langsung live
-- **Domain** `*.up.railway.app` gratis (atau custom domain nanti)
+Hosting PHP gratis + MySQL + subdomain. Cocok buat Laravel.
 
 ---
 
-## 1. Setup GitHub Repository
+## 1. Daftar InfinityFree
 
-Buka [github.com/new](https://github.com/new), buat repo baru (public/private bebas).
-Jalankan ini di terminal proyek:
+1. Buka [infinityfree.com](https://infinityfree.com)
+2. Klik **Get Premium Free Hosting** → **Register**
+3. Isi email & password → verifikasi email
+4. Login → **Create Account** → isi data hosting
+
+Kamu akan dapat:
+- Subdomain: `namakamu.infinityfreeapp.com`
+- Akses cPanel
+- MySQL database
+
+---
+
+## 2. Buat Database MySQL
+
+1. Login ke **cPanel** InfinityFree
+2. Cari **MySQL Databases**
+3. Buat database baru:
+   - **Database Name:** `if0_xxxx_sipsh` (copy nama lengkapnya)
+   - **Username:** `if0_xxxx` (copy username-nya)
+   - **Password:** isi password kuat
+4. Klik **Create User** lalu **Add User to Database**
+5. Centang **ALL PRIVILEGES** → **Make Changes**
+
+Simpan 4 info ini:
+```
+DB_DATABASE = if0_xxxx_sipsh
+DB_USERNAME = if0_xxxx
+DB_PASSWORD = (password yang kamu buat)
+DB_HOST     = sqlxxx.infinityfree.com (atau lihat di cPanel)
+```
+
+---
+
+## 3. Export Database dari Local
+
+Buka **terminal** di folder proyek:
 
 ```bash
-git remote add origin https://github.com/username/nama-repo.git
-git branch -M main
-git push -u origin main
+# Pindah ke MySQL dulu (ganti .env)
+# Edit .env → ubah DB_CONNECTION jadi mysql dan isi 4 info di atas
+
+# Jalankan migrasi (tabel akan terbentuk)
+php artisan migrate --force
+
+# Export database ke file SQL
+php artisan db:export > sipsh-database.sql
 ```
 
----
+> Catatan: Kalo `db:export` ga ada, pake phpMyAdmin XAMPP:
+> Buka `http://localhost/phpmyadmin` → pilih database → Export → Quick → Go
 
-## 2. Setup Railway
-
-1. Buka [railway.app](https://railway.app)
-2. Login dengan GitHub
-3. Klik **New Project** → **Deploy from GitHub repo**
-4. Pilih repo SIPSH kamu
-5. Railway otomatis mendeteksi Laravel dan mulai deploy
-
-⏳ Tunggu ~3-5 menit sampai build selesai.
-
----
-
-## 3. Setup Database PostgreSQL
-
-Setelah deploy pertama selesai:
-
-1. Di dashboard Railway project kamu, klik **+ New** → **Database** → **PostgreSQL**
-2. Tunggu sampai PostgreSQL terprovisi (lingkaran hijau)
-3. Klik PostgreSQL → tab **Variables**
-4. Akan ada variabel `DATABASE_URL` dan `PG*` — kita perlui detail koneksinya
-
-Sekarang set environment variables untuk Laravel:
-
-1. Klik project **SIPSH** (bukan database)
-2. Tab **Variables**
-3. Tambahkan variabel berikut:
-
-| Key | Value |
-|-----|-------|
-| `DB_CONNECTION` | `pgsql` |
-| `DB_HOST` | Host dari PostgreSQL (contoh: `roundhouse.proxy.rlwy.net`) |
-| `DB_PORT` | `5432` |
-| `DB_DATABASE` | `railway` |
-| `DB_USERNAME` | `postgres` |
-| `DB_PASSWORD` | Password dari PostgreSQL variable |
-| `DB_SSLMODE` | `require` |
-| `APP_KEY` | Generate dulu (lihat langkah 4) |
-| `APP_ENV` | `production` |
-| `APP_DEBUG` | `false` |
-| `APP_URL` | Domain Railway kamu (contoh: `https://sipsh.up.railway.app`) |
-| `SESSION_DRIVER` | `database` |
-| `CACHE_STORE` | `database` |
-
-> Semua nilai `DB_*` bisa kamu lihat dari PostgreSQL service → Variables.
-> `APP_KEY` bisa kamu generate via langkah berikut.
-
----
-
-## 4. Generate APP_KEY untuk Railway
-
-Jalankan:
+Atau jalankan ini di terminal:
 
 ```bash
-php artisan key:generate --show
+# Cek dulu kalo mysqldump ada di XAMPP
+"C:\xampp\mysql\bin\mysqldump" -u root sipsh > sipsh-database.sql
 ```
 
-> Outputnya seperti `base64:abc123...` — copy dan paste sebagai nilai `APP_KEY` di Railway Variables.
+Simpan file `sipsh-database.sql` — ini yang akan diimport ke InfinityFree.
 
 ---
 
-## 5. Deploy Ulang & Migrate
-
-Setelah variabel terisi:
-
-1. Tab **Deployments**
-2. Klik **Redeploy** (tombol ⋮ → Redeploy)
-3. Tunggu build selesai
-
-Jalankan migrasi di Railway console:
+## 4. Siapkan File untuk Upload
 
 ```bash
-railway run php artisan migrate --force
-```
+# 1. Hapus node_modules biar zip kecil
+rm -rf node_modules
 
-Atau pake tombol **Connect** → **Railway CLI**:
+# 2. Buat zip (Windows: klik kanan folder → Send to → Compressed folder)
+#    Atau pake perintah:
+zip -r sipsh-deploy.zip . -x "node_modules/*" -x ".git/*" -x ".env"
 
-```powershell
-# Install Railway CLI
-npm install -g @railway/cli
-
-# Login (browser akan terbuka)
-railway login
-
-# Link ke project
-railway link
-
-# Jalankan migrasi
-railway run php artisan migrate --force
-railway run php artisan storage:link
-railway run php artisan config:cache
-railway run php artisan route:cache
-railway run php artisan view:cache
+# 3. Zip file siap diupload ~20-30MB
 ```
 
 ---
 
-## 6. Setup Email (Mailtrap)
+## 5. Upload ke InfinityFree
 
-Buat akun gratis di [mailtrap.io](https://mailtrap.io):
-
-1. Masuk → **Email Testing** → **Inbox** → pilih **SMTP Settings**
-2. Pilih **Laravel 9+** di tab Integration
-3. Copy credentials → tambahkan ke Railway Variables:
-
-| Key | Value |
-|-----|-------|
-| `MAIL_MAILER` | `smtp` |
-| `MAIL_HOST` | `smtp.mailtrap.io` |
-| `MAIL_PORT` | `587` |
-| `MAIL_USERNAME` | dari Mailtrap |
-| `MAIL_PASSWORD` | dari Mailtrap |
-| `MAIL_ENCRYPTION` | `tls` |
-| `MAIL_FROM_ADDRESS` | `noreply@sipsh.local` |
+1. Login cPanel InfinityFree
+2. Buka **File Manager**
+3. Masuk ke folder `htdocs`
+4. Klik **Upload** → pilih `sipsh-deploy.zip`
+5. Setelah upload selesai:
+   - Klik kanan file zip → **Extract**
+   - Centang **Extract files into current directory**
+6. Hapus file `sipsh-deploy.zip` setelah extract
 
 ---
 
-## 7. Auto-Deploy (Push = Deploy)
+## 6. Setting Document Root
 
-Setelah semua setup, setiap kali kamu push ke `main`:
+Laravel harus diarahkan ke folder `public/`:
 
-```bash
-git add -A
-git commit -m "update fitur"
-git push origin main
+1. Di cPanel, cari **Settings** → **Root Domain**
+2. Pilih **Redirect URL** → **Manage**
+3. **Document Root:** ubah ke `htdocs/public`
+4. **Save**
+
+Atau via menu **Laravel** → pilih project → **Setup Laravel** (otomatis set document root).
+
+---
+
+## 7. Konfigurasi .env
+
+1. Di File Manager, buka folder `htdocs/`
+2. Copy file `.env.example` → rename jadi `.env`
+3. Klik kanan `.env` → **Edit**
+4. Isi dengan:
+
+```
+APP_ENV=production
+APP_DEBUG=false
+APP_URL=https://namakamu.infinityfreeapp.com
+
+DB_CONNECTION=mysql
+DB_HOST=sqlxxx.infinityfree.com
+DB_PORT=3306
+DB_DATABASE=if0_xxxx_sipsh
+DB_USERNAME=if0_xxxx
+DB_PASSWORD=password_kamu
+
+SESSION_DRIVER=database
+CACHE_STORE=database
 ```
 
-Railway otomatis:
-1. Detect perubahan
-2. Build ulang
-3. Deploy versi baru
-4. PostgreSQL database tetap aman
+5. **Save**
 
 ---
 
-## Yang perlu diingat
+## 8. Import Database
 
-| Hal | Catatan |
-|-----|---------|
-| **Railway free tier** | $5/bulan — cukup buat app kecil. Jangan upgrade tanpa perlu. |
-| **Database** | PostgreSQL Railway — jangan hapus! Data ilang. |
-| **File upload** | Upload user disimpan di `storage/app/public` — Railway storage ini **ephemeral**. Buat production sungguhan, pindah ke S3/MinIO. |
-| **Custom domain** | Bisa pasang domain `.com` kalo udah ready. Settings → Domain. |
-| **Sleep policy** | Railway akan "tidurkan" app gratis setelah ~30 menit idle. Kunjungan berikutnya agak lambat (cold start ~5 detik). |
+1. Di cPanel, buka **phpMyAdmin**
+2. Pilih database kamu (yang tadi dibuat)
+3. Klik tab **Import**
+4. **Choose File** → pilih file `sipsh-database.sql`
+5. Klik **Go**
+
+Tunggu sampai selesai. Semua tabel akan terbuat.
+
+---
+
+## 9. Generate APP_KEY
+
+Buka **PHP Script** di cPanel InfinityFree:
+
+```
+php /home/if0_xxxx/htdocs/artisan key:generate --force
+php /home/if0_xxxx/htdocs/artisan storage:link
+php /home/if0_xxxx/htdocs/artisan config:cache
+php /home/if0_xxxx/htdocs/artisan route:cache
+php /home/if0_xxxx/htdocs/artisan view:cache
+```
+
+Atau kalo ga ada menu PHP Script:
+
+1. Buat file `key.php` di folder `htdocs/`:
+
+```php
+<?php
+copy('.env.example', '.env');
+shell_exec('php artisan key:generate --force');
+shell_exec('php artisan storage:link');
+echo "Done! Delete this file now.";
+```
+
+2. Buka `https://namakamu.infinityfreeapp.com/key.php`
+3. Hapus file `key.php` setelah selesai
+
+---
+
+## ✅ Selesai!
+
+Buka `https://namakamu.infinityfreeapp.com` — website live!
 
 ---
 
 ## Troubleshooting
 
-**App error 500 setelah deploy:**
-- Cek Railway tab **Deployments** → logs
-- Pastikan `.env.example` di-root repo (dipakai Railway untuk fallback)
-- Generate APP_KEY, pastikan diset di Railway Variables
+**Error 500 / Blank page:**
+- Cek `.env` — pastikan semua terisi benar
+- Cek **Error Logs** di cPanel
+- Pastikan PHP versi 8.2 (cPanel → PHP Selector)
 
 **Database connection error:**
-- Pastikan PostgreSQL variables udah bener
-- `DB_CONNECTION` harus `pgsql`
-- `DB_SSLMODE=require`
+- Pastikan DB_HOST benar (cek di cPanel → MySQL Databases)
+- Pastikan database user punya ALL PRIVILEGES
+- Coba `DB_HOST=localhost` kalo ragu
 
 **File upload tidak muncul:**
-- Jalankan `railway run php artisan storage:link` setelah deploy
-- Atau untuk production serius: setup AWS S3 di `config/filesystems.php`
+- Jalankan ulang `php artisan storage:link`
+- Atau buat manual symlink di File Manager
+
+**CSS/Javascript broken:**
+- Jalankan `php artisan config:cache` dan `php artisan view:cache`
+- Hapus folder `storage/framework/cache/data/`
+
+**APP_KEY invalid:**
+- Generate ulang: `php artisan key:generate --force`
+- Update `.env` dengan key baru
